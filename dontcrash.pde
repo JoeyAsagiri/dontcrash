@@ -6,7 +6,10 @@ Tile[] tiles;
 Car car;
 Select select;
 
-int tileX = 50, tileY = 10;
+final int tileXStart = 50;
+final int tileYStart = 10;
+int tileX = tileXStart;
+int tileY = tileYStart;
 
 int tileCount = 8;
 int tileRow = 2;
@@ -29,7 +32,6 @@ void setup() {
     tiles[i] = new Tile();
     tiles[i].setImage(loadImage("images/tiles/tile" + (int) random + ".png")); 
     tiles[i].setCollision((int) random);
-    println(tiles[i].getCollision());
   }
 
   //Create the car
@@ -62,8 +64,8 @@ void drawTiles() {
       tileY += tileDistanceY;
     }
   } 
-  tileX = 50;
-  tileY = 10;
+  tileX = tileXStart;
+  tileY = tileYStart;
 }
 
 
