@@ -69,6 +69,22 @@ void drawTiles() {
   tileY = tileYStart;
 }
 
+//Placeholder drawTilesRight
+/*
+void drawTiles() {
+  // Create tiles up to the tileCount
+  for (int i = 0; i < tileCount; i++) {
+    image(tiles[i].getImage(), tileX, tileY);
+    tileX += tileDistanceX;
+    // set the tiles another row down after every 2 tiles
+    if ((i + 1) % tileRow == 0) {
+      tileX = position;
+      tileY += tileDistanceY;
+    }
+  } 
+  tileX = tileXStart;
+  tile
+*/
 
 // All the code that alters the Game World goes here
 void updateGame() {
