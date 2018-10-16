@@ -11,6 +11,7 @@ final int tileYStart = 10;
 int tileX = tileXStart;
 int tileY = tileYStart;
 
+//Grid
 int tileCount = 8;
 int tileRow = 2;
 int tileDistanceX = 200;
