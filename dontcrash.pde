@@ -104,7 +104,7 @@ void drawGame() {
   background(101, 232, 255);
 
   // Draw the tiles and selector
-  drawTiles();
+  drawTilesLeft();
   select.drawSelect();
   
   // Draw the line seperating the line select and the play field
