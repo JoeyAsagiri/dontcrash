@@ -3,6 +3,8 @@ final int KEY_LIMIT = 1024;
 boolean[] keysPressed = new boolean[KEY_LIMIT];
 
 Tile[] tiles;
+Tile[] tilesLeft;
+Tile[] tilesRight;
 Car car;
 Select select;
 
@@ -25,7 +27,7 @@ void setup() {
   size(1280, 720);
   background(101, 232, 255); // make the background blue
 
-  initTiles(tileCount); // Initialize the left side of the grid
+  tilesLeft = initTiles(tileCount); // Initialize the left side of the grid
 
   //Create the car
   car = new Car();
@@ -59,10 +61,10 @@ Tile[] initTiles(int tileCount){
 }
 
 // Draw the tiles to be shown
-void drawTiles() {
+void drawTilesLeft() {
   // Create tiles up to the tileCount
   for (int i = 0; i < tileCount; i++) {
-    image(tiles[i].getImage(), tileX, tileY);
+    image(tilesLeft[i].getImage(), tileX, tileY);
     tileX += tileDistanceX;
     // set the tiles another row down after every 2 tiles
     if ((i + 1) % tileRow == 0) {
