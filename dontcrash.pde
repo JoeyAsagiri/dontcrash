@@ -25,15 +25,7 @@ void setup() {
   size(1280, 720);
   background(101, 232, 255); // make the background blue
 
-  tiles = new Tile[tileCount];
-
-  // Give an image and collision(?) to every tile
-  for (int i = 0; i < tileCount; i++) {
-    float random = random(1, 8); // Get a random tile 
-    tiles[i] = new Tile();
-    tiles[i].setImage(loadImage("images/tiles/tile" + (int) random + ".png")); 
-    tiles[i].setCollision((int) random);
-  }
+  initTiles(tileCount); // Initialize the left side of the grid
 
   //Create the car
   car = new Car();
@@ -51,6 +43,19 @@ void setup() {
   select.tileRow = tileRow;
   select.tileDistanceX = tileDistanceX;
   select.tileDistanceY = tileDistanceY;
+}
+
+// Initialize a set amount of tiles and return an array of random tiles
+Tile[] initTiles(int tileCount){
+  tiles = new Tile[tileCount];
+   // Give an image and collision(?) to every tile
+  for (int i = 0; i < tileCount; i++) {
+    float random = random(1, 8); // Get a random tile 
+    tiles[i] = new Tile();
+    tiles[i].setImage(loadImage("images/tiles/tile" + (int) random + ".png"));  //assign the image of the chosen tile to the tile
+    tiles[i].setCollision((int) random); //set the collision of the chosen tile to the tile (todo)
+  } 
+  return tiles;
 }
 
 // Draw the tiles to be shown
