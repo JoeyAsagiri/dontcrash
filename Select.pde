@@ -13,15 +13,15 @@ class Select {
       limit = 1;
       selectX = selectX + tileDistanceX;
     }
-    if (keysPressed[LEFT] && selectX != tileX && limit == 0) {
+    if (keysPressed[LEFT] && selectX != tileXLeft && limit == 0) {
       limit = 1;
       selectX = selectX - tileDistanceX;
     }
-    if (keysPressed[DOWN] && selectY != (tileCount / tileRow -1)  * tileDistanceY + tileY && limit == 0) {
+    if (keysPressed[DOWN] && selectY != (tileCount / tileRow -1)  * tileDistanceY + tileYLeft && limit == 0) {
       limit = 1;
       selectY = selectY + tileDistanceY;
     }
-    if (keysPressed[UP] && selectY != tileY && limit == 0) {
+    if (keysPressed[UP] && selectY != tileYLeft && limit == 0) {
       limit = 1;
       selectY = selectY - tileDistanceY; 
     }
