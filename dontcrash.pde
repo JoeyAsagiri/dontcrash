@@ -1,6 +1,7 @@
 // Arrays of booleans for Keyboard handling. One boolean for each keyCode
 final int KEY_LIMIT = 1024;
 boolean[] keysPressed = new boolean[KEY_LIMIT];
+boolean[] keysReleased = new boolean[KEY_LIMIT];
 
 boolean Select = true;
 
@@ -59,37 +60,49 @@ void setup() {
   //Create the selector and give it the variables
   selectLeft = new SelectLeft();
   selectRight = new SelectRight();
+  
+  selectLeft.selectX = tileXLeft;
+  selectLeft.selectY = tileYLeft;
+  selectLeft.tileCount = tileCountLeft;
+  selectLeft.tileRow = tileRowLeft;
+  selectLeft.tileDistanceX = tileDistanceXLeft;
+  selectLeft.tileDistanceY = tileDistanceYLeft;
+  selectLeft.tileNumber = 0;
+  
+  selectRight.selectX = tileXRight;
+  selectRight.selectY = tileYRight;
+  selectRight.tileCount = tileCountRight;
+  selectRight.tileRow = tileRowRight;
+  selectRight.tileDistanceX = tileDistanceXRight;
+  selectRight.tileDistanceY = tileDistanceYRight;
+  selectRight.tileNumber = 0;
+    
 }
 void Select() {
   if (Select == true) {
-    selectLeft.selectX = tileXLeft;
-    selectLeft.selectY = tileYLeft;
-    selectLeft.tileCount = tileCountLeft;
-    selectLeft.tileRow = tileRowLeft;
-    selectLeft.tileDistanceX = tileDistanceXLeft;
-    selectLeft.tileDistanceY = tileDistanceYLeft;
-    selectLeft.tileNumber = 0;
-    if (keysPressed[ENTER] == true) {
-      //System.out.print(tileNumber);
+    if (keysPressed[ENTER] == true && limit == 0) {
       Select = false;
+      limit = 1;
+    } else {
+      selectLeft.selectLeft();
     }
-    selectLeft.selectLeft();
-    selectLeft.drawSelectLeft();
-  } else {
-    selectRight.selectX = tileXRight;
-    selectRight.selectY = tileYRight;
-    selectRight.tileCount = tileCountRight;
-    selectRight.tileRow = tileRowRight;
-    selectRight.tileDistanceX = tileDistanceXRight;
-    selectRight.tileDistanceY = tileDistanceYRight;
-    selectRight.tileNumber = 0;
-    if (keysPressed[ENTER] == true) {
-      //System.out.print(tileNumber);
+  } 
+  else {
+    if (keysPressed[ENTER] == true && limit == 0) {
+      println("PLS");
+      ////System.out.print(tileNumber);
       Select = true;
+      limit = 1;
+    } else {
+      selectRight.selectRight();
     }
-    selectRight.selectRight();
-    selectRight.drawSelectRight();
   }
+  
+  if (keysPressed[ENTER] == false) {
+     limit = 0; 
+  }
+  
+  
 
 //  if (Select) {
 //    if (keysPressed[ENTER] == true) {
@@ -158,8 +171,6 @@ void drawTilesRight() {
 void updateGame() {
   car.move(up);
   Select();
-  //selectLeft.selectLeft();
-  //selectRight.selectRight();
 }
 
 // All the code that draws the Game World goes here
@@ -169,8 +180,14 @@ void drawGame() {
   // Draw the tiles and selector
   drawTilesLeft();
   drawTilesRight();
-  Select();
-
+  
+  if (Select) {
+    selectLeft.drawSelectLeft();
+  }
+  else {
+    selectRight.drawSelectRight();
+  }
+  
   // Draw the line seperating the line select and the play field
   line(400, 0, 400, 720);
 
@@ -192,5 +209,5 @@ void keyPressed() {
 //..and with each key Released vice versa
 void keyReleased() {
   if (keyCode >= KEY_LIMIT) return;
-  keysPressed[keyCode] = false;
+  keysPressed[keyCode] = false; // set its boolean to false
 }
