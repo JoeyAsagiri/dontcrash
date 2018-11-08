@@ -58,22 +58,53 @@ void setup() {
 
   //Create the selector and give it the variables
   selectLeft = new SelectLeft();
-  selectLeft.selectX = tileXLeft;
-  selectLeft.selectY = tileYLeft;
-  selectLeft.tileCount = tileCountLeft;
-  selectLeft.tileRow = tileRowLeft;
-  selectLeft.tileDistanceX = tileDistanceXLeft;
-  selectLeft.tileDistanceY = tileDistanceYLeft;
-  selectLeft.tileNumber = 0;
-
   selectRight = new SelectRight();
-  selectRight.selectX = tileXRight;
-  selectRight.selectY = tileYRight;
-  selectRight.tileCount = tileCountRight;
-  selectRight.tileRow = tileRowRight;
-  selectRight.tileDistanceX = tileDistanceXRight;
-  selectRight.tileDistanceY = tileDistanceYRight;
-  selectRight.tileNumber = 0;
+}
+void Select() {
+  if (Select == true) {
+    selectLeft.selectX = tileXLeft;
+    selectLeft.selectY = tileYLeft;
+    selectLeft.tileCount = tileCountLeft;
+    selectLeft.tileRow = tileRowLeft;
+    selectLeft.tileDistanceX = tileDistanceXLeft;
+    selectLeft.tileDistanceY = tileDistanceYLeft;
+    selectLeft.tileNumber = 0;
+    if (keysPressed[ENTER] == true) {
+      //System.out.print(tileNumber);
+      Select = false;
+    }
+    selectLeft.selectLeft();
+    selectLeft.drawSelectLeft();
+  } else {
+    selectRight.selectX = tileXRight;
+    selectRight.selectY = tileYRight;
+    selectRight.tileCount = tileCountRight;
+    selectRight.tileRow = tileRowRight;
+    selectRight.tileDistanceX = tileDistanceXRight;
+    selectRight.tileDistanceY = tileDistanceYRight;
+    selectRight.tileNumber = 0;
+    if (keysPressed[ENTER] == true) {
+      //System.out.print(tileNumber);
+      Select = true;
+    }
+    selectRight.selectRight();
+    selectRight.drawSelectRight();
+  }
+
+//  if (Select) {
+//    if (keysPressed[ENTER] == true) {
+//      //System.out.print(tileNumber);
+//      Select = false;
+//    }
+//  } else {
+//    if (keysPressed[ENTER] == true) {
+//      //System.out.print(tileNumber);
+//      Select = true;
+//    }
+    
+//  if (keysPressed[ENTER] == true)
+//    System.out.print(Select);
+//  }
 }
 
 // Initialize a set amount of tiles and return an array of random tiles
@@ -121,11 +152,14 @@ void drawTilesRight() {
   tileYRight = tileYStartRight;
 }
 
+
+
 // All the code that alters the Game World goes here
 void updateGame() {
   car.move(up);
-  selectLeft.select();
-  selectRight.selectRight();
+  Select();
+  //selectLeft.selectLeft();
+  //selectRight.selectRight();
 }
 
 // All the code that draws the Game World goes here
@@ -135,8 +169,7 @@ void drawGame() {
   // Draw the tiles and selector
   drawTilesLeft();
   drawTilesRight();
-  selectLeft.drawSelectLeft();
-  selectRight.drawSelectRight();
+  Select();
 
   // Draw the line seperating the line select and the play field
   line(400, 0, 400, 720);

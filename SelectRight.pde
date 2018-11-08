@@ -37,8 +37,10 @@ class SelectRight {
     }
 
     // if enter is pressed, do stuff
-    if (keysPressed[ENTER] == true) {
-      System.out.print(tileNumber);
+    if (keysPressed[ENTER] == true && Select == false && limit == 0) {
+      //System.out.print(tileNumber);
+      Select = true;
+      limit = 1;
     }
   }
 
