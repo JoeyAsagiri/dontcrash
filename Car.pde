@@ -15,7 +15,19 @@ class Car {
   }
   
   // function to move the car upwards based on the velocity
-  void move() {
-      y-= velocity;
+  void move(int direction) {
+    switch(direction){
+      case 0: 
+        y-= velocity;
+        break;
+      case 1:
+        x+= velocity;
+        break;
+      case 2:
+        y+= velocity;
+        break;
+      case 3:
+        x-= velocity;       
+    }
   }
 }

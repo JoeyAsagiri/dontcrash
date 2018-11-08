@@ -33,6 +33,12 @@ int tileDistanceYRight = 200;
 
 final int position = 50;
 
+// constants for the car movement directions
+final int up = 0;
+final int right = 1;
+final int down = 2;
+final int left = 3;
+
 int limit = 0;
 
 void setup() {
@@ -117,7 +123,7 @@ void drawTilesRight() {
 
 // All the code that alters the Game World goes here
 void updateGame() {
-  car.move();
+  car.move(up);
   selectLeft.select();
   selectRight.selectRight();
 }
