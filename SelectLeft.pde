@@ -6,11 +6,12 @@ class SelectLeft {
   int tileDistanceX;
   int tileDistanceY;
   int tileNumber;
+  int limit = 0;
 
   // Function to move the selector over the tiles. 
   // TODO :: maybe find a better solution to the limit?
-  void select() {
-    if (keysPressed[RIGHT] && selectX != (tileDistanceX * (tileRow - 1) + 50) && limit == 0) {
+  void selectLeft() {
+    if (keysPressed[RIGHT] && selectX != (tileDistanceX * (tileRow - 1) + tileXStartLeft) && limit == 0) {
       limit = 1;
       selectX = selectX + tileDistanceX;
       tileNumber = tileNumber+ 1;
@@ -32,14 +33,8 @@ class SelectLeft {
     }
 
     // prevent the selector from going super saiyan
-    if (keysPressed[UP] == false && keysPressed[DOWN] == false && keysPressed[LEFT] == false && keysPressed[RIGHT] == false) {
+    if (keysPressed[UP] == false && keysPressed[DOWN] == false && keysPressed[LEFT] == false && keysPressed[RIGHT] == false && keysPressed[ENTER] == false) {
       limit = 0;
-    }
-
-    // if enter is pressed, do stuff
-    if (keysPressed[ENTER] == true) {
-      //System.out.print(tileNumber);
-      
     }
   }
 

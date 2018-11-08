@@ -1,6 +1,7 @@
 // Arrays of booleans for Keyboard handling. One boolean for each keyCode
 final int KEY_LIMIT = 1024;
 boolean[] keysPressed = new boolean[KEY_LIMIT];
+boolean[] keysReleased = new boolean[KEY_LIMIT];
 
 boolean Select = true;
 
@@ -58,6 +59,8 @@ void setup() {
 
   //Create the selector and give it the variables
   selectLeft = new SelectLeft();
+  selectRight = new SelectRight();
+  
   selectLeft.selectX = tileXLeft;
   selectLeft.selectY = tileYLeft;
   selectLeft.tileCount = tileCountLeft;
@@ -65,8 +68,7 @@ void setup() {
   selectLeft.tileDistanceX = tileDistanceXLeft;
   selectLeft.tileDistanceY = tileDistanceYLeft;
   selectLeft.tileNumber = 0;
-
-  selectRight = new SelectRight();
+  
   selectRight.selectX = tileXRight;
   selectRight.selectY = tileYRight;
   selectRight.tileCount = tileCountRight;
@@ -74,6 +76,47 @@ void setup() {
   selectRight.tileDistanceX = tileDistanceXRight;
   selectRight.tileDistanceY = tileDistanceYRight;
   selectRight.tileNumber = 0;
+    
+}
+void Select() {
+  if (Select == true) {
+    if (keysPressed[ENTER] == true && limit == 0) {
+      Select = false;
+      limit = 1;
+    } else {
+      selectLeft.selectLeft();
+    }
+  } 
+  else {
+    if (keysPressed[ENTER] == true && limit == 0) {
+      ////System.out.print(tileNumber);
+      Select = true;
+      limit = 1;
+    } else {
+      selectRight.selectRight();
+    }
+  }
+  
+  if (keysPressed[ENTER] == false) {
+     limit = 0; 
+  }
+  
+  
+
+//  if (Select) {
+//    if (keysPressed[ENTER] == true) {
+//      //System.out.print(tileNumber);
+//      Select = false;
+//    }
+//  } else {
+//    if (keysPressed[ENTER] == true) {
+//      //System.out.print(tileNumber);
+//      Select = true;
+//    }
+    
+//  if (keysPressed[ENTER] == true)
+//    System.out.print(Select);
+//  }
 }
 
 // Initialize a set amount of tiles and return an array of random tiles
@@ -121,11 +164,12 @@ void drawTilesRight() {
   tileYRight = tileYStartRight;
 }
 
+
+
 // All the code that alters the Game World goes here
 void updateGame() {
   car.move(up);
-  selectLeft.select();
-  selectRight.selectRight();
+  Select();
 }
 
 // All the code that draws the Game World goes here
@@ -135,9 +179,14 @@ void drawGame() {
   // Draw the tiles and selector
   drawTilesLeft();
   drawTilesRight();
-  selectLeft.drawSelectLeft();
-  selectRight.drawSelectRight();
-
+  
+  if (Select) {
+    selectLeft.drawSelectLeft();
+  }
+  else {
+    selectRight.drawSelectRight();
+  }
+  
   // Draw the line seperating the line select and the play field
   line(400, 0, 400, 720);
 
@@ -159,5 +208,5 @@ void keyPressed() {
 //..and with each key Released vice versa
 void keyReleased() {
   if (keyCode >= KEY_LIMIT) return;
-  keysPressed[keyCode] = false;
+  keysPressed[keyCode] = false; // set its boolean to false
 }
