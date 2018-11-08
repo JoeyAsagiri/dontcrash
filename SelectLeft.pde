@@ -11,7 +11,7 @@ class SelectLeft {
   // Function to move the selector over the tiles. 
   // TODO :: maybe find a better solution to the limit?
   void selectLeft() {
-    if (keysPressed[RIGHT] && selectX != (tileDistanceX * (tileRow - 1) + 50) && limit == 0) {
+    if (keysPressed[RIGHT] && selectX != (tileDistanceX * (tileRow - 1) + tileXStartLeft) && limit == 0) {
       limit = 1;
       selectX = selectX + tileDistanceX;
       tileNumber = tileNumber+ 1;
