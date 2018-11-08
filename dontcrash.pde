@@ -103,8 +103,7 @@ void drawTilesLeft() {
 void drawTilesRight() {
   // Create tiles up to the tileCountLeft
   for (int i = 0; i < tileCountRight; i++) {
-    rect(tileXRight, tileYRight, 150, 100);
-    //image(tilesRight[i].getImage(), tileXRight, tileYRight);
+    image(tilesRight[i].getImage(), tileXRight, tileYRight);
     tileXRight += tileDistanceXRight;
     // set the tiles another row down after every 4 tiles
     if ((i + 1) % tileRowRight == 0) {
