@@ -2,11 +2,14 @@
 final int KEY_LIMIT = 1024;
 boolean[] keysPressed = new boolean[KEY_LIMIT];
 
+boolean Select = true;
+
 Tile[] tiles;
 Tile[] tilesLeft;
 Tile[] tilesRight;
 Car car;
-Select select;
+SelectLeft selectLeft;
+SelectRight selectRight;
 
 final int tileXStartLeft = 50;
 final int tileYStartLeft = 10;
@@ -46,21 +49,31 @@ void setup() {
   car.x = 25 + position + (tileDistanceXLeft * 3);
   car.y = 700;
   car.velocity = 0.6;
-  
+
   //Create the selector and give it the variables
-  select = new Select();
-  select.selectX = tileXLeft;
-  select.selectY = tileYLeft;
-  select.tileCount = tileCountLeft;
-  select.tileRow = tileRowLeft;
-  select.tileDistanceX = tileDistanceXLeft;
-  select.tileDistanceY = tileDistanceYLeft;
+  selectLeft = new SelectLeft();
+  selectLeft.selectX = tileXLeft;
+  selectLeft.selectY = tileYLeft;
+  selectLeft.tileCount = tileCountLeft;
+  selectLeft.tileRow = tileRowLeft;
+  selectLeft.tileDistanceX = tileDistanceXLeft;
+  selectLeft.tileDistanceY = tileDistanceYLeft;
+  selectLeft.tileNumber = 0;
+
+  selectRight = new SelectRight();
+  selectRight.selectX = tileXRight;
+  selectRight.selectY = tileYRight;
+  selectRight.tileCount = tileCountRight;
+  selectRight.tileRow = tileRowRight;
+  selectRight.tileDistanceX = tileDistanceXRight;
+  selectRight.tileDistanceY = tileDistanceYRight;
+  selectRight.tileNumber = 0;
 }
 
 // Initialize a set amount of tiles and return an array of random tiles
-Tile[] initTiles(int tileCountLeft){
+Tile[] initTiles(int tileCountLeft) {
   tiles = new Tile[tileCountLeft];
-   // Give an image and collision(?) to every tile
+  // Give an image and collision(?) to every tile
   for (int i = 0; i < tileCountLeft; i++) {
     float random = random(1, 8); // Get a random tile 
     tiles[i] = new Tile();
@@ -106,7 +119,8 @@ void drawTilesRight() {
 // All the code that alters the Game World goes here
 void updateGame() {
   car.move();
-  select.select();
+  selectLeft.select();
+  selectRight.selectRight();
 }
 
 // All the code that draws the Game World goes here
@@ -116,11 +130,12 @@ void drawGame() {
   // Draw the tiles and selector
   drawTilesLeft();
   drawTilesRight();
-  select.drawSelect();
-  
+  selectLeft.drawSelectLeft();
+  selectRight.drawSelectRight();
+
   // Draw the line seperating the line select and the play field
   line(400, 0, 400, 720);
-  
+
   // Draw the car
   image(car.getImage(), car.x, car.y);
 } 
