@@ -89,7 +89,6 @@ void Select() {
   } 
   else {
     if (keysPressed[ENTER] == true && limit == 0) {
-      println("PLS");
       ////System.out.print(tileNumber);
       Select = true;
       limit = 1;
