@@ -4,6 +4,7 @@ boolean[] keysPressed = new boolean[KEY_LIMIT];
 boolean[] keysReleased = new boolean[KEY_LIMIT];
 
 boolean Select = true;
+boolean startCheck = false;
 
 Tile[] tiles;
 Tile[] tilesLeft;
@@ -168,7 +169,16 @@ void drawTilesRight() {
 
 // All the code that alters the Game World goes here
 void updateGame() {
-  car.move(up);
+  if (startCheck == true) {
+      car.move(up);
+  }
+  if (keysPressed[BACKSPACE] == true) {
+   startCheck = true; 
+  }
+  else if (keysPressed[SHIFT] == true) {
+    car.y = 700;
+    startCheck = false;
+  }
   Select();
 }
 
