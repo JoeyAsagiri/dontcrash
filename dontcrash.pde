@@ -89,9 +89,9 @@ void Select() {
   } 
   else {
     if (keysPressed[ENTER] == true && limit == 0) {
-      ////System.out.print(tileNumber);
       Select = true;
       limit = 1;
+      tilesRight[selectRight.tileNumber] = tilesLeft[selectLeft.tileNumber];
     } else {
       selectRight.selectRight();
     }
@@ -100,23 +100,6 @@ void Select() {
   if (keysPressed[ENTER] == false) {
      limit = 0; 
   }
-  
-  
-
-//  if (Select) {
-//    if (keysPressed[ENTER] == true) {
-//      //System.out.print(tileNumber);
-//      Select = false;
-//    }
-//  } else {
-//    if (keysPressed[ENTER] == true) {
-//      //System.out.print(tileNumber);
-//      Select = true;
-//    }
-    
-//  if (keysPressed[ENTER] == true)
-//    System.out.print(Select);
-//  }
 }
 
 // Initialize a set amount of tiles and return an array of random tiles

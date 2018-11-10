@@ -24,12 +24,12 @@ class SelectRight {
     if (keysPressed[DOWN] && selectY != (tileCountRight / tileRowRight -1)  * tileDistanceYRight + tileYRight && limit == 0) {
       limit = 1;
       selectY = selectY + tileDistanceY;
-      tileNumber = tileNumber+ 2;
+      tileNumber = tileNumber+ 4;
     }
     if (keysPressed[UP] && selectY != tileYRight && limit == 0) {
       limit = 1;
       selectY = selectY - tileDistanceY;
-      tileNumber = tileNumber-2;
+      tileNumber = tileNumber-4;
     }
 
     // prevent the selector from going super saiyan
