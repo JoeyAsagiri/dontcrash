@@ -170,17 +170,15 @@ void updateGame() {
   
 }
 
-
-
-
 //Collision checker
 
 void CarCollision() {
+  // adjust so going in from the top doesn't 
   for (int i = 0; i < tilesRight.length; i++) {
-    if (car.x + 50 >= tilesRight[i].x + 100 &&     // r1 right edge past r2 left
-  car.x <= tilesRight[i].x &&       // r1 left edge past r2 right
-  car.y + 80 >= tilesRight[i].y + 100 &&       // r1 top edge past r2 bottom
-  car.y <= tilesRight[i].y) {       // r1 bottom edge past r2 top
+    if (car.x + 50 >= (tilesRight[i].x + 25) + 50 &&     // r1 right edge past r2 left
+  car.x <= (tilesRight[i].x + 25) + 50  &&       // r1 left edge past r2 right
+  car.y + 80 >= (tilesRight[i].y + 25) &&       // r1 top edge past r2 bottom
+  car.y <= (tilesRight[i].y + 25)) {       // r1 bottom edge past r2 top
     collisionResult(tilesRight[i].getCollision());
 }
 
@@ -217,13 +215,13 @@ void collisionResult(int[] tile) {
     collisionCalc(richting, tile);
     break; 
     case 2:
-    richting[0] = 1;
-    richting[1] = 3;
-    richting[2] = 0;
-    richting[3] = 2;
-    richting[4] = 3;
-    richting[5] = 0;
-    richting[6] = 2;
+    richting[0] = 0;
+    richting[1] = 2;
+    richting[2] = 1;
+    richting[3] = 3;
+    richting[4] = 2;
+    richting[5] = 1;
+    richting[6] = 3;
     collisionCalc(richting, tile);
     break;
     case 3:
@@ -241,15 +239,12 @@ void collisionResult(int[] tile) {
 void collisionCalc(int[] richting, int[] tile ) {
  if(tile[richting[0]] == 1 ) {
       if(tile[richting[1]] == 1) {
-        println("test");
         previousDirection = richting[4];
         }
          else if(tile[richting[2]] == 1) {
-           println("test2");
            previousDirection = richting[5];
          }
          else if(tile[richting[3]] == 1){
-           println("test3");
            previousDirection = richting[6];
          }
          
