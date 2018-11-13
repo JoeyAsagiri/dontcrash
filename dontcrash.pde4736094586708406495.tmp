@@ -7,7 +7,7 @@ boolean[] keysReleased = new boolean[KEY_LIMIT];
 boolean Select = true;
 boolean startCheck = false;
 
-int[] richting = new int[7];
+//int[] richting = new int[7];
 Tile[] tiles;
 Tile[] tilesLeft;
 Tile[] tilesRight;
@@ -42,7 +42,7 @@ final int up = 0;
 final int right = 1;
 final int down = 2;
 final int left = 3;
-int previousDirection = up;
+int previousDirection = 0;
 
 int limit = 0;
 
@@ -59,7 +59,7 @@ void setup() {
   car.setImage(loadImage("images/car.png"));
   car.x = tileXStartRight + 25;
   car.y = 700;
-  car.velocity = 1.2;
+  car.velocity = 0.6;
 
   //Create the selector and give it the variables
   selectLeft = new SelectLeft();
@@ -176,20 +176,13 @@ void updateGame() {
 //Collision checker
 
 void CarCollision() {
+  println(previousDirection);
   for (int i = 0; i < tilesRight.length; i++) {
-    if (car.x + 50 >= tilesRight[i].x + 100 &&     // r1 right edge past r2 left
-  car.x <= tilesRight[i].x &&       // r1 left edge past r2 right
-  car.y + 80 >= tilesRight[i].y + 100 &&       // r1 top edge past r2 bottom
-  car.y <= tilesRight[i].y) {       // r1 bottom edge past r2 top
-    collisionResult(tilesRight[i].getCollision());
-}
-
-    //if (car.x > tilesRight[i].x && car.x < tilesRight[i].x +100) {
-    //  collisionResult(tilesRight[i].getCollision());
-    //} 
-    //else if (car.y > tilesRight[i].y && car.y < tilesRight[i].y +100) {
-    //  collisionResult(tilesRight[i].getCollision());
-    //}
+    if (car.x > tilesRight[i].x && car.x < tilesRight[i].x +100) {
+      collisionResult(tilesRight[i].getCollision());
+    } else if (car.y > tilesRight[i].y && car.y < tilesRight[i].y +100) {
+      collisionResult(tilesRight[i].getCollision());
+    }
   }
 }
 
@@ -197,59 +190,50 @@ void CarCollision() {
 void collisionResult(int[] tile) {
   switch(previousDirection) {
     case 0:
-    richting[0] = 2;
-    richting[1] = 0;
-    richting[2] = 1;
-    richting[3] = 3;
-    richting[4] = 0;
-    richting[5] = 1;
-    richting[6] = 3;
+    int[] richting = {2,0,1,3,0,1,3};
     collisionCalc(richting, tile);
     break;
-    case 1:
-    richting[0] = 3;
-    richting[1] = 1;
-    richting[2] = 2;
-    richting[3] = 0;
-    richting[4] = 1;
-    richting[5] = 2;
-    richting[6] = 0;
-    collisionCalc(richting, tile);
-    break; 
-    case 2:
-    richting[0] = 1;
-    richting[1] = 3;
-    richting[2] = 0;
-    richting[3] = 2;
-    richting[4] = 3;
-    richting[5] = 0;
-    richting[6] = 2;
-    collisionCalc(richting, tile);
-    break;
-    case 3:
-    richting[0] = 0;
-    richting[1] = 2;
-    richting[2] = 3;
-    richting[3] = 1;
-    richting[4] = 2;
-    richting[5] = 3;
-    richting[6] = 1;
-    collisionCalc(richting, tile);
+    //case 1:
+    //richting[0] = 3;
+    //richting[1] = 1;
+    //richting[2] = 2;
+    //richting[3] = 0;
+    //richting[4] = 1;
+    //richting[5] = 2;
+    //richting[6] = 0;
+    //collisionCalc(richting, tile);
+    //break; 
+    //case 2:
+    //richting[0] = 1;
+    //richting[1] = 3;
+    //richting[2] = 0;
+    //richting[3] = 2;
+    //richting[4] = 3;
+    //richting[5] = 0;
+    //richting[6] = 2;
+    //collisionCalc(richting, tile);
+    //break;
+    //case 3:
+    //richting[0] = 0;
+    //richting[1] = 2;
+    //richting[2] = 3;
+    //richting[3] = 1;
+    //richting[4] = 2;
+    //richting[5] = 3;
+    //richting[6] = 1;
+    //collisionCalc(richting, tile);
   }
 }
 
 void collisionCalc(int[] richting, int[] tile ) {
  if(tile[richting[0]] == 1 ) {
       if(tile[richting[1]] == 1) {
-        println("test");
         previousDirection = richting[4];
         }
          else if(tile[richting[2]] == 1) {
-           println("test2");
            previousDirection = richting[5];
          }
          else if(tile[richting[3]] == 1){
-           println("test3");
            previousDirection = richting[6];
          }
          
