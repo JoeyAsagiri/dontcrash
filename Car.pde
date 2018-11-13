@@ -4,12 +4,7 @@ class Car {
   float x;
   float y;
   float velocity;
-<<<<<<< HEAD
 
-=======
-  
-  int Direction;
->>>>>>> 675441f56def320021699186e5b07f91a388a484
   // function to set an image for the car
   void setImage(PImage image) {
     img = image;
@@ -26,7 +21,6 @@ class Car {
   PImage getImage() {
     return img;
   }
-<<<<<<< HEAD
 
   // function to move the car upwards based on the velocity
   void move(int direction) {
@@ -42,28 +36,6 @@ class Car {
       break;
     case 3:
       x-= velocity;
-=======
-  
- 
-  // function to move the car upwards based on the velocity
-  void move(int direction) {
-    switch(direction){
-      case 0: 
-        y-= velocity;
-        Direction = direction;
-        break;
-      case 1:
-        x+= velocity;
-        Direction = direction;
-        break;
-      case 2:
-        y+= velocity;
-        Direction = direction;
-        break;
-      case 3:
-        x-= velocity;  
-        Direction = direction;
->>>>>>> 675441f56def320021699186e5b07f91a388a484
     }
   }
 }
