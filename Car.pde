@@ -3,6 +3,7 @@ class Car {
   float x;
   float y;
   float velocity;
+  int frame = 0;
   
   // function to set an image for the car
   void setImage(PImage image) {
@@ -14,6 +15,13 @@ class Car {
     return img;
   }
   
+  void destroy() { 
+    if (frame < 20) {
+      frame++;
+      println(frame);
+      img = (loadImage("images/explosion/car"+(frame/4)+".png"));
+    }
+  }
  
   // function to move the car upwards based on the velocity
   void move(int direction) {
@@ -28,7 +36,11 @@ class Car {
         y+= velocity;
         break;
       case 3:
-        x-= velocity;  
+        x-= velocity; 
+        break;
+      case 4:
+        velocity = 0;
+        break;
     }
   }
 }

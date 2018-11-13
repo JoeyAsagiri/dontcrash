@@ -6,6 +6,7 @@ boolean[] keysReleased = new boolean[KEY_LIMIT];
 
 boolean Select = true;
 boolean startCheck = false;
+boolean destroyed = false;
 
 int[] richting = new int[7];
 Tile[] tiles;
@@ -43,8 +44,10 @@ final int right = 1;
 final int down = 2;
 final int left = 3;
 int previousDirection = up;
+int frame = 0;
 
 int limit = 0;
+int bullshit = 0;
 
 void setup() {
   size(1280, 720);
@@ -154,7 +157,13 @@ void drawTilesRight() {
 
 // All the code that alters the Game World goes here
 void updateGame() {
+  bullshit++;
   if (startCheck == true) {
+    if (destroyed) {
+      car.velocity = 0;
+    } else {
+      car.velocity = 1.2;
+    }
     CarCollision();
     car.move(previousDirection);
   }
@@ -165,6 +174,9 @@ void updateGame() {
     car.x = tileXStartRight + 25;
     previousDirection = 0;
     startCheck = false;
+    destroyed = false;
+    car.setImage(loadImage("images/car.png"));
+    car.frame = 0;
   }
   Select();
   
@@ -225,31 +237,35 @@ void collisionResult(int[] tile) {
     collisionCalc(richting, tile);
     break;
     case 3:
-    richting[0] = 0;
-    richting[1] = 2;
-    richting[2] = 3;
-    richting[3] = 1;
-    richting[4] = 2;
-    richting[5] = 3;
-    richting[6] = 1;
+    richting[0] = 1;
+    richting[1] = 3;
+    richting[2] = 2;
+    richting[3] = 0;
+    richting[4] = 3;
+    richting[5] = 2;
+    richting[6] = 0;
     collisionCalc(richting, tile);
   }
 }
 
 void collisionCalc(int[] richting, int[] tile ) {
- if(tile[richting[0]] == 1 ) {
+  if(tile[richting[0]] == 1 ) {
       if(tile[richting[1]] == 1) {
+        bullshit = 0;
         previousDirection = richting[4];
         }
          else if(tile[richting[2]] == 1) {
+           bullshit = 0;
            previousDirection = richting[5];
          }
          else if(tile[richting[3]] == 1){
+           bullshit = 0;
            previousDirection = richting[6];
          }
-         
-    } else {
-      //explode
+    } else
+    if(bullshit > 100) {
+      car.destroy();
+      destroyed = true;
     } 
 }
 
