@@ -54,7 +54,7 @@ void setup() {
   car = new Car();
 
   car.setImage(loadImage("images/car.png"));
-  car.x = 25 + position + (tileDistanceXLeft * 3);
+  car.x = tileXStartRight + 25;
   car.y = 700;
   car.velocity = 0.6;
 
@@ -224,6 +224,10 @@ void drawGame() {
 
   // Draw the car
   image(car.getImage(), car.x, car.y);
+  
+  // Draw some placeholder text for the start and reset buttons
+  fill(255,0,0);
+  text("Press Enter to select and place tiles. Press backspace to start and press shift to reset", 800,719);
 } 
 
 void draw() {
