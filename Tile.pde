@@ -1,6 +1,4 @@
-public class Tile {
-  int x;
-  int y;
+class Tile {
   PImage img;
   int[] collision = new int[4];
   
@@ -14,7 +12,6 @@ public class Tile {
   
   // Set the collision by filling an array with 0 and 1 indicating each side if it's open or not, counting clockwise
   void setCollision(int random){
-    // TODO: fill in everything ffs
     switch (random) {
          case 1:  
            collision[0] = 1; collision[1] = 0; collision[2] = 1; collision[3] = 0; //Straight line
@@ -39,7 +36,8 @@ public class Tile {
            break; 
     }
   }
-    int[] getCollision(){
+  
+  int[] getCollision(){
     return collision;
-    }
+  }
 }

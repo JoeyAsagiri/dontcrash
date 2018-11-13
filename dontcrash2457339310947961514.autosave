@@ -48,6 +48,7 @@ int limit = 0;
 
 void setup() {
   size(1280, 720);
+  background(101, 232, 255); // make the background blue
 
   tilesLeft = initTiles(tileCountLeft); // Initialize the left side of the grid
   tilesRight = initTiles(tileCountRight);
@@ -56,14 +57,14 @@ void setup() {
   car = new Car();
 
   car.setImage(loadImage("images/car.png"));
-  car.x = 25 + position + (tileDistanceXLeft * 3);
+  car.x = tileXStartRight + 25;
   car.y = 700;
   car.velocity = 1.2;
 
   //Create the selector and give it the variables
   selectLeft = new SelectLeft();
   selectRight = new SelectRight();
-  
+
   selectLeft.selectX = tileXLeft;
   selectLeft.selectY = tileYLeft;
   selectLeft.tileCount = tileCountLeft;
@@ -71,7 +72,7 @@ void setup() {
   selectLeft.tileDistanceX = tileDistanceXLeft;
   selectLeft.tileDistanceY = tileDistanceYLeft;
   selectLeft.tileNumber = 0;
-  
+
   selectRight.selectX = tileXRight;
   selectRight.selectY = tileYRight;
   selectRight.tileCount = tileCountRight;
@@ -79,7 +80,6 @@ void setup() {
   selectRight.tileDistanceX = tileDistanceXRight;
   selectRight.tileDistanceY = tileDistanceYRight;
   selectRight.tileNumber = 0;
-    
 }
 void Select() {
   if (Select == true) {
@@ -89,8 +89,7 @@ void Select() {
     } else {
       selectLeft.selectLeft();
     }
-  } 
-  else {
+  } else {
     if (keysPressed[ENTER] == true && limit == 0) {
       Select = true;
       limit = 1;
@@ -99,9 +98,9 @@ void Select() {
       selectRight.selectRight();
     }
   }
-  
+
   if (keysPressed[ENTER] == false) {
-     limit = 0; 
+    limit = 0;
   }
 }
 
@@ -139,6 +138,8 @@ void drawTilesRight() {
   // Create tiles up to the tileCountLeft
   for (int i = 0; i < tileCountRight; i++) {
     image(tilesRight[i].getImage(), tileXRight, tileYRight);
+    tilesRight[i].x = tileXRight;
+    tilesRight[i].y = tileYRight;
     tileXRight += tileDistanceXRight;
     // set the tiles another row down after every 4 tiles
     if ((i + 1) % tileRowRight == 0) {
@@ -151,18 +152,15 @@ void drawTilesRight() {
 }
 
 
-
 // All the code that alters the Game World goes here
 void updateGame() {
-
   if (startCheck == true) {
     CarCollision();
     car.move(previousDirection);
   }
   if (keysPressed[BACKSPACE] == true) {
-   startCheck = true; 
-  }
-  else if (keysPressed[SHIFT] == true) {
+    startCheck = true;
+  } else if (keysPressed[SHIFT] == true) {
     car.y = 700;
     car.x = tileXStartRight + 25;
     previousDirection = 0;
@@ -179,10 +177,10 @@ void updateGame() {
 
 void CarCollision() {
   for (int i = 0; i < tilesRight.length; i++) {
-    if (car.x + 50 >= tilesRight[i].x + 100 &&     // r1 right edge past r2 left
-  car.x <= tilesRight[i].x &&       // r1 left edge past r2 right
-  car.y + 80 >= tilesRight[i].y + 100 &&       // r1 top edge past r2 bottom
-  car.y <= tilesRight[i].y) {       // r1 bottom edge past r2 top
+    if (car.x + 50 >= tilesRight[i].x &&     // r1 right edge past r2 left
+  car.x <= tilesRight[i].x + 100 &&       // r1 left edge past r2 right
+  car.y + 80 >= tilesRight[i].y &&       // r1 top edge past r2 bottom
+  car.y <= tilesRight[i].y + 100) {       // r1 bottom edge past r2 top
     collisionResult(tilesRight[i].getCollision());
 }
 
@@ -264,26 +262,25 @@ void collisionCalc(int[] richting, int[] tile ) {
 void drawGame() {
   background(101, 232, 255);
 
-  if (keysPressed['X'] == true) {
-    car.destroy();
-  }
-  
   // Draw the tiles and selector
   drawTilesLeft();
   drawTilesRight();
-  
+
   if (Select) {
     selectLeft.drawSelectLeft();
-  }
-  else {
+  } else {
     selectRight.drawSelectRight();
   }
-  
+
   // Draw the line seperating the line select and the play field
   line(400, 0, 400, 720);
 
   // Draw the car
   image(car.getImage(), car.x, car.y);
+  
+  // Draw some placeholder text for the start and reset buttons
+  fill(255,0,0);
+  text("Press Enter to select and place tiles. Press backspace to start and press shift to reset", 800,719);
 } 
 
 void draw() {
