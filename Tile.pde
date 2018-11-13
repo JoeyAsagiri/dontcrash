@@ -1,4 +1,6 @@
-class Tile {
+public class Tile {
+  int x;
+  int y;
   PImage img;
   int[] collision = new int[4];
   
@@ -37,8 +39,7 @@ class Tile {
            break; 
     }
   }
-  
-  int[] getCollision(){
+    int[] getCollision(){
     return collision;
-  }
+    }
 }

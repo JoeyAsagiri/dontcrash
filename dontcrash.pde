@@ -61,7 +61,7 @@ void setup() {
   //Create the selector and give it the variables
   selectLeft = new SelectLeft();
   selectRight = new SelectRight();
-  
+
   selectLeft.selectX = tileXLeft;
   selectLeft.selectY = tileYLeft;
   selectLeft.tileCount = tileCountLeft;
@@ -69,7 +69,7 @@ void setup() {
   selectLeft.tileDistanceX = tileDistanceXLeft;
   selectLeft.tileDistanceY = tileDistanceYLeft;
   selectLeft.tileNumber = 0;
-  
+
   selectRight.selectX = tileXRight;
   selectRight.selectY = tileYRight;
   selectRight.tileCount = tileCountRight;
@@ -77,7 +77,6 @@ void setup() {
   selectRight.tileDistanceX = tileDistanceXRight;
   selectRight.tileDistanceY = tileDistanceYRight;
   selectRight.tileNumber = 0;
-    
 }
 void Select() {
   if (Select == true) {
@@ -87,8 +86,7 @@ void Select() {
     } else {
       selectLeft.selectLeft();
     }
-  } 
-  else {
+  } else {
     if (keysPressed[ENTER] == true && limit == 0) {
       Select = true;
       limit = 1;
@@ -97,9 +95,9 @@ void Select() {
       selectRight.selectRight();
     }
   }
-  
+
   if (keysPressed[ENTER] == false) {
-     limit = 0; 
+    limit = 0;
   }
 }
 
@@ -137,6 +135,8 @@ void drawTilesRight() {
   // Create tiles up to the tileCountLeft
   for (int i = 0; i < tileCountRight; i++) {
     image(tilesRight[i].getImage(), tileXRight, tileYRight);
+    tilesRight[i].x = tileXRight;
+    tilesRight[i].y = tileYRight;
     tileXRight += tileDistanceXRight;
     // set the tiles another row down after every 4 tiles
     if ((i + 1) % tileRowRight == 0) {
@@ -149,20 +149,60 @@ void drawTilesRight() {
 }
 
 
-
 // All the code that alters the Game World goes here
 void updateGame() {
   if (startCheck == true) {
-      car.move(up);
+    car.move(up);
   }
   if (keysPressed[BACKSPACE] == true) {
-   startCheck = true; 
-  }
-  else if (keysPressed[SHIFT] == true) {
+    startCheck = true;
+  } else if (keysPressed[SHIFT] == true) {
     car.y = 700;
     startCheck = false;
   }
   Select();
+}
+
+
+
+
+//Collision checker
+
+void CarCollision() {
+  for (int i = 0; i < tilesRight.length; i++) {
+    if (car.x > tilesRight[i].x && car.x < tilesRight[i].x +100) {
+      collisionResult(tilesRight[i].getCollision());
+    } else if (car.y > tilesRight[i].y && car.y < tilesRight[i].y +100) {
+      collisionResult(tilesRight[i].getCollision());
+    }
+  }
+}
+
+void collisionResult(int[] tile) {
+  switch(car.Direction) {
+    case 0:
+    int[] richting = {2,0,1,3,1,3};
+    collisionCalc(richting, tile);
+    break;
+    case 1:
+    
+  }
+}
+
+void collisionCalc(int[] richting, int[] tile ) {
+ if(tile[richting[0]] == 1 ) {
+      if(tile[richting[1]] == 1) {
+        }
+         else if(tile[richting[2]] == 1) {
+           car.move(richting[4]);
+         }
+         else if(tile[richting[3]] == 1){
+           car.move(richting[5]);
+         }
+         
+    } else {
+      //explode
+    } 
 }
 
 // All the code that draws the Game World goes here
@@ -172,14 +212,13 @@ void drawGame() {
   // Draw the tiles and selector
   drawTilesLeft();
   drawTilesRight();
-  
+
   if (Select) {
     selectLeft.drawSelectLeft();
-  }
-  else {
+  } else {
     selectRight.drawSelectRight();
   }
-  
+
   // Draw the line seperating the line select and the play field
   line(400, 0, 400, 720);
 
