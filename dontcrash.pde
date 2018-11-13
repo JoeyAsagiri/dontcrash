@@ -45,7 +45,6 @@ int limit = 0;
 
 void setup() {
   size(1280, 720);
-  background(101, 232, 255); // make the background blue
 
   tilesLeft = initTiles(tileCountLeft); // Initialize the left side of the grid
   tilesRight = initTiles(tileCountRight);
@@ -56,7 +55,7 @@ void setup() {
   car.setImage(loadImage("images/car.png"));
   car.x = 25 + position + (tileDistanceXLeft * 3);
   car.y = 700;
-  car.velocity = 0.6;
+  car.velocity = 20;
 
   //Create the selector and give it the variables
   selectLeft = new SelectLeft();
@@ -152,6 +151,7 @@ void drawTilesRight() {
 
 // All the code that alters the Game World goes here
 void updateGame() {
+
   if (startCheck == true) {
       car.move(up);
   }
@@ -169,6 +169,10 @@ void updateGame() {
 void drawGame() {
   background(101, 232, 255);
 
+  if (keysPressed['X'] == true) {
+    car.destroy();
+  }
+  
   // Draw the tiles and selector
   drawTilesLeft();
   drawTilesRight();

@@ -21,7 +21,7 @@ class SelectLeft {
       selectX = selectX - tileDistanceX;
       tileNumber = tileNumber- 1;
     }
-    if (keysPressed[DOWN] && selectY != (tileCount / tileRow -1)  * tileDistanceY + tileYLeft && limit == 0) {
+    if (keysPressed[DOWN] && selectY != (tileCount / tileRow - 1)  * tileDistanceY + tileYLeft && limit == 0) {
       limit = 1;
       selectY = selectY + tileDistanceY;
       tileNumber = tileNumber+ 2;
