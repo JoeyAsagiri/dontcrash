@@ -36,7 +36,7 @@ int tileRowRight = 4;
 int tileDistanceXRight = 200;
 int tileDistanceYRight = 200;
 
-final int position = 50;
+final int lineX = 400;
 
 // constants for the car movement directions
 final int up = 0;
@@ -48,6 +48,7 @@ int frame = 0;
 
 int limit = 0;
 int collisionTimer = 0;
+int collisionAdjustment = 75;
 
 void setup() {
   size(1280, 720);
@@ -174,13 +175,28 @@ void updateGame() {
 //Collision checker
 
 void CarCollision() {
-  // adjust so going in from the top doesn't 
   for (int i = 0; i < tilesRight.length; i++) {
-    if (car.x + 50 >= (tilesRight[i].x + 25) + 50 &&     // r1 right edge past r2 left
-      car.x <= (tilesRight[i].x + 25) + 50  &&       // r1 left edge past r2 right
-      car.y + 80 >= (tilesRight[i].y + 25) &&       // r1 top edge past r2 bottom
-      car.y <= (tilesRight[i].y + 25)) {       // r1 bottom edge past r2 top
-      collisionResult(tilesRight[i].getCollision());
+    switch (previousDirection) {
+    case up:
+      if (car.x + car.width >= tilesRight[i].x && car.x + car.width <= tilesRight[i].x + tilesRight[i].tileWidth && car.y + car.height >= tilesRight[i].y && car.y + car.height <= tilesRight[i].y + tilesRight[i].tileHeight)
+        collisionResult(tilesRight[i].getCollision());
+      break;
+    case right:
+      if (car.x + car.width >= tilesRight[i].x + collisionAdjustment && car.x + car.width <= tilesRight[i].x + tilesRight[i].tileWidth + collisionAdjustment && car.y + car.height >= tilesRight[i].y && car.y + car.height <= tilesRight[i].y + tilesRight[i].tileHeight) 
+        collisionResult(tilesRight[i].getCollision());
+      break;
+    case down:
+      if (car.x + car.width >= tilesRight[i].x && car.x + car.width <= tilesRight[i].x + tilesRight[i].tileWidth && car.y + car.height >= tilesRight[i].y + collisionAdjustment && car.y + car.height <= tilesRight[i].y + tilesRight[i].tileHeight + collisionAdjustment)
+        collisionResult(tilesRight[i].getCollision());
+      break;
+    case left:
+      if (car.x < lineX) {
+        car.destroy();
+        destroyed = true;
+      }
+      if (car.x + car.width >= tilesRight[i].x && car.x + car.width <= tilesRight[i].x + tilesRight[i].tileWidth && car.y + car.height >= tilesRight[i].y && car.y + car.height <= tilesRight[i].y + tilesRight[i].tileHeight) 
+        collisionResult(tilesRight[i].getCollision());
+      break;
     }
   }
 }
@@ -188,21 +204,45 @@ void CarCollision() {
 
 void collisionResult(int[] tile) {
   switch(previousDirection) {
-    case 0:
-      richting[0] = 2; richting[1] = 0; richting[2] = 1; richting[3] = 3; richting[4] = 0; richting[5] = 1; richting[6] = 3;
-      collisionCalc(richting, tile);
+  case 0:
+    richting[0] = 2; 
+    richting[1] = 0; 
+    richting[2] = 1; 
+    richting[3] = 3; 
+    richting[4] = 0; 
+    richting[5] = 1; 
+    richting[6] = 3;
+    collisionCalc(richting, tile);
     break;
-    case 1:
-      richting[0] = 3; richting[1] = 1; richting[2] = 2; richting[3] = 0; richting[4] = 1; richting[5] = 2; richting[6] = 0;
-      collisionCalc(richting, tile);
-      break; 
-    case 2:
-      richting[0] = 0; richting[1] = 2; richting[2] = 1; richting[3] = 3; richting[4] = 2; richting[5] = 1; richting[6] = 3;
-      collisionCalc(richting, tile);
-      break;
-    case 3:
-      richting[0] = 1; richting[1] = 3; richting[2] = 2; richting[3] = 0; richting[4] = 3; richting[5] = 2; richting[6] = 0;
-      collisionCalc(richting, tile);
+  case 1:
+    richting[0] = 3; 
+    richting[1] = 1; 
+    richting[2] = 2; 
+    richting[3] = 0; 
+    richting[4] = 1; 
+    richting[5] = 2; 
+    richting[6] = 0;
+    collisionCalc(richting, tile);
+    break; 
+  case 2:
+    richting[0] = 0; 
+    richting[1] = 2; 
+    richting[2] = 1; 
+    richting[3] = 3; 
+    richting[4] = 2; 
+    richting[5] = 1; 
+    richting[6] = 3;
+    collisionCalc(richting, tile);
+    break;
+  case 3:
+    richting[0] = 1; 
+    richting[1] = 3; 
+    richting[2] = 2; 
+    richting[3] = 0; 
+    richting[4] = 3; 
+    richting[5] = 2; 
+    richting[6] = 0;
+    collisionCalc(richting, tile);
   }
 }
 
@@ -240,7 +280,7 @@ void drawGame() {
   }
 
   // Draw the line seperating the line select and the play field
-  line(400, 0, 400, 720);
+  line(lineX, 0, lineX, 720);
 
   // Draw the car
   image(car.getImage(), car.x, car.y);

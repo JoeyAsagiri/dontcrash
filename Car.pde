@@ -5,6 +5,9 @@ class Car {
   float velocity;
   int frame = 0;
   
+  final int width = 50;
+  final int height = 80;
+  
   // function to set an image for the car
   void setImage(PImage image) {
     img = image;
