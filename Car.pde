@@ -18,7 +18,6 @@ class Car {
   void destroy() { 
     if (frame < 20) {
       frame++;
-      println(frame);
       img = (loadImage("images/explosion/car"+(frame/4)+".png"));
     }
   }

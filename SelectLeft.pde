@@ -1,34 +1,30 @@
 class SelectLeft {
   int selectX, selectY;
 
-  int tileCount;
-  int tileRow;
-  int tileDistanceX;
-  int tileDistanceY;
-  int tileNumber;
+  int tileNumber = 0;
   int limit = 0;
 
   // Function to move the selector over the tiles. 
   // TODO :: maybe find a better solution to the limit?
   void selectLeft() {
-    if (keysPressed[RIGHT] && selectX != (tileDistanceX * (tileRow - 1) + tileXStartLeft) && limit == 0) {
+    if (keysPressed[RIGHT] && selectX != (tileDistanceXLeft * (tileRowLeft - 1) + tileXStartLeft) && limit == 0) {
       limit = 1;
-      selectX = selectX + tileDistanceX;
+      selectX = selectX + tileDistanceXLeft;
       tileNumber = tileNumber+ 1;
     }
     if (keysPressed[LEFT] && selectX != tileXLeft && limit == 0) {
       limit = 1;
-      selectX = selectX - tileDistanceX;
+      selectX = selectX - tileDistanceXLeft;
       tileNumber = tileNumber- 1;
     }
-    if (keysPressed[DOWN] && selectY != (tileCount / tileRow -1)  * tileDistanceY + tileYLeft && limit == 0) {
+    if (keysPressed[DOWN] && selectY != (tileCountLeft / tileRowLeft -1)  * tileDistanceYLeft + tileYLeft && limit == 0) {
       limit = 1;
-      selectY = selectY + tileDistanceY;
+      selectY = selectY + tileDistanceYLeft;
       tileNumber = tileNumber+ 2;
     }
     if (keysPressed[UP] && selectY != tileYLeft && limit == 0) {
       limit = 1;
-      selectY = selectY - tileDistanceY;
+      selectY = selectY - tileDistanceYLeft;
       tileNumber = tileNumber-2;
     }
 

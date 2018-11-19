@@ -1,11 +1,7 @@
 class SelectRight {
   int selectX, selectY;
 
-  int tileCount;
-  int tileRow;
-  int tileDistanceX;
-  int tileDistanceY;
-  int tileNumber;
+  int tileNumber = 0;
   int limit = 0;
 
   // Function to move the selector over the tiles. 
@@ -13,22 +9,22 @@ class SelectRight {
   void selectRight() {
     if (keysPressed[RIGHT] && selectX != (tileDistanceXRight * (tileRowRight - 1) + tileXStartRight) && limit == 0) {
       limit = 1;
-      selectX = selectX + tileDistanceX;
+      selectX = selectX + tileDistanceXRight;
       tileNumber = tileNumber+ 1;
     }
     if (keysPressed[LEFT] && selectX != tileXRight && limit == 0) {
       limit = 1;
-      selectX = selectX - tileDistanceX;
+      selectX = selectX - tileDistanceXRight;
       tileNumber = tileNumber- 1;
     }
     if (keysPressed[DOWN] && selectY != (tileCountRight / tileRowRight -1)  * tileDistanceYRight + tileYRight && limit == 0) {
       limit = 1;
-      selectY = selectY + tileDistanceY;
+      selectY = selectY + tileDistanceYRight;
       tileNumber = tileNumber+ 4;
     }
     if (keysPressed[UP] && selectY != tileYRight && limit == 0) {
       limit = 1;
-      selectY = selectY - tileDistanceY;
+      selectY = selectY - tileDistanceYRight;
       tileNumber = tileNumber-4;
     }
 

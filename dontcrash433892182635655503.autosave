@@ -36,8 +36,6 @@ int tileRowRight = 4;
 int tileDistanceXRight = 200;
 int tileDistanceYRight = 200;
 
-final int position = 50;
-
 // constants for the car movement directions
 final int up = 0;
 final int right = 1;
@@ -47,7 +45,9 @@ int previousDirection = up;
 int frame = 0;
 
 int limit = 0;
-int bullshit = 0;
+int collisionTimer = -1;
+int check;
+int direction;
 
 void setup() {
   size(1280, 720);
@@ -73,7 +73,9 @@ void setup() {
 
   selectRight.selectX = tileXRight;
   selectRight.selectY = tileYRight;
+  
 }
+
 void Select() {
   if (Select == true) {
     if (keysPressed[ENTER] == true && limit == 0) {
@@ -144,44 +146,17 @@ void drawTilesRight() {
   tileYRight = tileYStartRight;
 }
 
-
-// All the code that alters the Game World goes here
-void updateGame() {
-  bullshit++;
-  if (startCheck == true) {
-    if (destroyed) {
-      car.velocity = 0;
-    } else {
-      car.velocity = 1.2;
-    }
-    CarCollision();
-    car.move(previousDirection);
-  }
-  if (keysPressed[BACKSPACE] == true) {
-    startCheck = true;
-  } else if (keysPressed[SHIFT] == true) {
-    car.y = 700;
-    car.x = tileXStartRight + 25;
-    previousDirection = 0;
-    startCheck = false;
-    destroyed = false;
-    car.setImage(loadImage("images/car.png"));
-    car.frame = 0;
-  }
-  Select();
-}
-
 //Collision checker
 
 void CarCollision() {
   // adjust so going in from the top doesn't 
   for (int i = 0; i < tilesRight.length; i++) {
-    if (car.x + 50 >= (tilesRight[i].x + 25) + 50 &&     // r1 right edge past r2 left
-      car.x <= (tilesRight[i].x + 25) + 50  &&       // r1 left edge past r2 right
-      car.y + 80 >= (tilesRight[i].y + 25) &&       // r1 top edge past r2 bottom
-      car.y <= (tilesRight[i].y + 25)) {       // r1 bottom edge past r2 top
-      collisionResult(tilesRight[i].getCollision());
-    }
+    if (car.x + 50 >= tilesRight[i].x &&     // r1 right edge past r2 left
+        car.x <= tilesRight[i].x + 100  &&       // r1 left edge past r2 right
+        car.y + 80 >= tilesRight[i].y &&       // r1 top edge past r2 bottom
+        car.y <= tilesRight[i].y + 100) {       // r1 bottom edge past r2 top
+          collisionResult(tilesRight[i].getCollision());
+     }
   }
 }
 
@@ -207,22 +182,71 @@ void collisionResult(int[] tile) {
 }
 
 void collisionCalc(int[] richting, int[] tile ) {
-  if (tile[richting[0]] == 1 ) {
-    if (tile[richting[1]] == 1) {
-      bullshit = 0;
-      previousDirection = richting[4];
-    } else if (tile[richting[2]] == 1) {
-      bullshit = 0;
-      previousDirection = richting[5];
-    } else if (tile[richting[3]] == 1) {
-      bullshit = 0;
-      previousDirection = richting[6];
+  if(tile[richting[0]] == 1 ) {
+      if(tile[richting[1]] == 1) {
+        collisionTimer = 0;
+        check = 0;
+        direction = richting[4];
+        }
+         else if(tile[richting[2]] == 1) {
+           collisionTimer = 0;
+           check = 0;
+           direction = richting[5];
+         }
+         else if(tile[richting[3]] == 1){
+           collisionTimer = 0;
+           check = 0;
+           direction = richting[6];
+         }
+    } else {
+    collisionTimer = 0;
+      check = 1;
+      direction = 0;
     }
-  } else
-    if (bullshit > 100) {
+}
+
+void collisionCheck(int check, int direction) {  
+  if(check == 1){
       car.destroy();
       destroyed = true;
+  } else {
+    previousDirection = direction;
+  }
+}
+
+// All the code that alters the Game World goes here
+void updateGame() {
+    collisionTimer++;
+  }
+  println(collisionTimer);
+  if (collisionTimer == 100){
+    collisionCheck(check, direction);
+  }
+  
+  if (startCheck == true) {
+    if (destroyed) {
+      car.velocity = 0;
+    } else {
+      car.velocity = 1.2;
     }
+    if (collisionTimer == -1) {
+      CarCollision();
+    }
+    car.move(previousDirection);
+  }
+  if (keysPressed[BACKSPACE] == true) {
+    startCheck = true;
+  } else if (keysPressed[SHIFT] == true) {
+    car.y = 700;
+    car.x = tileXStartRight + 25;
+    previousDirection = 0;
+    startCheck = false;
+    destroyed = false;
+    car.setImage(loadImage("images/car.png"));
+    car.frame = 0;
+  }
+  Select();
+  
 }
 
 // All the code that draws the Game World goes here
@@ -244,10 +268,10 @@ void drawGame() {
 
   // Draw the car
   image(car.getImage(), car.x, car.y);
-
+  
   // Draw some placeholder text for the start and reset buttons
-  fill(255, 0, 0);
-  text("Press Enter to select and place tiles. Press backspace to start and press shift to reset", 800, 719);
+  fill(255,0,0);
+  text("Press Enter to select and place tiles. Press backspace to start and press shift to reset", 800,719);
 } 
 
 void draw() {
