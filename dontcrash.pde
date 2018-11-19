@@ -47,7 +47,7 @@ int previousDirection = up;
 int frame = 0;
 
 int limit = 0;
-int bullshit = 0;
+int collisionTimer = 0;
 
 void setup() {
   size(1280, 720);
@@ -147,7 +147,7 @@ void drawTilesRight() {
 
 // All the code that alters the Game World goes here
 void updateGame() {
-  bullshit++;
+  collisionTimer++;
   if (startCheck == true) {
     if (destroyed) {
       car.velocity = 0;
@@ -209,17 +209,17 @@ void collisionResult(int[] tile) {
 void collisionCalc(int[] richting, int[] tile ) {
   if (tile[richting[0]] == 1 ) {
     if (tile[richting[1]] == 1) {
-      bullshit = 0;
+      collisionTimer = 0;
       previousDirection = richting[4];
     } else if (tile[richting[2]] == 1) {
-      bullshit = 0;
+      collisionTimer = 0;
       previousDirection = richting[5];
     } else if (tile[richting[3]] == 1) {
-      bullshit = 0;
+      collisionTimer = 0;
       previousDirection = richting[6];
     }
   } else
-    if (bullshit > 100) {
+    if (collisionTimer > 100) {
       car.destroy();
       destroyed = true;
     }
