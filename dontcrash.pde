@@ -174,7 +174,6 @@ void CarCollision() {
   }
 }
 
-
 void collisionResult(int[] tile) {
   switch(previousDirection) {
   case up:
@@ -232,14 +231,16 @@ void collisionCalc(int[] richting, int[] tile ) {
       previousDirection = richting[6];
     }
   } else
-    if (collisionTimer > car.velocity * 100) {
+    if (collisionTimer > 100) {
       destroyed = true;
     }
 }
 
 // All the code that alters the Game World goes here
 void updateGame() {
-  collisionTimer++;
+  if (collisionTimer <= 100){
+    collisionTimer++;
+  }
   if (startCheck == true) {
     if (destroyed) { 
       car.velocity = 0;
@@ -278,11 +279,12 @@ void drawGame() {
   }
   
   // Play the car explosion animation
-  if (destroyed)
-  car.destroy();
+  if (destroyed) {
+    car.destroy();
+  }
 
   // Draw the line seperating the line select and the play field
-  line(lineX, 0, lineX, 720);
+  line(lineX, 0, lineX, height);
 
   // Draw the car
   image(car.getImage(), car.x, car.y);
