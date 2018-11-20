@@ -1,4 +1,5 @@
 public class Tile {
+<<<<<<< HEAD
 
   int tileCountLeft = 8;
   int tileRowLeft = 2;
@@ -10,6 +11,8 @@ public class Tile {
   int tileDistanceXRight = 200;
   int tileDistanceYRight = 200;
 
+=======
+>>>>>>> parent of b614860... Moved tile variables to the tile class
   int x;
   int y;
   PImage img;
