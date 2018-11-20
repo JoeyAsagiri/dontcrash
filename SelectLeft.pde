@@ -10,22 +10,22 @@ class SelectLeft {
     if (keysPressed[RIGHT] && selectX != (tileDistanceXLeft * (tileRowLeft - 1) + tileXStartLeft) && limit == 0) {
       limit = 1;
       selectX = selectX + tileDistanceXLeft;
-      tileNumber = tileNumber+ 1;
+      tileNumber = tileNumber + 1;
     }
     if (keysPressed[LEFT] && selectX != tileXLeft && limit == 0) {
       limit = 1;
       selectX = selectX - tileDistanceXLeft;
-      tileNumber = tileNumber- 1;
+      tileNumber = tileNumber - 1;
     }
     if (keysPressed[DOWN] && selectY != (tileCountLeft / tileRowLeft -1)  * tileDistanceYLeft + tileYLeft && limit == 0) {
       limit = 1;
       selectY = selectY + tileDistanceYLeft;
-      tileNumber = tileNumber+ 2;
+      tileNumber = tileNumber + tileRowLeft;
     }
     if (keysPressed[UP] && selectY != tileYLeft && limit == 0) {
       limit = 1;
       selectY = selectY - tileDistanceYLeft;
-      tileNumber = tileNumber-2;
+      tileNumber = tileNumber - tileRowLeft;
     }
 
     // prevent the selector from going super saiyan

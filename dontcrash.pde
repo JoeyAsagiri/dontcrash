@@ -20,6 +20,7 @@ final int tileXStartLeft = 50;
 final int tileYStartLeft = 10;
 final int tileXStartRight = 500;
 final int tileYStartRight = 10;
+
 int tileXLeft = tileXStartLeft;
 int tileYLeft = tileYStartLeft;
 int tileXRight = tileXStartRight;
@@ -62,7 +63,7 @@ void setup() {
 
   car.setImage(loadImage("images/car.png"));
   car.x = tileXStartRight + 25;
-  car.y = 700;
+  car.y = height - 20;
   car.velocity = 1.2;
 
   //Create the selector and give it the variables
@@ -145,33 +146,6 @@ void drawTilesRight() {
   tileYRight = tileYStartRight;
 }
 
-
-// All the code that alters the Game World goes here
-void updateGame() {
-  collisionTimer++;
-  if (startCheck == true) {
-    if (destroyed) {
-      car.velocity = 0;
-    } else {
-      car.velocity = 1.2;
-    }
-    CarCollision();
-    car.move(previousDirection);
-  }
-  if (keysPressed[BACKSPACE] == true) {
-    startCheck = true;
-  } else if (keysPressed[SHIFT] == true) {
-    car.y = 700;
-    car.x = tileXStartRight + 25;
-    previousDirection = 0;
-    startCheck = false;
-    destroyed = false;
-    car.setImage(loadImage("images/car.png"));
-    car.frame = 0;
-  }
-  Select();
-}
-
 //Collision checker
 
 void CarCollision() {
@@ -190,7 +164,7 @@ void CarCollision() {
         collisionResult(tilesRight[i].getCollision());
       break;
     case left:
-      if (car.x < lineX) {
+      if (car.x <= lineX) {
         car.destroy();
         destroyed = true;
       }
@@ -204,7 +178,7 @@ void CarCollision() {
 
 void collisionResult(int[] tile) {
   switch(previousDirection) {
-  case 0:
+  case up:
     richting[0] = 2; 
     richting[1] = 0; 
     richting[2] = 1; 
@@ -214,7 +188,7 @@ void collisionResult(int[] tile) {
     richting[6] = 3;
     collisionCalc(richting, tile);
     break;
-  case 1:
+  case right:
     richting[0] = 3; 
     richting[1] = 1; 
     richting[2] = 2; 
@@ -224,7 +198,7 @@ void collisionResult(int[] tile) {
     richting[6] = 0;
     collisionCalc(richting, tile);
     break; 
-  case 2:
+  case down:
     richting[0] = 0; 
     richting[1] = 2; 
     richting[2] = 1; 
@@ -234,7 +208,7 @@ void collisionResult(int[] tile) {
     richting[6] = 3;
     collisionCalc(richting, tile);
     break;
-  case 3:
+  case left:
     richting[0] = 1; 
     richting[1] = 3; 
     richting[2] = 2; 
@@ -259,10 +233,36 @@ void collisionCalc(int[] richting, int[] tile ) {
       previousDirection = richting[6];
     }
   } else
-    if (collisionTimer > 100) {
+    if (collisionTimer > car.velocity * 100) {
       car.destroy();
       destroyed = true;
     }
+}
+
+// All the code that alters the Game World goes here
+void updateGame() {
+  collisionTimer++;
+  if (startCheck == true) {
+    if (destroyed) { 
+      car.velocity = 0;
+    } else {
+      car.velocity = 1.2;
+    }
+    CarCollision();
+    car.move(previousDirection);
+  }
+  if (keysPressed[BACKSPACE] == true) {
+    startCheck = true;
+  } else if (keysPressed[SHIFT] == true) {
+    car.y = 700;
+    car.x = tileXStartRight + 25;
+    previousDirection = 0;
+    startCheck = false;
+    destroyed = false;
+    car.setImage(loadImage("images/car.png"));
+    car.frame = 0;
+  }
+  Select();
 }
 
 // All the code that draws the Game World goes here
