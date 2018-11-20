@@ -1,4 +1,25 @@
 public class Tile {
+
+  int tileCountLeft = 8;
+  int tileRowLeft = 2;
+  int tileDistanceXLeft = 200;
+  int tileDistanceYLeft = 200;
+
+  int tileCountRight = 16;
+  int tileRowRight = 4;
+  int tileDistanceXRight = 200;
+  int tileDistanceYRight = 200;
+
+  final int tileXStartLeft = 50;
+  final int tileYStartLeft = 10;
+  final int tileXStartRight = 500;
+  final int tileYStartRight = 10;
+
+  int tileXLeft = tileXStartLeft;
+  int tileYLeft = tileYStartLeft;
+  int tileXRight = tileXStartRight;
+  int tileYRight = tileYStartRight;
+
   int x;
   int y;
   PImage img;

@@ -9,33 +9,13 @@ boolean startCheck = false;
 boolean destroyed = false;
 
 int[] richting = new int[7];
+Tile tile;
 Tile[] tiles;
 Tile[] tilesLeft;
 Tile[] tilesRight;
 Car car;
 SelectLeft selectLeft;
 SelectRight selectRight;
-
-final int tileXStartLeft = 50;
-final int tileYStartLeft = 10;
-final int tileXStartRight = 500;
-final int tileYStartRight = 10;
-
-int tileXLeft = tileXStartLeft;
-int tileYLeft = tileYStartLeft;
-int tileXRight = tileXStartRight;
-int tileYRight = tileYStartRight;
-
-//Grid
-int tileCountLeft = 8;
-int tileRowLeft = 2;
-int tileDistanceXLeft = 200;
-int tileDistanceYLeft = 200;
-
-int tileCountRight = 16;
-int tileRowRight = 4;
-int tileDistanceXRight = 200;
-int tileDistanceYRight = 200;
 
 final int lineX = 400;
 
@@ -55,14 +35,14 @@ void setup() {
   size(1280, 720);
   background(101, 232, 255); // make the background blue
 
-  tilesLeft = initTiles(tileCountLeft); // Initialize the left side of the grid
-  tilesRight = initTiles(tileCountRight);
+  tilesLeft = initTiles(tile.tileCountLeft); // Initialize the left side of the grid
+  tilesRight = initTiles(tile.tileCountRight);
 
   //Create the car
   car = new Car();
 
   car.setImage(loadImage("images/car.png"));
-  car.x = tileXStartRight + 25;
+  car.x = tile.tileXStartRight + 25;
   car.y = height - 20;
   car.velocity = 1.2;
 
@@ -70,11 +50,11 @@ void setup() {
   selectLeft = new SelectLeft();
   selectRight = new SelectRight();
 
-  selectLeft.selectX = tileXLeft;
-  selectLeft.selectY = tileYLeft;
+  selectLeft.selectX = tile.tileXLeft;
+  selectLeft.selectY = tile.tileYLeft;
 
-  selectRight.selectX = tileXRight;
-  selectRight.selectY = tileYRight;
+  selectRight.selectX = tile.tileXRight;
+  selectRight.selectY = tile.tileYRight;
 }
 void Select() {
   if (Select == true) {
@@ -115,35 +95,35 @@ Tile[] initTiles(int tileCountLeft) {
 // Draw the tiles to be shown
 void drawTilesLeft() {
   // Create tiles up to the tileCountLeft
-  for (int i = 0; i < tileCountLeft; i++) {
-    image(tilesLeft[i].getImage(), tileXLeft, tileYLeft);
-    tileXLeft += tileDistanceXLeft;
+  for (int i = 0; i < tile.tileCountLeft; i++) {
+    image(tilesLeft[i].getImage(), tile.tileXLeft, tile.tileYLeft);
+    tile.tileXLeft += tile.tileDistanceXLeft;
     // set the tiles another row down after every 2 tiles
-    if ((i + 1) % tileRowLeft == 0) {
-      tileXLeft = tileXStartLeft;
-      tileYLeft += tileDistanceYLeft;
+    if ((i + 1) % tile.tileRowLeft == 0) {
+      tile.tileXLeft = tile.tileXStartLeft;
+      tile.tileYLeft += tile.tileDistanceYLeft;
     }
   } 
-  tileXLeft = tileXStartLeft;
-  tileYLeft = tileYStartLeft;
+  tile.tileXLeft = tile.tileXStartLeft;
+  tile.tileYLeft = tile.tileYStartLeft;
 }
 
 //Placeholder drawTilesRight
 void drawTilesRight() {
   // Create tiles up to the tileCountLeft
-  for (int i = 0; i < tileCountRight; i++) {
-    image(tilesRight[i].getImage(), tileXRight, tileYRight);
-    tilesRight[i].x = tileXRight;
-    tilesRight[i].y = tileYRight;
-    tileXRight += tileDistanceXRight;
+  for (int i = 0; i < tile.tileCountRight; i++) {
+    image(tilesRight[i].getImage(), tile.tileXRight, tile.tileYRight);
+    tilesRight[i].x = tile.tileXRight;
+    tilesRight[i].y = tile.tileYRight;
+    tile.tileXRight += tile.tileDistanceXRight;
     // set the tiles another row down after every 4 tiles
-    if ((i + 1) % tileRowRight == 0) {
-      tileXRight = tileXStartRight;
-      tileYRight += tileDistanceYRight;
+    if ((i + 1) % tile.tileRowRight == 0) {
+      tile.tileXRight = tile.tileXStartRight;
+      tile.tileYRight += tile.tileDistanceYRight;
     }
   } 
-  tileXRight = tileXStartRight;
-  tileYRight = tileYStartRight;
+  tile.tileXRight = tile.tileXStartRight;
+  tile.tileYRight = tile.tileYStartRight;
 }
 
 //Collision checker
@@ -174,7 +154,6 @@ void CarCollision() {
     }
   }
 }
-
 
 void collisionResult(int[] tile) {
   switch(previousDirection) {
@@ -254,8 +233,8 @@ void updateGame() {
   if (keysPressed[BACKSPACE] == true) {
     startCheck = true;
   } else if (keysPressed[SHIFT] == true) {
-    car.y = 700;
-    car.x = tileXStartRight + 25;
+    car.y = height - 20;
+    car.x = tile.tileXStartRight + 25;
     previousDirection = 0;
     startCheck = false;
     destroyed = false;
