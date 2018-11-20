@@ -10,16 +10,6 @@ public class Tile {
   int tileDistanceXRight = 200;
   int tileDistanceYRight = 200;
 
-  final int tileXStartLeft = 50;
-  final int tileYStartLeft = 10;
-  final int tileXStartRight = 500;
-  final int tileYStartRight = 10;
-
-  int tileXLeft = tileXStartLeft;
-  int tileYLeft = tileYStartLeft;
-  int tileXRight = tileXStartRight;
-  int tileYRight = tileYStartRight;
-
   int x;
   int y;
   PImage img;
