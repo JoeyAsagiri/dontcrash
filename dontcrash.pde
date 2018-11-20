@@ -165,7 +165,6 @@ void CarCollision() {
       break;
     case left:
       if (car.x <= lineX) {
-        car.destroy();
         destroyed = true;
       }
       if (car.x + car.width >= tilesRight[i].x && car.x + car.width <= tilesRight[i].x + tilesRight[i].tileWidth && car.y + car.height >= tilesRight[i].y && car.y + car.height <= tilesRight[i].y + tilesRight[i].tileHeight) 
@@ -234,7 +233,6 @@ void collisionCalc(int[] richting, int[] tile ) {
     }
   } else
     if (collisionTimer > car.velocity * 100) {
-      car.destroy();
       destroyed = true;
     }
 }
@@ -278,6 +276,10 @@ void drawGame() {
   } else {
     selectRight.drawSelectRight();
   }
+  
+  // Play the car explosion animation
+  if (destroyed)
+  car.destroy();
 
   // Draw the line seperating the line select and the play field
   line(lineX, 0, lineX, 720);
