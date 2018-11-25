@@ -97,7 +97,9 @@ void Select() {
     if (keysPressed[ENTER] == true && limit == 0) {
       Select = true;
       limit = 1;
+      Tile memory = tilesRight[selectRight.tileNumber];
       tilesRight[selectRight.tileNumber] = tilesLeft[selectLeft.tileNumber];
+      tilesLeft[selectLeft.tileNumber] = memory;
     } else {
       selectRight.selectRight();
     }
