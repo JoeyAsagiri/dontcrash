@@ -84,6 +84,7 @@ void setup() {
   selectRight.tileDistanceY = tileDistanceYRight;
   selectRight.tileNumber = 0;
 }
+
 void Select() {
   if (Select == true) {
     if (keysPressed[ENTER] == true && limit == 0) {
@@ -112,7 +113,7 @@ Tile[] initTiles(int tileCountLeft) {
   tiles = new Tile[tileCountLeft];
   // Give an image and collision(?) to every tile
   for (int i = 0; i < tileCountLeft; i++) {
-    float random = random(1, 8); // Get a random tile 
+    float random = random(1, 9); // Get a random tile 
     tiles[i] = new Tile();
     tiles[i].setImage(loadImage("images/tiles/tile" + (int) random + ".png"));  //assign the image of the chosen tile to the tile
     tiles[i].setCollision((int) random); //set the collision of the chosen tile to the tile (todo)
@@ -136,9 +137,9 @@ void drawTilesLeft() {
   tileYLeft = tileYStartLeft;
 }
 
-//Placeholder drawTilesRight
+// Draw the tiles to be shown
 void drawTilesRight() {
-  // Create tiles up to the tileCountLeft
+  // Create tiles up to the tileCountRight
   for (int i = 0; i < tileCountRight; i++) {
     image(tilesRight[i].getImage(), tileXRight, tileYRight);
     tilesRight[i].x = tileXRight;
@@ -179,7 +180,6 @@ void updateGame() {
     car.frame = 0;
   }
   Select();
-  
 }
 
 //Collision checker
@@ -188,11 +188,11 @@ void CarCollision() {
   // adjust so going in from the top doesn't 
   for (int i = 0; i < tilesRight.length; i++) {
     if (car.x + 50 >= (tilesRight[i].x + 25) + 50 &&     // r1 right edge past r2 left
-  car.x <= (tilesRight[i].x + 25) + 50  &&       // r1 left edge past r2 right
-  car.y + 80 >= (tilesRight[i].y + 25) &&       // r1 top edge past r2 bottom
-  car.y <= (tilesRight[i].y + 25)) {       // r1 bottom edge past r2 top
-    collisionResult(tilesRight[i].getCollision());
-}
+      car.x <= (tilesRight[i].x + 25) + 50  &&       // r1 left edge past r2 right
+      car.y + 80 >= (tilesRight[i].y + 25) &&       // r1 top edge past r2 bottom
+      car.y <= (tilesRight[i].y + 25)) {       // r1 bottom edge past r2 top
+      collisionResult(tilesRight[i].getCollision());
+    }
 
     //if (car.x > tilesRight[i].x && car.x < tilesRight[i].x +100) {
     //  collisionResult(tilesRight[i].getCollision());
@@ -206,7 +206,7 @@ void CarCollision() {
 
 void collisionResult(int[] tile) {
   switch(previousDirection) {
-    case 0:
+  case 0:
     richting[0] = 2;
     richting[1] = 0;
     richting[2] = 1;
@@ -216,7 +216,7 @@ void collisionResult(int[] tile) {
     richting[6] = 3;
     collisionCalc(richting, tile);
     break;
-    case 1:
+  case 1:
     richting[0] = 3;
     richting[1] = 1;
     richting[2] = 2;
@@ -226,7 +226,7 @@ void collisionResult(int[] tile) {
     richting[6] = 0;
     collisionCalc(richting, tile);
     break; 
-    case 2:
+  case 2:
     richting[0] = 0;
     richting[1] = 2;
     richting[2] = 1;
@@ -236,7 +236,7 @@ void collisionResult(int[] tile) {
     richting[6] = 3;
     collisionCalc(richting, tile);
     break;
-    case 3:
+  case 3:
     richting[0] = 1;
     richting[1] = 3;
     richting[2] = 2;
@@ -249,24 +249,22 @@ void collisionResult(int[] tile) {
 }
 
 void collisionCalc(int[] richting, int[] tile ) {
-  if(tile[richting[0]] == 1 ) {
-      if(tile[richting[1]] == 1) {
-        bullshit = 0;
-        previousDirection = richting[4];
-        }
-         else if(tile[richting[2]] == 1) {
-           bullshit = 0;
-           previousDirection = richting[5];
-         }
-         else if(tile[richting[3]] == 1){
-           bullshit = 0;
-           previousDirection = richting[6];
-         }
-    } else
-    if(bullshit > 100) {
+  if (tile[richting[0]] == 1 ) {
+    if (tile[richting[1]] == 1) {
+      bullshit = 0;
+      previousDirection = richting[4];
+    } else if (tile[richting[2]] == 1) {
+      bullshit = 0;
+      previousDirection = richting[5];
+    } else if (tile[richting[3]] == 1) {
+      bullshit = 0;
+      previousDirection = richting[6];
+    }
+  } else
+    if (bullshit > 100) {
       car.destroy();
       destroyed = true;
-    } 
+    }
 }
 
 // All the code that draws the Game World goes here
@@ -288,10 +286,10 @@ void drawGame() {
 
   // Draw the car
   image(car.getImage(), car.x, car.y);
-  
+
   // Draw some placeholder text for the start and reset buttons
-  fill(255,0,0);
-  text("Press Enter to select and place tiles. Press backspace to start and press shift to reset", 800,719);
+  fill(255, 0, 0);
+  text("Press Enter to select and place tiles. Press backspace to start and press shift to reset", 800, 719);
 } 
 
 void draw() {
