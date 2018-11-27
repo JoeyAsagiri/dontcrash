@@ -58,7 +58,7 @@ int collisionAdjustment = 75;
 void setup() {
   size(1280, 720);
   background(14, 209, 69); // make the background green
-  
+
   // Load a soundfile from the /data folder of the sketch and play it back
   file = new SoundFile(this, "/music/funky_theme.wav");
   file.loop();
@@ -69,7 +69,7 @@ void setup() {
   //Create the car
   car = new Car();
 
-  car.setImage(loadImage("images/car.png"));
+  car.setImage(loadImage("images/carUp.png"));
   car.x = tileXStartRight + 25;
   car.y = height - 20;
   car.velocity = 1.2;
@@ -84,6 +84,7 @@ void setup() {
   selectRight.selectX = tileXRight;
   selectRight.selectY = tileYRight;
 }
+
 
 void Select() {
   if (Select == true) {
@@ -234,12 +235,15 @@ void collisionCalc(int[] richting, int[] tile ) {
     if (tile[richting[1]] == 1) {
       collisionTimer = 0;
       previousDirection = richting[4];
+      print(previousDirection);
     } else if (tile[richting[2]] == 1) {
       collisionTimer = 0;
       previousDirection = richting[5];
+      print(previousDirection);
     } else if (tile[richting[3]] == 1) {
       collisionTimer = 0;
       previousDirection = richting[6];
+      print(previousDirection);
     }
   } else
     if (collisionTimer > 100) {
@@ -247,9 +251,35 @@ void collisionCalc(int[] richting, int[] tile ) {
     }
 }
 
+
+
+void rotate90() {
+  switch(previousDirection) {
+  case 0: 
+    previousDirection = 0;
+    car.setImage(loadImage("images/carUp.png"));
+    break;
+  case 1:
+    previousDirection = 1;
+    car.setImage(loadImage("images/carRight.png"));
+    break;
+  case 2:
+    previousDirection = 2;
+    car.setImage(loadImage("images/carDown.png"));
+    break;
+  case 3:
+    previousDirection = 3;
+    car.setImage(loadImage("images/carLeft.png"));
+    break;
+  }
+}
+
+
+
+
 // All the code that alters the Game World goes here
 void updateGame() {
-  if (collisionTimer <= 100){
+  if (collisionTimer <= 100) {
     collisionTimer++;
   }
   if (startCheck == true) {
@@ -257,6 +287,7 @@ void updateGame() {
       car.velocity = 0;
     } else {
       car.velocity = 1.2;
+      rotate90();
     }
     CarCollision();
     car.move(previousDirection);
@@ -269,7 +300,7 @@ void updateGame() {
     previousDirection = 0;
     startCheck = false;
     destroyed = false;
-    car.setImage(loadImage("images/car.png"));
+    car.setImage(loadImage("images/carUp.png"));
     car.frame = 0;
   }
   Select();
@@ -280,15 +311,18 @@ void drawGame() {
   background(14, 209, 69); // make the background green
 
   // Draw the tiles and selector
+
   drawTilesLeft();
   drawTilesRight();
-
-  if (Select) {
-    selectLeft.drawSelectLeft();
-  } else {
-    selectRight.drawSelectRight();
+  if (startCheck == false) {
+    if (Select) {
+      selectLeft.drawSelectLeft();
+    } else {
+      selectRight.drawSelectRight();
+    }
   }
-  
+
+
   // Play the car explosion animation
   if (destroyed) {
     car.destroy();
