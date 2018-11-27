@@ -17,7 +17,6 @@ public class Tile {
 
   // Set the collision by filling an array with 0 and 1 indicating each side if it's open or not, counting clockwise
   void setCollision(int random) {
-    // TODO: fill in everything ffs
     switch (random) {
     case 1:  
       collision[0] = 1; 
@@ -61,15 +60,12 @@ public class Tile {
       collision[2] = 0; 
       collision[3] = 0; //right to top corner
       break;
-<<<<<<< HEAD
-=======
-      case 8: 
+    case 8: 
       collision[0] = 0; 
       collision[1] = 0; 
       collision[2] = 0; 
       collision[3] = 0; //blank tile
       break;
->>>>>>> origin/Mirthe
     }
   }
   int[] getCollision() {
