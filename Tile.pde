@@ -61,6 +61,15 @@ public class Tile {
       collision[2] = 0; 
       collision[3] = 0; //right to top corner
       break;
+<<<<<<< HEAD
+=======
+      case 8: 
+      collision[0] = 0; 
+      collision[1] = 0; 
+      collision[2] = 0; 
+      collision[3] = 0; //blank tile
+      break;
+>>>>>>> origin/Mirthe
     }
   }
   int[] getCollision() {

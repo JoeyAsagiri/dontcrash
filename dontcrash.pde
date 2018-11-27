@@ -76,6 +76,7 @@ void setup() {
   selectRight.selectX = tileXRight;
   selectRight.selectY = tileYRight;
 }
+
 void Select() {
   if (Select == true) {
     if (keysPressed[ENTER] == true && limit == 0) {
@@ -88,7 +89,9 @@ void Select() {
     if (keysPressed[ENTER] == true && limit == 0) {
       Select = true;
       limit = 1;
+      Tile memory = tilesRight[selectRight.tileNumber];
       tilesRight[selectRight.tileNumber] = tilesLeft[selectLeft.tileNumber];
+      tilesLeft[selectLeft.tileNumber] = memory;
     } else {
       selectRight.selectRight();
     }
@@ -104,7 +107,7 @@ Tile[] initTiles(int tileCountLeft) {
   tiles = new Tile[tileCountLeft];
   // Give an image and collision(?) to every tile
   for (int i = 0; i < tileCountLeft; i++) {
-    float random = random(1, 8); // Get a random tile 
+    float random = random(1, 9); // Get a random tile 
     tiles[i] = new Tile();
     tiles[i].setImage(loadImage("images/tiles/tile" + (int) random + ".png"));  //assign the image of the chosen tile to the tile
     tiles[i].setCollision((int) random); //set the collision of the chosen tile to the tile (todo)
@@ -128,9 +131,9 @@ void drawTilesLeft() {
   tileYLeft = tileYStartLeft;
 }
 
-//Placeholder drawTilesRight
+// Draw the tiles to be shown
 void drawTilesRight() {
-  // Create tiles up to the tileCountLeft
+  // Create tiles up to the tileCountRight
   for (int i = 0; i < tileCountRight; i++) {
     image(tilesRight[i].getImage(), tileXRight, tileYRight);
     tilesRight[i].x = tileXRight;
