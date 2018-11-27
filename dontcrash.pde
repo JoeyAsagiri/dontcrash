@@ -1,3 +1,7 @@
+// Create a soundfile for the music  
+import processing.sound.*;
+SoundFile file;
+
 // Arrays of booleans for Keyboard handling. One boolean for each keyCode
 final int KEY_LIMIT = 1024;
 
@@ -53,7 +57,11 @@ int collisionAdjustment = 75;
 
 void setup() {
   size(1280, 720);
-  background(101, 232, 255); // make the background blue
+  background(14, 209, 69); // make the background green
+  
+  // Load a soundfile from the /data folder of the sketch and play it back
+  file = new SoundFile(this, "/music/funky_theme.wav");
+  file.loop();
 
   tilesLeft = initTiles(tileCountLeft); // Initialize the left side of the grid
   tilesRight = initTiles(tileCountRight);
@@ -170,7 +178,7 @@ void CarCollision() {
       if (car.x <= lineX) {
         destroyed = true;
       }
-      if (car.x + car.width >= tilesRight[i].x && car.x + car.width <= tilesRight[i].x + tilesRight[i].tileWidth && car.y + car.height >= tilesRight[i].y && car.y + car.height <= tilesRight[i].y + tilesRight[i].tileHeight) 
+      if (car.x + car.width >= tilesRight[i].x - (collisionAdjustment / 3) && car.x + car.width <= tilesRight[i].x + tilesRight[i].tileWidth - (collisionAdjustment / 3) && car.y + car.height >= tilesRight[i].y && car.y + car.height <= tilesRight[i].y + tilesRight[i].tileHeight) 
         collisionResult(tilesRight[i].getCollision());
       break;
     }
@@ -269,7 +277,7 @@ void updateGame() {
 
 // All the code that draws the Game World goes here
 void drawGame() {
-  background(101, 232, 255);
+  background(14, 209, 69); // make the background green
 
   // Draw the tiles and selector
   drawTilesLeft();
