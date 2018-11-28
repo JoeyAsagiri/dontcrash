@@ -63,11 +63,13 @@ boolean limit2;
 int collisionTimer = 0;
 int collisionAdjustment = 75;
 
+boolean win = false;
+
 void setup() {
   size(1280, 720);
 
   // Load a soundfile from the /data folder of the sketch and play it back
-  file = new SoundFile(this, "/music/funky_theme.wav");
+  file = new SoundFile(this, "/music/funky_menu.wav");
   file.loop();
 
   tilesLeft = initTiles(tileCountLeft); // Initialize the left side of the grid
@@ -90,6 +92,8 @@ void setup() {
 
   selectRight.selectX = tileXRight;
   selectRight.selectY = tileYRight;
+  startCheck = false;
+  win = false;
 }
 
 
@@ -242,15 +246,12 @@ void collisionCalc(int[] richting, int[] tile ) {
     if (tile[richting[1]] == 1) {
       collisionTimer = 0;
       previousDirection = richting[4];
-      print(previousDirection);
     } else if (tile[richting[2]] == 1) {
       collisionTimer = 0;
       previousDirection = richting[5];
-      print(previousDirection);
     } else if (tile[richting[3]] == 1) {
       collisionTimer = 0;
       previousDirection = richting[6];
-      print(previousDirection);
     }
   } else
     if (collisionTimer > 100) {
@@ -281,11 +282,25 @@ void rotate90() {
   }
 }
 
-
+// Function to let the game go back to the menu when you win
+void win() {
+  win = true;
+  if (keysPressed[ENTER] == true) {
+    file.stop();
+    gameState = mainMenu;
+    limit2 = true;
+    setup();
+  } 
+}
 
 
 // All the code that alters the Game World goes here
 void updateGame() {
+  // Win condition
+  if (car.y <= -20) {
+    win();
+  }
+  
   if (collisionTimer <= 100) {
     collisionTimer++;
   }
@@ -311,13 +326,14 @@ void updateGame() {
     car.frame = 0;
   }
   Select();
+  
 }
 
 // All the code that draws the Game World goes here
 
 void drawMainMenu() {
 
-  background(0,0,255);
+  background(101,232,255);
   textAlign(CENTER);
   textSize(100);
   text("DON'T CRASH", width/2, height/4); 
@@ -329,7 +345,7 @@ void drawMainMenu() {
 
 void drawLevelSelect() {
 
-  background(0,0,255);
+  background(101,232,255);
   textSize(100);
   text("LEVEL SELECT", width/2, height/4);
 }
@@ -337,7 +353,7 @@ void drawLevelSelect() {
 
 void drawOptions() {
 
-  background(0,0,255);
+  background(101,232,255);
   textSize(30);
   text("MUTE SOUND", width/2, 3*(height/5));
   text("QUIT GAME", width/2, 4*(height/5));
@@ -374,6 +390,12 @@ void drawGame() {
   fill(255, 0, 0);
   textSize(11);
   text("Press Enter to select and place tiles. Press backspace to start and press shift to reset", 800, 719);
+  
+  if (win) {
+    textSize(100);
+    fill(255,0,0);
+    text("YOU WIN!", width/2, height/2); 
+  }
 } 
 
 void draw() {
@@ -393,7 +415,11 @@ void draw() {
 
   if (keysPressed[ENTER] && gameState == levelSelect && limit2 == false) {
 
-    limit2 = true;
+    file.stop();
+      // Load a soundfile from the /data folder of the sketch and play it back
+    file = new SoundFile(this, "/music/funky_theme.wav");
+    file.loop();
+    
     gameState = inGame;
     
   } 
@@ -437,7 +463,7 @@ void draw() {
 
 
   case inGame:
-
+    
     drawGame();
     break;
   }  // Draw the game
