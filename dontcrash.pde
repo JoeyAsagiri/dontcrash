@@ -16,6 +16,13 @@ Car car;
 SelectLeft selectLeft;
 SelectRight selectRight;
 
+// constants for different screens
+int gameState = 0;
+final int mainMenu = 0;
+final int levelSelect = 1;
+final int options = 2;
+final int inGame = 3;
+
 final int tileXStartLeft = 50;
 final int tileYStartLeft = 10;
 final int tileXStartRight = 500;
@@ -152,6 +159,22 @@ void drawTilesRight() {
   } 
   tileXRight = tileXStartRight;
   tileYRight = tileYStartRight;
+}
+
+
+void drawMainMenu() {
+  
+  
+}
+
+
+void drawOptions() {
+  
+}
+
+
+void drawLevelSelect() {
+  
 }
 
 
@@ -295,8 +318,10 @@ void drawGame() {
 } 
 
 void draw() {
-  updateGame(); // Update the game 
-  drawGame();  // Draw the game
+    
+    updateGame(); // Update the game 
+    drawGame();  // Draw the game
+    
 }
 
 // Keyboard handling...
