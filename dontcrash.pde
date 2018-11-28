@@ -172,7 +172,7 @@ void CarCollision() {
         collisionResult(tilesRight[i].getCollision());
       break;
     case down:
-      if (car.x + car.width >= tilesRight[i].x && car.x + car.width <= tilesRight[i].x + tilesRight[i].tileWidth && car.y + car.height >= tilesRight[i].y + collisionAdjustment && car.y + car.height <= tilesRight[i].y + tilesRight[i].tileHeight + collisionAdjustment)
+      if (car.x + car.width >= tilesRight[i].x && car.x + car.width <= tilesRight[i].x + tilesRight[i].tileWidth && car.y + car.height >= tilesRight[i].y + collisionAdjustment + (collisionAdjustment / 3) && car.y + car.height <= tilesRight[i].y + tilesRight[i].tileHeight + collisionAdjustment + (collisionAdjustment / 3))
         collisionResult(tilesRight[i].getCollision());
       break;
     case left:
