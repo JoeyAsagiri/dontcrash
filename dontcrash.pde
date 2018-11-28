@@ -41,6 +41,13 @@ int tileRowRight = 4;
 int tileDistanceXRight = 200;
 int tileDistanceYRight = 200;
 
+int gameState = 0;
+final int mainMenu = 0;
+final int levelSelect = 1;
+final int optionsScreen = 2;
+final int inGame = 3;
+
+
 final int lineX = 400;
 
 // constants for the car movement directions
@@ -52,12 +59,12 @@ int previousDirection = up;
 int frame = 0;
 
 int limit = 0;
+boolean limit2;
 int collisionTimer = 0;
 int collisionAdjustment = 75;
 
 void setup() {
   size(1280, 720);
-  background(14, 209, 69); // make the background green
 
   // Load a soundfile from the /data folder of the sketch and play it back
   file = new SoundFile(this, "/music/funky_theme.wav");
@@ -307,6 +314,35 @@ void updateGame() {
 }
 
 // All the code that draws the Game World goes here
+
+void drawMainMenu() {
+
+  background(0,0,255);
+  textAlign(CENTER);
+  textSize(100);
+  text("DON'T CRASH", width/2, height/4); 
+  fill(0, 102, 153);
+  textSize(30);
+  text("LEVEL SELECT", width/2, 3*(height/5));
+  text("OPTIONS", width/2, 4*(height/5));
+}
+
+void drawLevelSelect() {
+
+  background(0,0,255);
+  textSize(100);
+  text("LEVEL SELECT", width/2, height/4);
+}
+
+
+void drawOptions() {
+
+  background(0,0,255);
+  textSize(30);
+  text("MUTE SOUND", width/2, 3*(height/5));
+  text("QUIT GAME", width/2, 4*(height/5));
+}
+
 void drawGame() {
   background(14, 209, 69); // make the background green
 
@@ -336,12 +372,75 @@ void drawGame() {
 
   // Draw some placeholder text for the start and reset buttons
   fill(255, 0, 0);
+  textSize(11);
   text("Press Enter to select and place tiles. Press backspace to start and press shift to reset", 800, 719);
 } 
 
 void draw() {
+  
+   // causes the screens to advance on buttonpresses
+
+  if (!keysPressed[ENTER]) {
+
+    limit2 = false;
+  }
+
+  if (keysPressed[ENTER] && gameState == mainMenu) {
+
+    gameState = levelSelect;
+    limit2 = true;
+  }
+
+  if (keysPressed[ENTER] && gameState == levelSelect && limit2 == false) {
+
+    limit2 = true;
+    gameState = inGame;
+    
+  } 
+
+
+  if (keysPressed['O'] && gameState == mainMenu) {
+
+    gameState = optionsScreen;
+  }  
+
+
+  if (keysPressed[BACKSPACE] && gameState == optionsScreen) {
+
+    gameState = mainMenu;
+  } 
+
+  if (keysPressed[BACKSPACE] && gameState == levelSelect) {
+
+    gameState = mainMenu;
+  }
+  
   updateGame(); // Update the game 
-  drawGame();  // Draw the game
+   switch(gameState) {
+
+  case mainMenu:
+
+    drawMainMenu();
+    break;
+
+
+  case levelSelect:
+
+    drawLevelSelect();
+    break;
+
+
+  case optionsScreen:
+
+    drawOptions();
+    break;
+
+
+  case inGame:
+
+    drawGame();
+    break;
+  }  // Draw the game
 }
 
 // Keyboard handling...
