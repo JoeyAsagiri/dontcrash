@@ -389,7 +389,7 @@ void drawGame() {
   // Draw some placeholder text for the start and reset buttons
   fill(255, 0, 0);
   textSize(11);
-  text("Press Enter to select and place tiles. Press backspace to start and press shift to reset", 800, 719);
+  text("Press Enter to select and place tiles. Press backspace to start and press shift to reset", 1050, 719);
   
   if (win) {
     textSize(100);
