@@ -5,6 +5,19 @@ SoundFile file;
 // Arrays of booleans for Keyboard handling. One boolean for each keyCode
 final int KEY_LIMIT = 1024;
 
+// Keyboard handling...
+void keyPressed() {  
+  if (keyCode >= KEY_LIMIT) return; //safety: if keycode exceeds limit, exit methhod ('return').
+  keysPressed[keyCode] = true; // set its boolean to true
+}
+
+//..and with each key Released vice versa
+void keyReleased() {
+  if (keyCode >= KEY_LIMIT) return;
+  keysPressed[keyCode] = false; // set its boolean to false
+}
+
+
 boolean[] keysPressed = new boolean[KEY_LIMIT];
 boolean[] keysReleased = new boolean[KEY_LIMIT];
 
@@ -30,6 +43,7 @@ int tileYLeft = tileYStartLeft;
 int tileXRight = tileXStartRight;
 int tileYRight = tileYStartRight;
 
+
 //Grid
 int tileCountLeft = 8;
 int tileRowLeft = 2;
@@ -41,14 +55,16 @@ int tileRowRight = 4;
 int tileDistanceXRight = 200;
 int tileDistanceYRight = 200;
 
+final int lineX = 400;
+
+
+// Different screens
 int gameState = 0;
 final int mainMenu = 0;
 final int levelSelect = 1;
 final int optionsScreen = 2;
 final int inGame = 3;
 
-
-final int lineX = 400;
 
 // constants for the car movement directions
 final int up = 0;
@@ -58,12 +74,15 @@ final int left = 3;
 int previousDirection = up;
 int frame = 0;
 
+
 int limit = 0;
 boolean limit2;
+
 int collisionTimer = 0;
 int collisionAdjustment = 75;
 
 boolean win = false;
+
 
 void setup() {
   size(1280, 720);
@@ -72,7 +91,8 @@ void setup() {
   file = new SoundFile(this, "/music/funky_menu.wav");
   file.loop();
 
-  tilesLeft = initTiles(tileCountLeft); // Initialize the left side of the grid
+  // Initialize the left side of the grid
+  tilesLeft = initTiles(tileCountLeft);
   tilesRight = initTiles(tileCountRight);
 
   //Create the car
@@ -96,9 +116,9 @@ void setup() {
   win = false;
 }
 
-
+// calls the right select function
 void Select() {
-  if (Select == true) {
+  if (Select) {
     if (keysPressed[ENTER] == true && limit == 0) {
       Select = false;
       limit = 1;
@@ -125,7 +145,8 @@ void Select() {
 // Initialize a set amount of tiles and return an array of random tiles
 Tile[] initTiles(int tileCountLeft) {
   tiles = new Tile[tileCountLeft];
-  // Give an image and collision(?) to every tile
+  
+  // Give an image and to every tile
   for (int i = 0; i < tileCountLeft; i++) {
     float random = random(1, 9); // Get a random tile 
     tiles[i] = new Tile();
@@ -137,10 +158,12 @@ Tile[] initTiles(int tileCountLeft) {
 
 // Draw the tiles to be shown
 void drawTilesLeft() {
+  
   // Create tiles up to the tileCountLeft
   for (int i = 0; i < tileCountLeft; i++) {
     image(tilesLeft[i].getImage(), tileXLeft, tileYLeft);
     tileXLeft += tileDistanceXLeft;
+    
     // set the tiles another row down after every 2 tiles
     if ((i + 1) % tileRowLeft == 0) {
       tileXLeft = tileXStartLeft;
@@ -153,12 +176,14 @@ void drawTilesLeft() {
 
 // Draw the tiles to be shown
 void drawTilesRight() {
+  
   // Create tiles up to the tileCountRight
   for (int i = 0; i < tileCountRight; i++) {
     image(tilesRight[i].getImage(), tileXRight, tileYRight);
     tilesRight[i].x = tileXRight;
     tilesRight[i].y = tileYRight;
     tileXRight += tileDistanceXRight;
+    
     // set the tiles another row down after every 4 tiles
     if ((i + 1) % tileRowRight == 0) {
       tileXRight = tileXStartRight;
@@ -169,118 +194,9 @@ void drawTilesRight() {
   tileYRight = tileYStartRight;
 }
 
-//Collision checker
-
-void CarCollision() {
-  for (int i = 0; i < tilesRight.length; i++) {
-    switch (previousDirection) {
-    case up:
-      if (car.x + car.width >= tilesRight[i].x && car.x + car.width <= tilesRight[i].x + tilesRight[i].tileWidth && car.y + car.height >= tilesRight[i].y && car.y + car.height <= tilesRight[i].y + tilesRight[i].tileHeight)
-        collisionResult(tilesRight[i].getCollision());
-      break;
-    case right:
-      if (car.x + car.width >= tilesRight[i].x + collisionAdjustment && car.x + car.width <= tilesRight[i].x + tilesRight[i].tileWidth + collisionAdjustment && car.y + car.height >= tilesRight[i].y && car.y + car.height <= tilesRight[i].y + tilesRight[i].tileHeight) 
-        collisionResult(tilesRight[i].getCollision());
-      break;
-    case down:
-      if (car.x + car.width >= tilesRight[i].x && car.x + car.width <= tilesRight[i].x + tilesRight[i].tileWidth && car.y + car.height >= tilesRight[i].y + collisionAdjustment + (collisionAdjustment / 3) && car.y + car.height <= tilesRight[i].y + tilesRight[i].tileHeight + collisionAdjustment + (collisionAdjustment / 3))
-        collisionResult(tilesRight[i].getCollision());
-      break;
-    case left:
-      if (car.x <= lineX) {
-        destroyed = true;
-      }
-      if (car.x + car.width >= tilesRight[i].x - (collisionAdjustment / 3) && car.x + car.width <= tilesRight[i].x + tilesRight[i].tileWidth - (collisionAdjustment / 3) && car.y + car.height >= tilesRight[i].y && car.y + car.height <= tilesRight[i].y + tilesRight[i].tileHeight) 
-        collisionResult(tilesRight[i].getCollision());
-      break;
-    }
-  }
-}
-
-void collisionResult(int[] tile) {
-  switch(previousDirection) {
-  case up:
-    richting[0] = 2; 
-    richting[1] = 0; 
-    richting[2] = 1; 
-    richting[3] = 3; 
-    richting[4] = 0; 
-    richting[5] = 1; 
-    richting[6] = 3;
-    collisionCalc(richting, tile);
-    break;
-  case right:
-    richting[0] = 3; 
-    richting[1] = 1; 
-    richting[2] = 2; 
-    richting[3] = 0; 
-    richting[4] = 1; 
-    richting[5] = 2; 
-    richting[6] = 0;
-    collisionCalc(richting, tile);
-    break; 
-  case down:
-    richting[0] = 0; 
-    richting[1] = 2; 
-    richting[2] = 1; 
-    richting[3] = 3; 
-    richting[4] = 2; 
-    richting[5] = 1; 
-    richting[6] = 3;
-    collisionCalc(richting, tile);
-    break;
-  case left:
-    richting[0] = 1; 
-    richting[1] = 3; 
-    richting[2] = 2; 
-    richting[3] = 0; 
-    richting[4] = 3; 
-    richting[5] = 2; 
-    richting[6] = 0;
-    collisionCalc(richting, tile);
-  }
-}
-
-void collisionCalc(int[] richting, int[] tile ) {
-  if (tile[richting[0]] == 1 ) {
-    if (tile[richting[1]] == 1) {
-      collisionTimer = 0;
-      previousDirection = richting[4];
-    } else if (tile[richting[2]] == 1) {
-      collisionTimer = 0;
-      previousDirection = richting[5];
-    } else if (tile[richting[3]] == 1) {
-      collisionTimer = 0;
-      previousDirection = richting[6];
-    }
-  } else
-    if (collisionTimer > 100) {
-      destroyed = true;
-    }
-}
 
 
 
-void rotate90() {
-  switch(previousDirection) {
-  case 0: 
-    previousDirection = 0;
-    car.setImage(loadImage("images/carUp.png"));
-    break;
-  case 1:
-    previousDirection = 1;
-    car.setImage(loadImage("images/carRight.png"));
-    break;
-  case 2:
-    previousDirection = 2;
-    car.setImage(loadImage("images/carDown.png"));
-    break;
-  case 3:
-    previousDirection = 3;
-    car.setImage(loadImage("images/carLeft.png"));
-    break;
-  }
-}
 
 // Function to let the game go back to the menu when you win
 void win() {
@@ -309,9 +225,9 @@ void updateGame() {
       car.velocity = 0;
     } else {
       car.velocity = 1.2;
-      rotate90();
+      car.rotate90();
     }
-    CarCollision();
+    car.CarCollision();
     car.move(previousDirection);
   }
   if (keysPressed[BACKSPACE] == true) {
@@ -403,80 +319,55 @@ void draw() {
    // causes the screens to advance on buttonpresses
 
   if (!keysPressed[ENTER]) {
-
     limit2 = false;
   }
 
   if (keysPressed[ENTER] && gameState == mainMenu) {
-
     gameState = levelSelect;
     limit2 = true;
   }
 
   if (keysPressed[ENTER] && gameState == levelSelect && limit2 == false) {
-
     file.stop();
       // Load a soundfile from the /data folder of the sketch and play it back
     file = new SoundFile(this, "/music/funky_theme.wav");
     file.loop();
     
-    gameState = inGame;
-    
+    gameState = inGame;    
   } 
 
 
   if (keysPressed['O'] && gameState == mainMenu) {
-
     gameState = optionsScreen;
   }  
 
 
   if (keysPressed[BACKSPACE] && gameState == optionsScreen) {
-
     gameState = mainMenu;
   } 
 
   if (keysPressed[BACKSPACE] && gameState == levelSelect) {
-
     gameState = mainMenu;
   }
   
-  updateGame(); // Update the game 
+  // handles drawing of different screens
+  updateGame();
    switch(gameState) {
 
   case mainMenu:
-
     drawMainMenu();
     break;
 
-
   case levelSelect:
-
     drawLevelSelect();
     break;
 
-
   case optionsScreen:
-
     drawOptions();
     break;
 
-
-  case inGame:
-    
+  case inGame:   
     drawGame();
     break;
-  }  // Draw the game
-}
-
-// Keyboard handling...
-void keyPressed() {  
-  if (keyCode >= KEY_LIMIT) return; //safety: if keycode exceeds limit, exit methhod ('return').
-  keysPressed[keyCode] = true; // set its boolean to true
-}
-
-//..and with each key Released vice versa
-void keyReleased() {
-  if (keyCode >= KEY_LIMIT) return;
-  keysPressed[keyCode] = false; // set its boolean to false
+  }  
 }

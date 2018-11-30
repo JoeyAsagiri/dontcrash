@@ -1,11 +1,11 @@
 class SelectRight {
+  
   int selectX, selectY;
 
   int tileNumber = 0;
   int limit = 0;
 
   // Function to move the selector over the tiles. 
-  // TODO :: maybe find a better solution to the limit?
   void selectRight() {
     if (keysPressed[RIGHT] && selectX != (tileDistanceXRight * (tileRowRight - 1) + tileXStartRight) && limit == 0) {
       limit = 1;
