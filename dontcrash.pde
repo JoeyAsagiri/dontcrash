@@ -73,7 +73,7 @@ void setup() {
   file.loop();
 
   tilesLeft = initTiles(tileCountLeft); // Initialize the left side of the grid
-  tilesRight = initTiles(tileCountRight);
+  tilesRight = initTiles(tileCountRight); // Initialize the right side of the grid
 
   //Create the car
   car = new Car();
@@ -170,7 +170,6 @@ void drawTilesRight() {
 }
 
 //Collision checker
-
 void CarCollision() {
   for (int i = 0; i < tilesRight.length; i++) {
     switch (previousDirection) {
@@ -197,6 +196,7 @@ void CarCollision() {
   }
 }
 
+// Checks direction of car
 void collisionResult(int[] tile) {
   switch(previousDirection) {
   case up:
@@ -260,7 +260,7 @@ void collisionCalc(int[] richting, int[] tile ) {
 }
 
 
-
+// Rotates car
 void rotate90() {
   switch(previousDirection) {
   case 0: 
@@ -330,7 +330,6 @@ void updateGame() {
 }
 
 // All the code that draws the Game World goes here
-
 void drawMainMenu() {
 
   background(101,232,255);
