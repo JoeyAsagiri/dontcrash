@@ -1,6 +1,6 @@
 // Create a soundfile for the music  
-import processing.sound.*;
-SoundFile file;
+//import processing.sound.*;
+//SoundFile file;
 
 // Arrays of booleans for Keyboard handling. One boolean for each keyCode
 final int KEY_LIMIT = 1024;
@@ -17,6 +17,7 @@ Tile[] tiles;
 Tile[] tilesLeft;
 Tile[] tilesRight;
 Car car;
+Car car2;
 SelectLeft selectLeft;
 SelectRight selectRight;
 
@@ -69,19 +70,25 @@ void setup() {
   size(1280, 720);
 
   // Load a soundfile from the /data folder of the sketch and play it back
-  file = new SoundFile(this, "/music/funky_menu.wav");
-  file.loop();
+//  file = new SoundFile(this, "/music/funky_menu.wav");
+//  file.loop();
 
   tilesLeft = initTiles(tileCountLeft); // Initialize the left side of the grid
   tilesRight = initTiles(tileCountRight); // Initialize the right side of the grid
 
   //Create the car
   car = new Car();
+  car2 = new Car();
 
   car.setImage(loadImage("images/carUp.png"));
   car.x = tileXStartRight + 25;
   car.y = height - 20;
   car.velocity = 1.2;
+  
+  car2.setImage(loadImage("images/carUp.png"));
+  car2.x = tileXStartRight + 50;
+  car2.y = height - 20;
+  car2.velocity = 1.2;
 
   //Create the selector and give it the variables
   selectLeft = new SelectLeft();
@@ -281,12 +288,32 @@ void rotate90() {
     break;
   }
 }
+void rotate90_2() {
+  switch(previousDirection) {
+  case 0: 
+    previousDirection = 0;
+    car2.setImage(loadImage("images/carUp.png"));
+    break;
+  case 1:
+    previousDirection = 1;
+    car2.setImage(loadImage("images/carRight.png"));
+    break;
+  case 2:
+    previousDirection = 2;
+    car2.setImage(loadImage("images/carDown.png"));
+    break;
+  case 3:
+    previousDirection = 3;
+    car2.setImage(loadImage("images/carLeft.png"));
+    break;
+  }
+}
 
 // Function to let the game go back to the menu when you win
 void win() {
   win = true;
   if (keysPressed[ENTER] == true) {
-    file.stop();
+//    file.stop();
     gameState = mainMenu;
     limit2 = true;
     setup();
@@ -324,7 +351,44 @@ void updateGame() {
     destroyed = false;
     car.setImage(loadImage("images/carUp.png"));
     car.frame = 0;
+    
+    car2.y = height - 20;
+    car2.x = tileXStartRight + 25;
+    previousDirection = 0;
+    startCheck = false;
+    destroyed = false;
+    car2.setImage(loadImage("images/carUp.png"));
+    car2.frame = 0;
   }
+  
+    if (car2.y <= -20) {
+    win();
+  }
+  if (collisionTimer <= 100) {
+    collisionTimer++;
+  }
+  if (startCheck == true) {
+    if (destroyed) { 
+      car2.velocity = 0;
+    } else {
+      car2.velocity = 1.2;
+      rotate90();
+    }
+    CarCollision();
+    car2.move(previousDirection);
+  }
+  if (keysPressed[BACKSPACE] == true) {
+    startCheck = true;
+  } else if (keysPressed[SHIFT] == true) {
+    car2.y = height - 20;
+    car2.x = tileXStartRight + 50;
+    previousDirection = 0;
+    startCheck = false;
+    destroyed = false;
+    car2.setImage(loadImage("images/carUp.png"));
+    car2.frame = 0;
+  }
+  
   Select();
   
 }
@@ -384,6 +448,7 @@ void drawGame() {
 
   // Draw the car
   image(car.getImage(), car.x, car.y);
+  image(car2.getImage(), car2.x, car2.y);
 
   // Draw some placeholder text for the start and reset buttons
   fill(255, 0, 0);
@@ -414,10 +479,10 @@ void draw() {
 
   if (keysPressed[ENTER] && gameState == levelSelect && limit2 == false) {
 
-    file.stop();
+//    file.stop();
       // Load a soundfile from the /data folder of the sketch and play it back
-    file = new SoundFile(this, "/music/funky_theme.wav");
-    file.loop();
+//    file = new SoundFile(this, "/music/funky_theme.wav");
+//    file.loop();
     
     gameState = inGame;
     
