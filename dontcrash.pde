@@ -36,7 +36,7 @@ SelectRight selectRight;
 final int tileXStartLeft = 50;
 final int tileYStartLeft = 10;
 final int tileXStartRight = 500;
-final int tileYStartRight = 10;
+final int tileYStartRight = 50;
 
 int tileXLeft = tileXStartLeft;
 int tileYLeft = tileYStartLeft;
@@ -53,7 +53,7 @@ int tileDistanceYLeft = 200;
 int tileCountRight = 16;
 int tileRowRight = 4;
 int tileDistanceXRight = 200;
-int tileDistanceYRight = 200;
+int tileDistanceYRight = 180;
 
 final int lineX = 400;
 
@@ -387,6 +387,9 @@ void drawGame() {
   if (destroyed) {
     car.destroy();
   }
+
+  // Draw the finish line
+  image(loadImage("images/finishline.png"), lineX, 0);
 
   // Draw the line seperating the line select and the play field
   line(lineX, 0, lineX, height);
