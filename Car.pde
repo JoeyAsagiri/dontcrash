@@ -4,6 +4,7 @@ class Car {
   float y;
   float velocity;
   int frame = 0;
+  SoundFile file;
 
   final int width = 50;
   final int height = 80;
@@ -19,7 +20,11 @@ class Car {
   }
 
   // plays destruction-animation
-  void destroy() { 
+  void destroy() {
+    if (frame == 0) {
+          file = new SoundFile(dontcrash.this, "/sound/explosion.wav");
+    file.play();
+    }
     if (frame < 20) {
       frame++;
       img = (loadImage("images/explosion/car"+(frame/4)+".png"));

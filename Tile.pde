@@ -4,6 +4,7 @@ public class Tile {
   int y;
   PImage img;
   int[] collision = new int[4];
+  int tile;
 
   final int tileWidth = 100;
   final int tileHeight = 100;

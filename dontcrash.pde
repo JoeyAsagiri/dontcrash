@@ -1,6 +1,7 @@
 // Create a soundfile for the music  
 import processing.sound.*;
 SoundFile file;
+SoundFile file2;
 
 // Arrays of booleans for Keyboard handling. One boolean for each keyCode
 final int KEY_LIMIT = 1024;
@@ -153,14 +154,14 @@ void setup() {
 
   size(1280, 720);
 
-  // Load a soundfile from the /data folder of the sketch and play it back
-  file = new SoundFile(this, "/music/funky_menu.wav");
-  file.loop();
-
   // Initialize the left side of the grid
   if (start) {
     tilesLeft = initTiles(tileCountLeft, levelLeft);
     tilesRight = initTiles(tileCountRight, levelRight);
+  } else {
+      // Load a soundfile from the /data folder of the sketch and play it back
+  file = new SoundFile(this, "/music/funky_menu.wav");
+  file.loop();
   }
 
   //Create the car
@@ -213,12 +214,33 @@ void Select() {
 // Initialize a set amount of tiles and return an array of random tiles
 Tile[] initTiles(int tileCountLeft, int[] level) {
   tiles = new Tile[tileCountLeft];
-  print(level[1]);
   // Give an image and to every tile
   for (int i = 0; i < tileCountLeft; i++) {
-    print(level[i]);
+    String tile = "tile";
     tiles[i] = new Tile();
-    tiles[i].setImage(loadImage("images/tiles/tile" + level[i] + ".png"));  //assign the image of the chosen tile to the tile
+    tiles[i].tile = level[i];
+    if (level[i] == 8) {
+      float random = random(1,5);
+      print((int) random);
+      switch((int) random){
+        case 1:
+        tile = "hole";
+        break;
+        case 2:
+        tile = "rock";
+        break;
+        case 3:
+        tile = "thing";
+        case 4:
+        tile = "tile";
+        break;
+        default:
+        tile = "tile";
+        break;
+      }
+       
+    }
+    tiles[i].setImage(loadImage("images/tiles/" + tile + level[i] + ".png"));  //assign the image of the chosen tile to the tile
     tiles[i].setCollision(level[i]); //set the collision of the chosen tile to the tile (todo)
   } 
   //for (int i = 0; i < tileCountLeft; i++) {
