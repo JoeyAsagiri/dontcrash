@@ -95,10 +95,43 @@ int[] level1Rechts = new int[tileCountRight];
 int[] level2Links = new int[tileCountLeft];
 int[] level2Rechts = new int[tileCountRight];
 
+int[] level3Links = new int[tileCountRight];
+int[] level3Rechts = new int[tileCountRight];
+
 int testerinos = 0;
 
 int selectLevel = 0;
+
 void setup() {
+  
+  //smerige constanten voor invullen van tiles in levels
+ 
+  level3Links[0] = 8;
+  level3Links[1] = 2;
+  level3Links[2] = 3;
+  level3Links[3] = 4;
+  level3Links[4] = 5;
+  level3Links[5] = 6;
+  level3Links[6] = 7;
+  level3Links[7] = 8;
+
+  level3Rechts[0] = 1;
+  level3Rechts[1] = 8;
+  level3Rechts[2] = 8;
+  level3Rechts[3] = 8; 
+  level3Rechts[4] = 8;
+  level3Rechts[5] = 8;
+  level3Rechts[6] = 8;
+  level3Rechts[7] = 8;
+  level3Rechts[8] = 8;
+  level3Rechts[9] = 8;
+  level3Rechts[10] = 8;
+  level3Rechts[11] = 8;
+  level3Rechts[12] = 8;
+  level3Rechts[13] = 8;
+  level3Rechts[14] = 8;
+  level3Rechts[15] = 8; 
+ 
   level2Links[0] = 8;
   level2Links[1] = 2;
   level2Links[2] = 3;
@@ -362,21 +395,31 @@ void drawLevelSelect() {
   textSize(24);
   text("Level 1", width/2, height/2);
   text("Level 2", width/2, height/2 + 200);
+  text("Level 3", width/2 + 200, height/2);
+
+
+  //Joey's abominatie
+  if (keysPressed[RIGHT]) {
+    testerinos = 2;
+  }
 
   if (keysPressed[DOWN]) {
     testerinos = 1;
   }
 
-  if (keysPressed[UP]) {
+  if (keysPressed[UP] ^ keysPressed[LEFT]) {
     testerinos = 0;
   }
 
   if (testerinos == 0) {
     image(loadImage("images/selection.png"), (width/2 - 50), (height/2) - 50);
     selectLevel = 1;
-  } else {
+  } else if (testerinos == 1){
     image(loadImage("images/selection.png"), (width/2 - 50), (height/2) + 150);
     selectLevel = 2;
+  } else {
+    selectLevel = 3;
+    image(loadImage("images/selection.png"), (width/2) + 150, (height/2) - 50);
   }
 }
 
@@ -462,6 +505,9 @@ void draw() {
     case 2:
       levelLeft = level2Links;
       levelRight = level2Rechts;
+    case 3:
+      levelLeft = level3Links;
+      levelRight = level3Rechts;
       break;
     }
 
