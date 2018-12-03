@@ -1,6 +1,6 @@
 // Create a soundfile for the music  
-import processing.sound.*;
-SoundFile file;
+//import processing.sound.*;
+//SoundFile file;
 
 // Arrays of booleans for Keyboard handling. One boolean for each keyCode
 final int KEY_LIMIT = 1024;
@@ -17,6 +17,7 @@ Tile[] tiles;
 Tile[] tilesLeft;
 Tile[] tilesRight;
 Car car;
+Level level;
 SelectLeft selectLeft;
 SelectRight selectRight;
 
@@ -60,11 +61,11 @@ void setup() {
   background(14, 209, 69); // make the background green
 
   // Load a soundfile from the /data folder of the sketch and play it back
-  file = new SoundFile(this, "/music/funky_theme.wav");
-  file.loop();
+  //file = new SoundFile(this, "/music/funky_theme.wav");
+  //file.loop();
 
-  tilesLeft = initTiles(tileCountLeft); // Initialize the left side of the grid
-  tilesRight = initTiles(tileCountRight);
+  tilesLeft = initTilesLeft(tileCountLeft); // Initialize the left side of the grid
+  tilesRight = initTilesRight(tileCountRight);
 
   //Create the car
   car = new Car();
@@ -112,14 +113,25 @@ void Select() {
 }
 
 // Initialize a set amount of tiles and return an array of random tiles
-Tile[] initTiles(int tileCountLeft) {
-  tiles = new Tile[tileCountLeft];
+Tile[] initTilesLeft(int tileCountLinks) {
+  tiles = new Tile[tileCountLinks];
   // Give an image and collision(?) to every tile
-  for (int i = 0; i < tileCountLeft; i++) {
-    float random = random(1, 9); // Get a random tile 
+  for (int i = 0; i < tileCountLinks; i++) {
     tiles[i] = new Tile();
-    tiles[i].setImage(loadImage("images/tiles/tile" + (int) random + ".png"));  //assign the image of the chosen tile to the tile
-    tiles[i].setCollision((int) random); //set the collision of the chosen tile to the tile (todo)
+    tiles[i].setImage(loadImage("images/tiles/tile" + level.level1Links[i] + ".png"));  //assign the image of the chosen tile to the tile
+    tiles[i].setCollision(level.level1Links[i]); //set the collision of the chosen tile to the tile (todo)
+  } 
+  return tiles;
+}
+
+// Initialize a set amount of tiles and return an array of random tiles
+Tile[] initTilesRight(int tileCountRight) {
+  tiles = new Tile[tileCountRight];
+  // Give an image and collision(?) to every tile
+  for (int i = 0; i < tileCountRight; i++) {
+    tiles[i] = new Tile();
+    tiles[i].setImage(loadImage("images/tiles/tile" + (int) level.level1Links[i] + ".png"));  //assign the image of the chosen tile to the tile
+    tiles[i].setCollision((int) level.level1Links[i]); //set the collision of the chosen tile to the tile (todo)
   } 
   return tiles;
 }
