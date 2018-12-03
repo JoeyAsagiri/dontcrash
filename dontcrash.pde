@@ -221,7 +221,6 @@ Tile[] initTiles(int tileCountLeft, int[] level) {
     tiles[i].tile = level[i];
     if (level[i] == 8) {
       float random = random(1,5);
-      print((int) random);
       switch((int) random){
         case 1:
         tile = "hole";
@@ -301,6 +300,8 @@ void win() {
     file.stop();
     gameState = mainMenu;
     limit2 = true;
+    file = new SoundFile(this, "/music/funky_menu.wav");
+    file.loop();
     setup();
   }
 }
