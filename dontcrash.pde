@@ -106,16 +106,16 @@ void setup() {
   
   //smerige constanten voor invullen van tiles in levels
  
-  level3Links[0] = 8;
-  level3Links[1] = 2;
-  level3Links[2] = 3;
-  level3Links[3] = 4;
-  level3Links[4] = 5;
+  level3Links[0] = 3;
+  level3Links[1] = 4;
+  level3Links[2] = 6;
+  level3Links[3] = 6;
+  level3Links[4] = 1;
   level3Links[5] = 6;
   level3Links[6] = 7;
   level3Links[7] = 8;
 
-  level3Rechts[0] = 1;
+  level3Rechts[0] = 8;
   level3Rechts[1] = 8;
   level3Rechts[2] = 8;
   level3Rechts[3] = 8; 
@@ -125,9 +125,9 @@ void setup() {
   level3Rechts[7] = 8;
   level3Rechts[8] = 8;
   level3Rechts[9] = 8;
-  level3Rechts[10] = 8;
+  level3Rechts[10] = 3;
   level3Rechts[11] = 8;
-  level3Rechts[12] = 8;
+  level3Rechts[12] = 1;
   level3Rechts[13] = 8;
   level3Rechts[14] = 8;
   level3Rechts[15] = 8; 
