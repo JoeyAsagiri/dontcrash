@@ -304,7 +304,7 @@ void updateGame() {
     car.CarCollision();
     car.move(previousDirection);
   }
-  if (keysPressed[ENTER] == true) {
+  if (keysPressed[ENTER] == true && gameState = inGame) {
     startCheck = true;
   } else if (keysPressed['R'] == true) {
     car.y = height - 20;
