@@ -1,7 +1,6 @@
 // Create a soundfile for the music  
 import processing.sound.*;
 SoundFile file;
-SoundFile file2;
 
 // Arrays of booleans for Keyboard handling. One boolean for each keyCode
 final int KEY_LIMIT = 1024;
@@ -98,7 +97,7 @@ int selectLevel = 0;
 Level level;
 
 void setup() {
-  
+
   // Initializeer de level klas
   level = new Level();
 
@@ -109,14 +108,15 @@ void setup() {
     tilesLeft = initTiles(tileCountLeft, levelLeft);
     tilesRight = initTiles(tileCountRight, levelRight);
   } else {
-      // Load a soundfile from the /data folder of the sketch and play it back
-  file = new SoundFile(this, "/music/funky_menu.wav");
-  file.loop();
+    // Load a soundfile from the /data folder of the sketch and play it back
+    file = new SoundFile(this, "/music/funky_menu.wav");
+    file.loop();
   }
 
   //Create the car
   car = new Car();
 
+  // Zet de start positie van de auto TODO:: maak een nieuwe method om meerdere autos te maken met unieke posities
   car.x = tileXStartRight + 25;
   car.y = height - 20;
 
@@ -129,12 +129,12 @@ void setup() {
 
   selectRight.selectX = tileXRight;
   selectRight.selectY = tileYRight;
-  
+
   startCheck = false;
   win = false;
 }
 
-// calls the right select function
+// calls the select functions
 void Select() {
   if (Select) {
     if (keysPressed[' '] == true && limit == 0) {
@@ -169,34 +169,27 @@ Tile[] initTiles(int tileCountLeft, int[] level) {
     tiles[i] = new Tile();
     tiles[i].tile = level[i];
     if (level[i] == 8) {
-      float random = random(1,5);
-      switch((int) random){
-        case 1:
+      float random = random(1, 5);
+      switch((int) random) {
+      case 1:
         tile = "hole";
         break;
-        case 2:
+      case 2:
         tile = "rock";
         break;
-        case 3:
+      case 3:
         tile = "thing";
-        case 4:
+      case 4:
         tile = "tile";
         break;
-        default:
+      default:
         tile = "tile";
         break;
       }
-       
     }
     tiles[i].setImage(loadImage("images/tiles/" + tile + level[i] + ".png"));  //assign the image of the chosen tile to the tile
     tiles[i].setCollision(level[i]); //set the collision of the chosen tile to the tile (todo)
   } 
-  //for (int i = 0; i < tileCountLeft; i++) {
-  //  float random = random(1, 9); // Get a random tile 
-  //  tiles[i] = new Tile();
-  //  tiles[i].setImage(loadImage("images/tiles/tile" + (int) random + ".png"));  //assign the image of the chosen tile to the tile
-  //  tiles[i].setCollision((int) random); //set the collision of the chosen tile to the tile (todo)
-  //} 
   return tiles;
 }
 
@@ -238,10 +231,6 @@ void drawTilesRight() {
   tileYRight = tileYStartRight;
 }
 
-
-
-
-
 // Function to let the game go back to the menu when you win
 void win() {
   win = true;
@@ -255,7 +244,6 @@ void win() {
   }
 }
 
-
 // All the code that alters the Game World goes here
 void updateGame() {
   // Win condition
@@ -263,6 +251,7 @@ void updateGame() {
     win();
   }
 
+  // Use an int as a timer to prevent multiple collision checks on one tile
   if (collisionTimer <= 100) {
     collisionTimer++;
   }
@@ -276,6 +265,8 @@ void updateGame() {
     car.CarCollision();
     car.move(previousDirection);
   }
+
+  // Conditions to start the car and reset it.
   if (keysPressed[ENTER] == true && gameState == inGame) {
     startCheck = true;
   } else if (keysPressed['R'] == true) {
@@ -331,7 +322,7 @@ void drawLevelSelect() {
   if (testerinos == 0) {
     image(loadImage("images/selection.png"), (width/2 - 50), (height/2) - 50);
     selectLevel = 1;
-  } else if (testerinos == 1){
+  } else if (testerinos == 1) {
     image(loadImage("images/selection.png"), (width/2 - 50), (height/2) + 150);
     selectLevel = 2;
   } else {
@@ -339,7 +330,6 @@ void drawLevelSelect() {
     image(loadImage("images/selection.png"), (width/2) + 150, (height/2) - 50);
   }
 }
-
 
 void drawOptions() {
 
@@ -353,7 +343,6 @@ void drawGame() {
   background(14, 209, 69); // make the background green
 
   // Draw the tiles and selector
-
   drawTilesLeft();
   drawTilesRight();
   if (startCheck == false) {
@@ -379,11 +368,6 @@ void drawGame() {
   // Draw the car
   image(car.getImage(), car.x, car.y);
 
-  //// Draw some placeholder text for the start and reset buttons
-  //fill(255, 0, 0);
-  //textSize(11);
-  //text("Press Enter to select and place tiles. Press backspace to start and press shift to reset", 1050, 719);
-
   if (win) {
     textSize(100);
     fill(255, 0, 0);
@@ -392,10 +376,7 @@ void drawGame() {
 } 
 
 void draw() {
-
-
   // causes the screens to advance on buttonpresses
-
   if (!keysPressed[' ']) {
     limit2 = false;
   }
@@ -430,7 +411,6 @@ void draw() {
 
     setup();
   } 
-
 
   //if (keysPressed['O'] && gameState == mainMenu) {
   //  gameState = optionsScreen;
