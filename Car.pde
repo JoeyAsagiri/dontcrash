@@ -3,11 +3,18 @@ class Car {
   float x;
   float y;
   float velocity;
+  float originalVelocity;
   int frame = 0;
   SoundFile file;
 
   final int width = 50;
   final int height = 80;
+
+  Car() {
+     velocity = 3; 
+     originalVelocity = velocity;
+     img = loadImage("images/carUp.png");
+  }
 
   // function to set an image for the car
   void setImage(PImage image) {
@@ -127,7 +134,7 @@ void collisionCalc(int[] richting, int[] tile ) {
       previousDirection = richting[6];
     }
   } else
-    if (collisionTimer > 100) {
+    if (collisionTimer > (100 / originalVelocity)) {
       destroyed = true;
     }
 }
