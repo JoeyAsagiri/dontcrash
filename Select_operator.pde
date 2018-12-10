@@ -1,7 +1,7 @@
 class SelectOperator {
   
   boolean Select = true;
-  void createSelect(){
+  SelectOperator(){
   
   //Create the selector and give it the variables
   selectLeft = new SelectLeft();
@@ -11,7 +11,8 @@ class SelectOperator {
   selectLeft.selectY = tileYLeft;
 
   selectRight.selectX = tileXRight;
-  selectRight.selectY = tileYRight;}
+  selectRight.selectY = tileYRight;
+}
 
   // calls the right select function
   void Select() {

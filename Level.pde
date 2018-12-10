@@ -11,8 +11,8 @@ class Level {
   int[] level3Links = new int[tileCountRight];
   int[] level3Rechts = new int[tileCountRight];
 
-  //smerige constanten voor invullen van tiles in levels
-  void levelArray() {
+  //Constructor class om de level arrays in te vullen wanneer de klass aangemaakt word
+  Level() {
     level3Links[0] = 3;
     level3Links[1] = 4;
     level3Links[2] = 6;

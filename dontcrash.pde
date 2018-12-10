@@ -83,10 +83,16 @@ int selectLevel = 0;
 void setup() {  
   size(1280, 720);
 
+  // Initializeer de level class zodat de arrays ook echt geladen worden ;p
+  level = new Level();
+  selectOperator = new SelectOperator();
+
   // Initialize the left side of the grid
   if (start) {
-    tilesLeft = initTiles(tileCountLeft, level.levelLeft);
-    tilesRight = initTiles(tileCountRight, level.levelRight);
+    car1.setImage(loadImage("images/carUp.png"));
+    car2.setImage(loadImage("images/carUp.png"));
+    tilesLeft = initTiles(tileCountLeft, level.level1Links);
+    tilesRight = initTiles(tileCountRight, level.level1Rechts);
   } else {
     // Load a soundfile from the /data folder of the sketch and play it back
     file = new SoundFile(this, "/music/funky_menu.wav");
@@ -198,6 +204,7 @@ void updateGame() {
   if (collisionTimer <= 100) {
     collisionTimer++;
   }
+  
   if (startCheck == true) {
     if (car1.destroyed == true) {
         car1.velocity = 0;
@@ -207,7 +214,7 @@ void updateGame() {
       }
       car1.CarCollision();
       car1.move(previousDirection);
-    }
+    
     if (car2.destroyed == true){
         car2.velocity = 0;
       } else {
@@ -216,7 +223,7 @@ void updateGame() {
       }
       car2.CarCollision();
       car2.move(previousDirection);
-
+  
   if (keysPressed[ENTER] == true && gameState == inGame) {
     startCheck = true;
   } else if (keysPressed['R'] == true) {
@@ -234,6 +241,7 @@ void updateGame() {
     car2.frame = 0;
   }
   selectOperator.Select();
+  }
 }
 
 // All the code that draws the Game World goes here
@@ -345,8 +353,6 @@ void drawGame() {
 } 
 
 void draw() {
-
-
   // causes the screens to advance on buttonpresses
 
   if (!keysPressed[' ']) {
@@ -367,19 +373,19 @@ void draw() {
     gameState = inGame;
     start = true;
 
-    switch(selectLevel) {
-    case 1:
-      level.levelLeft = level.level1Links;
-      level.levelRight = level.level1Rechts;
-      break;
-    case 2:
-      level.levelLeft = level.level2Links;
-      level.levelRight = level.level2Rechts;
-    case 3:
-      level.levelLeft = level.level3Links;
-      level.levelRight = level.level3Rechts;
-      break;
-    }
+    //switch(selectLevel) {
+    //case 1:
+    //  level.levelLeft = level.level1Links;
+    //  level.levelRight = level.level1Rechts;
+    //  break;
+    //case 2:
+    //  level.levelLeft = level.level2Links;
+    //  level.levelRight = level.level2Rechts;
+    //case 3:
+    //  level.levelLeft = level.level3Links;
+    //  level.levelRight = level.level3Rechts;
+    //  break;
+    //}
 
     setup();
   } 
