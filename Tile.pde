@@ -1,5 +1,5 @@
 public class Tile {
-  
+
   int x;
   int y;
   PImage img;
@@ -72,5 +72,29 @@ public class Tile {
   }
   int[] getCollision() {
     return collision;
+  }
+
+  // Functie om de blokade tiles random te draaien als het een blokade tile is
+  String rotatedTile(int selectedTile) {
+    String rotate = "tile";
+
+    if (selectedTile == 8) {
+      float random = random(1, 5);
+      switch((int) random) {
+      case 1:
+        rotate = "hole";
+        break;
+      case 2:
+        rotate = "rock";
+        break;
+      case 3:
+        rotate = "thing";
+      default:
+        rotate = "tile";
+        break;
+      }
+    }
+    
+    return rotate;
   }
 }

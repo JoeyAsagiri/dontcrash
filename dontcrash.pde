@@ -165,29 +165,8 @@ Tile[] initTiles(int tileCountLeft, int[] level) {
   tiles = new Tile[tileCountLeft];
   // Give an image and to every tile
   for (int i = 0; i < tileCountLeft; i++) {
-    String tile = "tile";
     tiles[i] = new Tile();
-    tiles[i].tile = level[i];
-    if (level[i] == 8) {
-      float random = random(1, 5);
-      switch((int) random) {
-      case 1:
-        tile = "hole";
-        break;
-      case 2:
-        tile = "rock";
-        break;
-      case 3:
-        tile = "thing";
-      case 4:
-        tile = "tile";
-        break;
-      default:
-        tile = "tile";
-        break;
-      }
-    }
-    tiles[i].setImage(loadImage("images/tiles/" + tile + level[i] + ".png"));  //assign the image of the chosen tile to the tile
+    tiles[i].setImage(loadImage("images/tiles/" + tiles[i].rotatedTile(level[i]) + level[i] + ".png"));  //assign the image of the chosen tile to the tile
     tiles[i].setCollision(level[i]); //set the collision of the chosen tile to the tile (todo)
   } 
   return tiles;
