@@ -31,8 +31,10 @@ Tile[] tiles;
 Tile[] tilesLeft;
 Tile[] tilesRight;
 Car car;
-SelectLeft selectLeft;
-SelectRight selectRight;
+//SelectLeft selectLeft;
+//SelectRight selectRight;
+Select selectLeft;
+Select selectRight;
 
 final int tileXStartLeft = 50;
 final int tileYStartLeft = 10;
@@ -97,6 +99,7 @@ Level level;
 
 void setup() {
   
+  // Initializeer de level klas
   level = new Level();
 
   size(1280, 720);
@@ -118,14 +121,15 @@ void setup() {
   car.y = height - 20;
 
   //Create the selector and give it the variables
-  selectLeft = new SelectLeft();
-  selectRight = new SelectRight();
+  selectLeft = new Select();
+  selectRight = new Select();
 
   selectLeft.selectX = tileXLeft;
   selectLeft.selectY = tileYLeft;
 
   selectRight.selectX = tileXRight;
   selectRight.selectY = tileYRight;
+  
   startCheck = false;
   win = false;
 }
@@ -137,7 +141,7 @@ void Select() {
       Select = false;
       limit = 1;
     } else {
-      selectLeft.selectLeft();
+      selectLeft.select(tileDistanceXLeft, tileXLeft, tileDistanceYLeft, tileYLeft, tileXStartLeft, tileRowLeft, tileCountLeft);
     }
   } else {
     if (keysPressed[' '] == true && limit == 0) {
@@ -147,7 +151,7 @@ void Select() {
       tilesRight[selectRight.tileNumber] = tilesLeft[selectLeft.tileNumber];
       tilesLeft[selectLeft.tileNumber] = memory;
     } else {
-      selectRight.selectRight();
+      selectRight.select(tileDistanceXRight, tileXRight, tileDistanceYRight, tileYRight, tileXStartRight, tileRowRight, tileCountRight);
     }
   }
 
@@ -354,9 +358,9 @@ void drawGame() {
   drawTilesRight();
   if (startCheck == false) {
     if (Select) {
-      selectLeft.drawSelectLeft();
+      selectLeft.drawSelect();
     } else {
-      selectRight.drawSelectRight();
+      selectRight.drawSelect();
     }
   }
 
