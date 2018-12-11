@@ -67,6 +67,9 @@ final int levelSelect = 1;
 final int optionsScreen = 2;
 final int inGame = 3;
 
+// Options in settings
+int options = 0;
+
 
 // constants for the car movement directions
 final int up = 0;
@@ -89,8 +92,10 @@ int[] levelLeft = new int[tileCountLeft];
 int[] levelRight = new int[tileCountRight];
 
 boolean start = false;
+boolean music = true;
 
 int testerinos = 0;
+int mainselect = 0;
 
 int selectLevel = 0;
 
@@ -313,9 +318,48 @@ void drawLevelSelect() {
 void drawOptions() {
 
   background(101, 232, 255);
+  fill(0, 102, 153);
   textSize(30);
-  text("MUTE SOUND", width/2, 3*(height/5));
   text("QUIT GAME", width/2, 4*(height/5));
+  
+    if (options == 0) {
+      fill(255, 255, 255);
+      if (music == true) {
+        text("SOUND OFF", width/2, 3*(height/5));
+      }
+      else if (music == false) {
+        text("SOUND ON", width/2, 3*(height/5));
+      }
+      fill(0, 102, 153);
+    }
+    else if (options == 1) {
+      fill(0, 102, 153);
+      text("SOUND ON/OFF", width/2, 3*(height/5));
+      fill(255, 255, 255);
+      text("QUIT GAME", width/2, 4*(height/5));
+      fill(0, 102, 153);
+    }
+    if (keysPressed[DOWN] || (options == 2 && keysPressed[DOWN])) {
+      options = 1;
+    }
+    if ((options == 1) && (keysPressed[UP])) {
+      options = 0;
+    }
+    // Press RIGHT to turn the music off
+    if (options == 0 && keysPressed[RIGHT] && music == true) {
+      file.stop();
+      music = false;
+    }
+    // Press LEFT to turn the music on
+    if (options == 0 && keysPressed[LEFT] && music == false) {
+      file.loop();
+      music = true;
+    }
+    // Press this option to exit the game
+    if ((options == 1) && (keysPressed[ENTER])) {
+      exit();
+    }
+    
 }
 
 void drawGame() {
@@ -391,18 +435,18 @@ void draw() {
     setup();
   } 
 
-  //if (keysPressed['O'] && gameState == mainMenu) {
-  //  gameState = optionsScreen;
-  //}  
+  if (keysPressed['O'] && gameState == mainMenu) {
+    gameState = optionsScreen;
+  }  
 
 
-  //if (keysPressed[ENTER] && gameState == optionsScreen) {
-  //  gameState = mainMenu;
-  //} 
+  if (keysPressed[ENTER] && gameState == optionsScreen) {
+    gameState = optionsScreen;
+  } 
 
-  //if (keysPressed[ENTER] && gameState == levelSelect) {
-  //  gameState = mainMenu;
-  //}
+  if (keysPressed[ENTER] && gameState == levelSelect) {
+    gameState = mainMenu;
+  }
 
   // handles drawing of different screens
   updateGame();
