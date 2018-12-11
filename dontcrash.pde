@@ -30,10 +30,11 @@ Tile[] tiles;
 Tile[] tilesLeft;
 Tile[] tilesRight;
 Car car;
-//SelectLeft selectLeft;
-//SelectRight selectRight;
+Menu menu;
 Select selectLeft;
 Select selectRight;
+Level level;
+Ingame ingame;
 
 final int tileXStartLeft = 50;
 final int tileYStartLeft = 10;
@@ -94,12 +95,14 @@ int testerinos = 0;
 
 int selectLevel = 0;
 
-Level level;
+
 
 void setup() {
 
-  // Initializeer de level klas
+  // Initializeer de klassen
   level = new Level();
+  menu = new Menu();
+  ingame = new Ingame();
 
   size(1280, 720);
 
@@ -134,31 +137,7 @@ void setup() {
   win = false;
 }
 
-// calls the select functions
-void Select() {
-  if (Select) {
-    if (keysPressed[' '] == true && limit == 0) {
-      Select = false;
-      limit = 1;
-    } else {
-      selectLeft.select(tileDistanceXLeft, tileXLeft, tileDistanceYLeft, tileYLeft, tileXStartLeft, tileRowLeft, tileCountLeft);
-    }
-  } else {
-    if (keysPressed[' '] == true && limit == 0) {
-      Select = true;
-      limit = 1;
-      Tile memory = tilesRight[selectRight.tileNumber];
-      tilesRight[selectRight.tileNumber] = tilesLeft[selectLeft.tileNumber];
-      tilesLeft[selectLeft.tileNumber] = memory;
-    } else {
-      selectRight.select(tileDistanceXRight, tileXRight, tileDistanceYRight, tileYRight, tileXStartRight, tileRowRight, tileCountRight);
-    }
-  }
 
-  if (keysPressed[' '] == false) {
-    limit = 0;
-  }
-}
 
 // Initialize a set amount of tiles and return an array of random tiles
 Tile[] initTiles(int tileCountLeft, int[] level) {
@@ -223,137 +202,7 @@ void win() {
   }
 }
 
-// All the code that alters the Game World goes here
-void updateGame() {
-  // Win condition
-  if (car.y <= -20) {
-    win();
-  }
-
-  // Use an int as a timer to prevent multiple collision checks on one tile
-  if (collisionTimer <= 100) {
-    collisionTimer++;
-  }
-  if (startCheck == true) {
-    if (destroyed) { 
-      car.velocity = 0;
-    } else {
-      car.velocity = car.originalVelocity;
-      car.rotate90();
-    }
-    car.CarCollision();
-    car.move(previousDirection);
-  }
-
-  // Conditions to start the car and reset it.
-  if (keysPressed[ENTER] == true && gameState == inGame) {
-    startCheck = true;
-  } else if (keysPressed['R'] == true) {
-    car.y = height - 20;
-    car.x = tileXStartRight + 25;
-    previousDirection = 0;
-    startCheck = false;
-    destroyed = false;
-    car.setImage(loadImage("images/carUp.png"));
-    car.frame = 0;
-  }
-  Select();
-}
-
 // All the code that draws the Game World goes here
-
-void drawMainMenu() {
-
-  background(101, 232, 255);
-  textAlign(CENTER);
-  textSize(100);
-  text("DON'T CRASH", width/2, height/4); 
-  fill(0, 102, 153);
-  textSize(30);
-  text("LEVEL SELECT", width/2, 3*(height/5));
-  text("OPTIONS", width/2, 4*(height/5));
-}
-
-void drawLevelSelect() {
-
-  background(101, 232, 255);
-  textSize(100);
-  text("LEVEL SELECT", width/2, height/4);
-  textSize(24);
-  text("Level 1", width/2, height/2);
-  text("Level 2", width/2, height/2 + 200);
-  text("Level 3", width/2 + 200, height/2);
-
-
-  //Joey's abominatie
-  if (keysPressed[RIGHT]) {
-    testerinos = 2;
-  }
-
-  if (keysPressed[DOWN]) {
-    testerinos = 1;
-  }
-
-  if (keysPressed[UP] ^ keysPressed[LEFT]) {
-    testerinos = 0;
-  }
-
-  if (testerinos == 0) {
-    image(loadImage("images/selection.png"), (width/2 - 50), (height/2) - 50);
-    selectLevel = 1;
-  } else if (testerinos == 1) {
-    image(loadImage("images/selection.png"), (width/2 - 50), (height/2) + 150);
-    selectLevel = 2;
-  } else {
-    selectLevel = 3;
-    image(loadImage("images/selection.png"), (width/2) + 150, (height/2) - 50);
-  }
-}
-
-void drawOptions() {
-
-  background(101, 232, 255);
-  textSize(30);
-  text("MUTE SOUND", width/2, 3*(height/5));
-  text("QUIT GAME", width/2, 4*(height/5));
-}
-
-void drawGame() {
-  background(14, 209, 69); // make the background green
-
-  // Draw the tiles and selector
-  drawTilesLeft();
-  drawTilesRight();
-  if (startCheck == false) {
-    if (Select) {
-      selectLeft.drawSelect();
-    } else {
-      selectRight.drawSelect();
-    }
-  }
-
-
-  // Play the car explosion animation
-  if (destroyed) {
-    car.destroy();
-  }
-
-  // Draw the finish line
-  image(loadImage("images/finishline.png"), lineX, 0);
-
-  // Draw the line seperating the line select and the play field
-  line(lineX, 0, lineX, height);
-
-  // Draw the car
-  image(car.getImage(), car.x, car.y);
-
-  if (win) {
-    textSize(100);
-    fill(255, 0, 0);
-    text("YOU WIN!", width/2, height/2);
-  }
-} 
-
 void draw() {
   // causes the screens to advance on buttonpresses
   if (!keysPressed[' ']) {
@@ -405,23 +254,24 @@ void draw() {
   //}
 
   // handles drawing of different screens
-  updateGame();
+
   switch(gameState) {
 
   case mainMenu:
-    drawMainMenu();
+    menu.drawMainMenu();
     break;
 
   case levelSelect:
-    drawLevelSelect();
+    menu.drawLevelSelect();
     break;
 
   case optionsScreen:
-    drawOptions();
+    menu.drawOptions();
     break;
 
   case inGame:   
-    drawGame();
+    ingame.updateGame();
+    ingame.drawGame();
     break;
   }
 }

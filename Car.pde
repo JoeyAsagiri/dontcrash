@@ -44,25 +44,25 @@ void CarCollision() {
     switch (previousDirection) {
       
     case up:
-      if (car.x + car.width >= tilesRight[i].x && car.x + car.width <= tilesRight[i].x + tilesRight[i].tileWidth && car.y + car.height >= tilesRight[i].y && car.y + car.height <= tilesRight[i].y + tilesRight[i].tileHeight)
+      if (x + this.width >= tilesRight[i].x && x + this.width <= tilesRight[i].x + tilesRight[i].tileWidth && y + this.height >= tilesRight[i].y && y + this.height <= tilesRight[i].y + tilesRight[i].tileHeight)
         collisionResult(tilesRight[i].getCollision());
       break;
       
     case right:
-      if (car.x + car.width >= tilesRight[i].x + collisionAdjustment && car.x + car.width <= tilesRight[i].x + tilesRight[i].tileWidth + collisionAdjustment && car.y + car.height >= tilesRight[i].y && car.y + car.height <= tilesRight[i].y + tilesRight[i].tileHeight) 
+      if (x + this.width >= tilesRight[i].x + collisionAdjustment && x + this.width <= tilesRight[i].x + tilesRight[i].tileWidth + collisionAdjustment && y + this.height >= tilesRight[i].y && y + this.height <= tilesRight[i].y + tilesRight[i].tileHeight) 
         collisionResult(tilesRight[i].getCollision());
       break;
       
     case down:
-      if (car.x + car.width >= tilesRight[i].x && car.x + car.width <= tilesRight[i].x + tilesRight[i].tileWidth && car.y + car.height >= tilesRight[i].y + collisionAdjustment + (collisionAdjustment / 3) && car.y + car.height <= tilesRight[i].y + tilesRight[i].tileHeight + collisionAdjustment + (collisionAdjustment / 3))
+      if (car.x + this.width >= tilesRight[i].x && car.x + car.width <= tilesRight[i].x + tilesRight[i].tileWidth && y + this.height >= tilesRight[i].y + collisionAdjustment + (collisionAdjustment / 3) && y + this.height <= tilesRight[i].y + tilesRight[i].tileHeight + collisionAdjustment + (collisionAdjustment / 3))
         collisionResult(tilesRight[i].getCollision());
       break;
       
     case left:
-      if (car.x <= lineX) {
+      if (x <= lineX) {
         destroyed = true;
       }
-      if (car.x + car.width >= tilesRight[i].x - (collisionAdjustment / 3) && car.x + car.width <= tilesRight[i].x + tilesRight[i].tileWidth - (collisionAdjustment / 3) && car.y + car.height >= tilesRight[i].y && car.y + car.height <= tilesRight[i].y + tilesRight[i].tileHeight) 
+      if (x + this.width >= tilesRight[i].x - (collisionAdjustment / 3) && x + this.width <= tilesRight[i].x + tilesRight[i].tileWidth - (collisionAdjustment / 3) && y + this.height >= tilesRight[i].y && y + this.height <= tilesRight[i].y + tilesRight[i].tileHeight) 
         collisionResult(tilesRight[i].getCollision());
       break;
     }
