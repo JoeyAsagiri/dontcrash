@@ -79,6 +79,10 @@ class Ingame {
         Select = false;
         limit = 1;
       } else {
+        if (keysPressed[' '] && !tilesLeft[selectLeft.tileNumber].select && limit == 0) {
+          selectRight.reject.play();
+          limit = 1;
+        }
         selectLeft.select(tileDistanceXLeft, tileXLeft, tileDistanceYLeft, tileYLeft, tileXStartLeft, tileRowLeft, tileCountLeft);
       }
     } else {
@@ -89,6 +93,10 @@ class Ingame {
         tilesRight[selectRight.tileNumber] = tilesLeft[selectLeft.tileNumber];
         tilesLeft[selectLeft.tileNumber] = memory;
       } else {
+        if (keysPressed[' '] && !tilesRight[selectRight.tileNumber].select && limit == 0) {
+          selectRight.reject.play();
+          limit = 1;
+        }
         selectRight.select(tileDistanceXRight, tileXRight, tileDistanceYRight, tileYRight, tileXStartRight, tileRowRight, tileCountRight);
       }
     }

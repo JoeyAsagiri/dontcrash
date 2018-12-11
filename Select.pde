@@ -4,7 +4,12 @@ class Select {
 
   int tileNumber = 0;
   int limit = 0;
+  SoundFile reject;
 
+  Select(){
+     reject = new SoundFile(dontcrash.this, "/sound/false.wav"); 
+  }
+  
   // Function to move the selector over the tiles. 
   void select(int tileDistanceX, int tileX, int tileDistanceY, int tileY, int tileXStart, int tileRow, int tileCount) {
     if (keysPressed[RIGHT] && selectX != (tileDistanceX * (tileRow - 1) + tileXStart) && limit == 0) {
