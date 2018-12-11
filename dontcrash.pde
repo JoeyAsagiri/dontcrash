@@ -321,9 +321,10 @@ void drawOptions() {
   fill(0, 102, 153);
   textSize(30);
   text("QUIT GAME", width/2, 4*(height/5));
-  
+    // Sound
     if (options == 0) {
       fill(255, 255, 255);
+      // Switches text based on if the music is turned on or off
       if (music == true) {
         text("SOUND OFF", width/2, 3*(height/5));
       }
@@ -332,6 +333,7 @@ void drawOptions() {
       }
       fill(0, 102, 153);
     }
+    // Quit
     else if (options == 1) {
       fill(0, 102, 153);
       text("SOUND ON/OFF", width/2, 3*(height/5));
@@ -339,9 +341,11 @@ void drawOptions() {
       text("QUIT GAME", width/2, 4*(height/5));
       fill(0, 102, 153);
     }
+    // Press DOWN when 'Sound' is selected to move down
     if (keysPressed[DOWN] || (options == 2 && keysPressed[DOWN])) {
       options = 1;
     }
+    // Press UP when 'quit' selected to move up
     if ((options == 1) && (keysPressed[UP])) {
       options = 0;
     }
