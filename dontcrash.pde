@@ -18,6 +18,16 @@ void keyReleased() {
 }
 
 
+final color tile1load = color(255, 0, 0); //rood
+final color tile2load = color(255, 106, 0); //oranje
+final color tile3load = color(255, 216, 0); //geel
+final color tile4load = color(0, 255, 33); //felgroen
+final color tile5load = color(0, 255, 255); //felblauw
+final color tile6load = color(0, 38, 255); //donkerblauw
+final color tile7load = color(178, 0, 255); // paars
+final color tile8load = color(0, 0, 0); // afro-amerikaans
+
+
 boolean[] keysPressed = new boolean[KEY_LIMIT];
 boolean[] keysReleased = new boolean[KEY_LIMIT];
 
@@ -34,6 +44,7 @@ Car car;
 //SelectRight selectRight;
 Select selectLeft;
 Select selectRight;
+LevelLoader levelLoader;
 
 final int tileXStartLeft = 50;
 final int tileYStartLeft = 10;
@@ -98,8 +109,9 @@ Level level;
 
 void setup() {
 
-  // Initializeer de level klas
+  // Initializeer klassen
   level = new Level();
+  levelLoader = new LevelLoader();
 
   size(1280, 720);
 
@@ -374,19 +386,9 @@ void draw() {
     gameState = inGame;
     start = true;
 
-    switch(selectLevel) {
-    case 1:
-      levelLeft = level.level1Links;
-      levelRight = level.level1Rechts;
-      break;
-    case 2:
-      levelLeft = level.level2Links;
-      levelRight = level.level2Rechts;
-    case 3:
-      levelLeft = level.level3Links;
-      levelRight = level.level3Rechts;
-      break;
-    }
+      
+    levelLeft = levelLoader.loadLevel(loadImage("images/levels/level"+selectLevel+"links.png"), tileCountLeft);
+    levelRight = levelLoader.loadLevel(loadImage("images/levels/level"+selectLevel+"rechts.png"), tileCountRight);
 
     setup();
   } 
