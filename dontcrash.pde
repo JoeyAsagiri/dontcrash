@@ -149,7 +149,7 @@ void Select() {
       selectLeft.select(tileDistanceXLeft, tileXLeft, tileDistanceYLeft, tileYLeft, tileXStartLeft, tileRowLeft, tileCountLeft);
     }
   } else {
-    if (keysPressed[' '] == true && limit == 0) {
+    if (keysPressed[' '] == true && limit == 0 && gameState == inGame) {
       Select = true;
       limit = 1;
       Tile memory = tilesRight[selectRight.tileNumber];
@@ -223,7 +223,12 @@ void win() {
     gameState = mainMenu;
     limit2 = true;
     file = new SoundFile(this, "/music/funky_menu.wav");
-    file.loop();
+    if (music == true) {
+      file.loop();
+    }
+    else {
+      file.stop();
+    }
     setup();
   }
 }
@@ -345,7 +350,7 @@ void drawOptions() {
     if (keysPressed[DOWN] || (options == 2 && keysPressed[DOWN])) {
       options = 1;
     }
-    // Press UP when 'quit' selected to move up
+    // Press UP when 'quit' is selected to move up
     if ((options == 1) && (keysPressed[UP])) {
       options = 0;
     }
@@ -360,8 +365,12 @@ void drawOptions() {
       music = true;
     }
     // Press this option to exit the game
-    if ((options == 1) && (keysPressed[ENTER])) {
+    if ((options == 1) && (keysPressed[' '])) {
       exit();
+    }
+    //Return to main menu
+    if (keysPressed[ENTER]) {
+      gameState = mainMenu;
     }
     
 }
@@ -417,7 +426,9 @@ void draw() {
     file.stop();
     // Load a soundfile from the /data folder of the sketch and play it back
     file = new SoundFile(this, "/music/funky_theme.wav");
-    file.loop();
+    if (music == true) {
+      file.loop();
+    }
 
     gameState = inGame;
     start = true;
