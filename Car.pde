@@ -5,14 +5,15 @@ class Car {
   float velocity;
   float originalVelocity;
   int frame = 0;
+  boolean destroyed = false;
+  int previousDirection = up;
+  int collisionTimer = 0;
   SoundFile file;
 
   final int width = 50;
   final int height = 80;
 
   Car() {
-     velocity = 3; 
-     originalVelocity = velocity;
      img = loadImage("images/carUp.png");
   }
 
@@ -44,25 +45,25 @@ void CarCollision() {
     switch (previousDirection) {
       
     case up:
-      if (car.x + car.width >= tilesRight[i].x && car.x + car.width <= tilesRight[i].x + tilesRight[i].tileWidth && car.y + car.height >= tilesRight[i].y && car.y + car.height <= tilesRight[i].y + tilesRight[i].tileHeight)
+      if (x + width >= tilesRight[i].x && x + width <= tilesRight[i].x + tilesRight[i].tileWidth && y + height >= tilesRight[i].y && y + height <= tilesRight[i].y + tilesRight[i].tileHeight)
         collisionResult(tilesRight[i].getCollision());
       break;
       
     case right:
-      if (car.x + car.width >= tilesRight[i].x + collisionAdjustment && car.x + car.width <= tilesRight[i].x + tilesRight[i].tileWidth + collisionAdjustment && car.y + car.height >= tilesRight[i].y && car.y + car.height <= tilesRight[i].y + tilesRight[i].tileHeight) 
+      if (x + width >= tilesRight[i].x + collisionAdjustment && x + width <= tilesRight[i].x + tilesRight[i].tileWidth + collisionAdjustment && y + height >= tilesRight[i].y && y + height <= tilesRight[i].y + tilesRight[i].tileHeight) 
         collisionResult(tilesRight[i].getCollision());
       break;
       
     case down:
-      if (car.x + car.width >= tilesRight[i].x && car.x + car.width <= tilesRight[i].x + tilesRight[i].tileWidth && car.y + car.height >= tilesRight[i].y + collisionAdjustment + (collisionAdjustment / 3) && car.y + car.height <= tilesRight[i].y + tilesRight[i].tileHeight + collisionAdjustment + (collisionAdjustment / 3))
+      if (x + width >= tilesRight[i].x && x + width <= tilesRight[i].x + tilesRight[i].tileWidth && y + height >= tilesRight[i].y + collisionAdjustment + (collisionAdjustment / 3) && y + height <= tilesRight[i].y + tilesRight[i].tileHeight + collisionAdjustment + (collisionAdjustment / 3))
         collisionResult(tilesRight[i].getCollision());
       break;
       
     case left:
-      if (car.x <= lineX) {
+      if (x <= lineX) {
         destroyed = true;
       }
-      if (car.x + car.width >= tilesRight[i].x - (collisionAdjustment / 3) && car.x + car.width <= tilesRight[i].x + tilesRight[i].tileWidth - (collisionAdjustment / 3) && car.y + car.height >= tilesRight[i].y && car.y + car.height <= tilesRight[i].y + tilesRight[i].tileHeight) 
+      if (x + width >= tilesRight[i].x - (collisionAdjustment / 3) && x + width <= tilesRight[i].x + tilesRight[i].tileWidth - (collisionAdjustment / 3) && y + height >= tilesRight[i].y && y + height <= tilesRight[i].y + tilesRight[i].tileHeight) 
         collisionResult(tilesRight[i].getCollision());
       break;
     }
@@ -145,19 +146,19 @@ void rotate90() {
   switch(previousDirection) {
   case 0: 
     previousDirection = 0;
-    car.setImage(loadImage("images/carUp.png"));
+    setImage(loadImage("images/carUp.png"));
     break;
   case 1:
     previousDirection = 1;
-    car.setImage(loadImage("images/carRight.png"));
+    setImage(loadImage("images/carRight.png"));
     break;
   case 2:
     previousDirection = 2;
-    car.setImage(loadImage("images/carDown.png"));
+    setImage(loadImage("images/carDown.png"));
     break;
   case 3:
     previousDirection = 3;
-    car.setImage(loadImage("images/carLeft.png"));
+    setImage(loadImage("images/carLeft.png"));
     break;
   }
 }
