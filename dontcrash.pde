@@ -88,6 +88,8 @@ boolean win = false;
 
 int[] levelLeft = new int[tileCountLeft];
 int[] levelRight = new int[tileCountRight];
+boolean[] levelLeftSelect = new boolean[tileCountLeft];
+boolean[] levelRightSelect = new boolean[tileCountRight];
 
 boolean start = false;
 
@@ -140,10 +142,10 @@ void setup() {
 
 
 // Initialize a set amount of tiles and return an array of random tiles
-Tile[] initTiles(int tileCountLeft, int[] level) {
-  tiles = new Tile[tileCountLeft];
+Tile[] initTiles(int tileCount, int[] level) {
+  tiles = new Tile[tileCount];
   // Give an image and to every tile
-  for (int i = 0; i < tileCountLeft; i++) {
+  for (int i = 0; i < tileCount; i++) {
     tiles[i] = new Tile();
     tiles[i].setImage(loadImage("images/tiles/" + tiles[i].rotatedTile(level[i]) + level[i] + ".png"));  //assign the image of the chosen tile to the tile
     tiles[i].setCollision(level[i]); //set the collision of the chosen tile to the tile (todo)
@@ -227,13 +229,20 @@ void draw() {
     case 1:
       levelLeft = level.level1Links;
       levelRight = level.level1Rechts;
+      levelLeftSelect = level.level1LinksSelect;
+      levelRightSelect = level.level1RechtsSelect;
       break;
     case 2:
       levelLeft = level.level2Links;
       levelRight = level.level2Rechts;
+      levelLeftSelect = level.level2LinksSelect;
+      levelRightSelect = level.level2RechtsSelect;
+
     case 3:
       levelLeft = level.level3Links;
       levelRight = level.level3Rechts;
+      levelLeftSelect = level.level3LinksSelect;
+      levelRightSelect = level.level3RechtsSelect;
       break;
     }
 

@@ -1,12 +1,18 @@
 class Level {
   int[] level1Links = new int[tileCountLeft];
   int[] level1Rechts = new int[tileCountRight];
+  boolean[] level1LinksSelect = new boolean[tileCountRight];
+  boolean[] level1RechtsSelect = new boolean[tileCountRight];
 
   int[] level2Links = new int[tileCountLeft];
   int[] level2Rechts = new int[tileCountRight];
+  boolean[] level2LinksSelect = new boolean[tileCountRight];
+  boolean[] level2RechtsSelect = new boolean[tileCountRight];
 
   int[] level3Links = new int[tileCountRight];
   int[] level3Rechts = new int[tileCountRight];
+  boolean[] level3LinksSelect = new boolean[tileCountRight];
+  boolean[] level3RechtsSelect = new boolean[tileCountRight];
 
   //Constructor class om de level arrays in te vullen wanneer de klass aangemaakt word
   Level() {
@@ -18,6 +24,16 @@ class Level {
     level1Links[5] = 8;
     level1Links[6] = 8;
     level1Links[7] = 8;
+
+    level1LinksSelect[0] = true;
+    level1LinksSelect[1] = true;
+    level1LinksSelect[2] = true;
+    level1LinksSelect[3] = false;
+    level1LinksSelect[4] = false;
+    level1LinksSelect[5] = false;
+    level1LinksSelect[6] = false;
+    level1LinksSelect[7] = false;
+    level1LinksSelect[8] = false;
 
     level1Rechts[0] = 1;
     level1Rechts[1] = 8;
@@ -35,7 +51,24 @@ class Level {
     level1Rechts[13] = 8;
     level1Rechts[14] = 8;
     level1Rechts[15] = 8;
-    
+
+    level1RechtsSelect[0] = true;
+    level1RechtsSelect[1] = true;
+    level1RechtsSelect[2] = true;
+    level1RechtsSelect[3] = true;
+    level1RechtsSelect[4] = true;
+    level1RechtsSelect[5] = true;
+    level1RechtsSelect[6] = true;
+    level1RechtsSelect[7] = true;
+    level1RechtsSelect[8] = true;
+    level1RechtsSelect[9] = true;
+    level1RechtsSelect[10] = true;
+    level1RechtsSelect[11] = true;
+    level1RechtsSelect[12] = true;
+    level1RechtsSelect[13] = true;
+    level1RechtsSelect[14] = true;
+    level1RechtsSelect[15] = true;
+
     level2Links[0] = 8;
     level2Links[1] = 2;
     level2Links[2] = 3;
@@ -86,6 +119,6 @@ class Level {
     level3Rechts[12] = 1;
     level3Rechts[13] = 8;
     level3Rechts[14] = 8;
-    level3Rechts[15] = 8; 
+    level3Rechts[15] = 8;
   }
 }
