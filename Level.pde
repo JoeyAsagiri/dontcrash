@@ -58,16 +58,16 @@ class Level {
     level1RechtsSelect[3] = true;
     level1RechtsSelect[4] = true;
     level1RechtsSelect[5] = true;
-    level1RechtsSelect[6] = true;
-    level1RechtsSelect[7] = true;
+    level1RechtsSelect[6] = false;
+    level1RechtsSelect[7] = false;
     level1RechtsSelect[8] = true;
     level1RechtsSelect[9] = true;
-    level1RechtsSelect[10] = true;
-    level1RechtsSelect[11] = true;
+    level1RechtsSelect[10] = false;
+    level1RechtsSelect[11] = false;
     level1RechtsSelect[12] = true;
-    level1RechtsSelect[13] = true;
-    level1RechtsSelect[14] = true;
-    level1RechtsSelect[15] = true;
+    level1RechtsSelect[13] = false;
+    level1RechtsSelect[14] = false;
+    level1RechtsSelect[15] = false;
 
     level2Links[0] = 8;
     level2Links[1] = 2;

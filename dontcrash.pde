@@ -110,8 +110,8 @@ void setup() {
 
   // Initialize the left side of the grid
   if (start) {
-    tilesLeft = initTiles(tileCountLeft, levelLeft);
-    tilesRight = initTiles(tileCountRight, levelRight);
+    tilesLeft = initTiles(tileCountLeft, levelLeft, levelLeftSelect);
+    tilesRight = initTiles(tileCountRight, levelRight, levelRightSelect);
   } else {
     // Load a soundfile from the /data folder of the sketch and play it back
     file = new SoundFile(this, "/music/funky_menu.wav");
@@ -142,13 +142,14 @@ void setup() {
 
 
 // Initialize a set amount of tiles and return an array of random tiles
-Tile[] initTiles(int tileCount, int[] level) {
+Tile[] initTiles(int tileCount, int[] level, boolean[] levelSelect) {
   tiles = new Tile[tileCount];
   // Give an image and to every tile
   for (int i = 0; i < tileCount; i++) {
     tiles[i] = new Tile();
     tiles[i].setImage(loadImage("images/tiles/" + tiles[i].rotatedTile(level[i]) + level[i] + ".png"));  //assign the image of the chosen tile to the tile
-    tiles[i].setCollision(level[i]); //set the collision of the chosen tile to the tile (todo)
+    tiles[i].setCollision(level[i]);
+    tiles[i].select = levelSelect[i];
   } 
   return tiles;
 }

@@ -35,7 +35,7 @@ class Ingame {
     }
     Select();
   }
-  
+
   void drawGame() {
     background(14, 209, 69); // make the background green
 
@@ -44,9 +44,9 @@ class Ingame {
     drawTilesRight();
     if (startCheck == false) {
       if (Select) {
-        selectLeft.drawSelect();
+        selectLeft.drawSelect("left");
       } else {
-        selectRight.drawSelect();
+        selectRight.drawSelect("right");
       }
     }
 
@@ -71,18 +71,18 @@ class Ingame {
       text("YOU WIN!", width/2, height/2);
     }
   }
-  
+
   // calls the select functions
   void Select() {
     if (Select) {
-      if (keysPressed[' '] == true && limit == 0) {
+      if (keysPressed[' '] == true && limit == 0 && tilesLeft[selectLeft.tileNumber].select) {
         Select = false;
         limit = 1;
       } else {
         selectLeft.select(tileDistanceXLeft, tileXLeft, tileDistanceYLeft, tileYLeft, tileXStartLeft, tileRowLeft, tileCountLeft);
       }
     } else {
-      if (keysPressed[' '] == true && limit == 0) {
+      if (keysPressed[' '] == true && limit == 0 && tilesRight[selectRight.tileNumber].select) {
         Select = true;
         limit = 1;
         Tile memory = tilesRight[selectRight.tileNumber];

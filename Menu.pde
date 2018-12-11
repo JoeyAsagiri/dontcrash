@@ -33,14 +33,14 @@ class Menu {
     }
 
     if (testerinos == 0) {
-      image(loadImage("images/selection.png"), (width/2 - 50), (height/2) - 50);
+      image(loadImage("images/selectionFalse.png"), (width/2 - 50), (height/2) - 50);
       selectLevel = 1;
     } else if (testerinos == 1) {
-      image(loadImage("images/selection.png"), (width/2 - 50), (height/2) + 150);
+      image(loadImage("images/selectionFalse.png"), (width/2 - 50), (height/2) + 150);
       selectLevel = 2;
     } else {
       selectLevel = 3;
-      image(loadImage("images/selection.png"), (width/2) + 150, (height/2) - 50);
+      image(loadImage("images/selectionFalse.png"), (width/2) + 150, (height/2) - 50);
     }
   }
 

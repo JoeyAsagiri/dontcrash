@@ -1,5 +1,5 @@
 class Select {
-  
+
   int selectX, selectY;
 
   int tileNumber = 0;
@@ -34,7 +34,19 @@ class Select {
     }
   }
 
-  void drawSelect() {
-    image(loadImage("images/selection.png"), selectX, selectY);
+  void drawSelect(String side) {
+    if (side == "left") {
+      if (tilesLeft[selectLeft.tileNumber].select) {
+        image(loadImage("images/selectionTrue.png"), selectX, selectY);
+      } else {
+        image(loadImage("images/selectionFalse.png"), selectX, selectY);
+      }
+    } else {
+      if (tilesRight[selectRight.tileNumber].select) {
+        image(loadImage("images/selectionTrue.png"), selectX, selectY);
+      } else {
+        image(loadImage("images/selectionFalse.png"), selectX, selectY);
+      }
+    }
   }
 }
