@@ -244,11 +244,7 @@ void win() {
 
 // All the code that alters the Game World goes here
 void updateGame() {
-  // Win condition TODO
-  //if (carList[0].y <= -20 && carList[1].y <= -20) {
-  //  win();
-  //}
-
+  // Win condition
 
   if (startCheck == true) {
     for (Car car : carList) {
@@ -265,6 +261,13 @@ void updateGame() {
       car.CarCollision();
       car.move(car.previousDirection);
     }
+    int j = 0;
+    for (Car car : carList) {
+      if (car.y <= -20)
+        j++;
+    }
+    if (j == carList.length)
+      win = true;
   }
 
   // Conditions to start the car and reset it.

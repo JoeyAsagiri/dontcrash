@@ -8,6 +8,7 @@ class Car {
   boolean destroyed = false;
   int previousDirection = up;
   int collisionTimer = 0;
+  boolean winCheck = false;
   SoundFile file;
 
   final int width = 50;
