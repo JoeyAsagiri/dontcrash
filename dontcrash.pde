@@ -28,7 +28,8 @@ final color tile7load = color(178, 0, 255); // paars
 final color tile8load = color(0, 0, 0); // afro-amerikaans
 final color tileSelectFalse = tile8load;
 final color tileSelectTrue = color(255, 255, 255);
-
+final color carSelectFalse = tileSelectFalse;
+final color carSelectTrue = tileSelectTrue;
 
 boolean[] keysPressed = new boolean[KEY_LIMIT];
 boolean[] keysReleased = new boolean[KEY_LIMIT];
@@ -167,18 +168,18 @@ Car[] initCar(int carAmount) {
     car[i] = new Car();
     switch (i) {
     case 0:
-          car[i].carPosition(tileXStartRight + 25);
-          break;
-        case 1:
-          car[i].carPosition(tileXStartRight + tileDistanceXRight + 25);
-          break;
-        case 2:
-          car[i].carPosition(tileXStartRight + (tileDistanceXRight * 2) + 25);
-          break;
-        case 3:
-          car[i].carPosition(tileXStartRight + (tileDistanceXRight * 3) + 25);
-          break;
-        }
+      car[i].carPosition(tileXStartRight + 25);
+      break;
+    case 1:
+      car[i].carPosition(tileXStartRight + tileDistanceXRight + 25);
+      break;
+    case 2:
+      car[i].carPosition(tileXStartRight + (tileDistanceXRight * 2) + 25);
+      break;
+    case 3:
+      car[i].carPosition(tileXStartRight + (tileDistanceXRight * 3) + 25);
+      break;
+    }
   } 
   return car;
 }

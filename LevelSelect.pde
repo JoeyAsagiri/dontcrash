@@ -59,4 +59,20 @@ class LevelLoader {
       }
     return levelArray;
   }
+
+  boolean[] carLoad(PImage levelImage, int carAmount) {
+
+    boolean[] carChecker = new boolean[carAmount];
+
+    car = new Car[carAmount];
+
+    for (int i = 0; i < carAmount; i++) {
+      if (levelImage.get(i, 1) == carSelectTrue) {
+        carChecker[i] = true;
+      } else {
+        carChecker[i] = false;
+      }     
+    }
+    return carChecker;
+  }
 }
