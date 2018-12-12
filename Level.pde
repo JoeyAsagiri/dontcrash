@@ -104,21 +104,21 @@ class Level {
     level3Links[6] = 7;
     level3Links[7] = 8;
 
-    level3Rechts[0] = 8;
-    level3Rechts[1] = 8;
-    level3Rechts[2] = 8;
-    level3Rechts[3] = 8; 
-    level3Rechts[4] = 8;
-    level3Rechts[5] = 8;
-    level3Rechts[6] = 8;
-    level3Rechts[7] = 8;
-    level3Rechts[8] = 8;
-    level3Rechts[9] = 8;
-    level3Rechts[10] = 3;
-    level3Rechts[11] = 8;
+    level3Rechts[0] = 1;
+    level3Rechts[1] = 1;
+    level3Rechts[2] = 1;
+    level3Rechts[3] = 1; 
+    level3Rechts[4] = 1;
+    level3Rechts[5] = 1;
+    level3Rechts[6] = 1;
+    level3Rechts[7] = 1;
+    level3Rechts[8] = 1;
+    level3Rechts[9] = 1;
+    level3Rechts[10] = 1;
+    level3Rechts[11] = 1;
     level3Rechts[12] = 1;
-    level3Rechts[13] = 8;
-    level3Rechts[14] = 8;
-    level3Rechts[15] = 8;
+    level3Rechts[13] = 1;
+    level3Rechts[14] = 1;
+    level3Rechts[15] = 1; 
   }
 }
