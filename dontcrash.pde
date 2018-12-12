@@ -45,7 +45,6 @@ Menu menu;
 Select selectLeft;
 Select selectRight;
 LevelLoader levelLoader;
-Level level;
 Ingame ingame;
 
 final int tileXStartLeft = 50;
@@ -113,7 +112,6 @@ int selectLevel = 0;
 void setup() {
 
   // Initializeer klassen
-  level = new Level();
   levelLoader = new LevelLoader();
   menu = new Menu();
   ingame = new Ingame();

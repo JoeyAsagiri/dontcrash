@@ -4,8 +4,6 @@ class LevelLoader {
 
   int[] loadLevel(PImage levelImage, int tileCount) {
 
-  println("werkt dit?");
-
     int levelArray[] = new int[tileCount];
     int arrayLocation = 0;
 
