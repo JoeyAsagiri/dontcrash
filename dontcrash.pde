@@ -28,10 +28,12 @@ int[] richting = new int[7];
 Tile[] tiles;
 Tile[] tilesLeft;
 Tile[] tilesRight;
-//SelectLeft selectLeft;
-//SelectRight selectRight;
+Car car;
+Menu menu;
 Select selectLeft;
 Select selectRight;
+Level level;
+Ingame ingame;
 
 final int tileXStartLeft = 50;
 final int tileYStartLeft = 10;
@@ -84,6 +86,8 @@ boolean win = false;
 
 int[] levelLeft = new int[tileCountLeft];
 int[] levelRight = new int[tileCountRight];
+boolean[] levelLeftSelect = new boolean[tileCountLeft];
+boolean[] levelRightSelect = new boolean[tileCountRight];
 
 boolean start = false;
 
@@ -91,19 +95,21 @@ int testerinos = 0;
 
 int selectLevel = 0;
 
-Level level;
+
 
 void setup() {
 
-  // Initializeer de level klas
+  // Initializeer de klassen
   level = new Level();
+  menu = new Menu();
+  ingame = new Ingame();
 
   size(1280, 720);
 
   // Initialize the left side of the grid
   if (start) {
-    tilesLeft = initTiles(tileCountLeft, levelLeft);
-    tilesRight = initTiles(tileCountRight, levelRight);
+    tilesLeft = initTiles(tileCountLeft, levelLeft, levelLeftSelect);
+    tilesRight = initTiles(tileCountRight, levelRight, levelRightSelect);
     carList = initCar(2);
   } else {
     // Load a soundfile from the /data folder of the sketch and play it back
@@ -125,40 +131,17 @@ void setup() {
   win = false;
 }
 
-// calls the select functions
-void Select() {
-  if (Select) {
-    if (keysPressed[' '] == true && limit == 0) {
-      Select = false;
-      limit = 1;
-    } else {
-      selectLeft.select(tileDistanceXLeft, tileXLeft, tileDistanceYLeft, tileYLeft, tileXStartLeft, tileRowLeft, tileCountLeft);
-    }
-  } else {
-    if (keysPressed[' '] == true && limit == 0) {
-      Select = true;
-      limit = 1;
-      Tile memory = tilesRight[selectRight.tileNumber];
-      tilesRight[selectRight.tileNumber] = tilesLeft[selectLeft.tileNumber];
-      tilesLeft[selectLeft.tileNumber] = memory;
-    } else {
-      selectRight.select(tileDistanceXRight, tileXRight, tileDistanceYRight, tileYRight, tileXStartRight, tileRowRight, tileCountRight);
-    }
-  }
 
-  if (keysPressed[' '] == false) {
-    limit = 0;
-  }
-}
 
 // Initialize a set amount of tiles and return an array of random tiles
-Tile[] initTiles(int tileCountLeft, int[] level) {
-  tiles = new Tile[tileCountLeft];
+Tile[] initTiles(int tileCount, int[] level, boolean[] levelSelect) {
+  tiles = new Tile[tileCount];
   // Give an image and to every tile
-  for (int i = 0; i < tileCountLeft; i++) {
+  for (int i = 0; i < tileCount; i++) {
     tiles[i] = new Tile();
     tiles[i].setImage(loadImage("images/tiles/" + tiles[i].rotatedTile(level[i]) + level[i] + ".png"));  //assign the image of the chosen tile to the tile
-    tiles[i].setCollision(level[i]); //set the collision of the chosen tile to the tile (todo)
+    tiles[i].setCollision(level[i]);
+    tiles[i].select = levelSelect[i];
   } 
   return tiles;
 }
@@ -420,6 +403,7 @@ void drawGame() {
   }
 } 
 
+// All the code that draws the Game World goes here
 void draw() {
   // causes the screens to advance on buttonpresses
   if (!keysPressed[' ']) {
@@ -444,13 +428,20 @@ void draw() {
     case 1:
       levelLeft = level.level1Links;
       levelRight = level.level1Rechts;
+      levelLeftSelect = level.level1LinksSelect;
+      levelRightSelect = level.level1RechtsSelect;
       break;
     case 2:
       levelLeft = level.level2Links;
       levelRight = level.level2Rechts;
+      levelLeftSelect = level.level2LinksSelect;
+      levelRightSelect = level.level2RechtsSelect;
+
     case 3:
       levelLeft = level.level3Links;
       levelRight = level.level3Rechts;
+      levelLeftSelect = level.level3LinksSelect;
+      levelRightSelect = level.level3RechtsSelect;
       break;
     }
 
@@ -471,23 +462,24 @@ void draw() {
   //}
 
   // handles drawing of different screens
-  updateGame();
+
   switch(gameState) {
 
   case mainMenu:
-    drawMainMenu();
+    menu.drawMainMenu();
     break;
 
   case levelSelect:
-    drawLevelSelect();
+    menu.drawLevelSelect();
     break;
 
   case optionsScreen:
-    drawOptions();
+    menu.drawOptions();
     break;
 
   case inGame:   
-    drawGame();
+    ingame.updateGame();
+    ingame.drawGame();
     break;
   }
 }

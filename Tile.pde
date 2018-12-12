@@ -5,6 +5,7 @@ public class Tile {
   PImage img;
   int[] collision = new int[4];
   int tile;
+  boolean select;
 
   final int tileWidth = 100;
   final int tileHeight = 100;
