@@ -65,7 +65,7 @@ class Level {
     level1RechtsSelect[10] = false;
     level1RechtsSelect[11] = false;
     level1RechtsSelect[12] = true;
-    level1RechtsSelect[13] = false;
+    level1RechtsSelect[13] = true;
     level1RechtsSelect[14] = false;
     level1RechtsSelect[15] = false;
 

@@ -28,7 +28,9 @@ int[] richting = new int[7];
 Tile[] tiles;
 Tile[] tilesLeft;
 Tile[] tilesRight;
-Car car;
+Car[] car;
+Car[] carList;
+int carAmount = 2;
 Menu menu;
 Select selectLeft;
 Select selectRight;
@@ -146,10 +148,6 @@ Tile[] initTiles(int tileCount, int[] level, boolean[] levelSelect) {
   return tiles;
 }
 
-Car[] car;
-Car[] carList;
-int carAmount = 2;
-
 Car[] initCar(int carAmount) {
   car = new Car[carAmount];
   // Give an image and to every tile
@@ -240,168 +238,8 @@ void carToCarCollision(Car car) {
   }
 }
 
-// All the code that alters the Game World goes here
-void updateGame() {
-  // Win condition
-
-  if (startCheck == true) {
-    for (Car car : carList) {
-      // Use an int as a timer to prevent multiple collision checks on one tile
-      if (car.collisionTimer <= 100) {
-        car.collisionTimer++;
-      }
-      if (car.destroyed) {
-        car.velocity = 0;
-      } else {
-        car.velocity = car.originalVelocity;
-        car.rotate90();
-      }
-      car.CarCollision();
-      car.move(car.previousDirection);
-      carToCarCollision(car);
-    }
-    int j = 0;
-    for (Car car : carList) {
-      if (car.y <= -20)
-        j++;
-    }
-    if (j == carList.length)
-      win = true;
-  }
-
-  // Conditions to start the car and reset it.
-  if (keysPressed[ENTER] == true && gameState == inGame) {
-    startCheck = true;
-  } else if (keysPressed['R'] == true) {
-    int i = 0;
-    for (Car car : carList) {
-      switch (i) {
-      case 0:
-        car.velocity = 3; 
-        car.originalVelocity = car.velocity;
-        car.x = tileXStartRight + 25;
-        car.y = height - 20;
-        car.destroyed = false;
-        car.setImage(loadImage("images/carUp.png"));
-        car.previousDirection = up;
-        car.frame = 0;
-        break;
-      case 1:
-        car.velocity = 3; 
-        car.originalVelocity = car.velocity;
-        car.x = tileXStartRight + tileDistanceXRight + 25;
-        car.y = height - 20;
-        car.destroyed = false;
-        car.setImage(loadImage("images/carUp.png"));
-        car.previousDirection = up;
-        car.frame = 0;
-        break;
-      }
-      i++;
-    }
-    startCheck = false;
-  }
-  Select();
-}
 
 
-
-// All the code that draws the Game World goes here
-
-void drawMainMenu() {
-
-  background(101, 232, 255);
-  textAlign(CENTER);
-  textSize(100);
-  text("DON'T CRASH", width/2, height/4); 
-  fill(0, 102, 153);
-  textSize(30);
-  text("LEVEL SELECT", width/2, 3*(height/5));
-  text("OPTIONS", width/2, 4*(height/5));
-}
-
-void drawLevelSelect() {
-
-  background(101, 232, 255);
-  textSize(100);
-  text("LEVEL SELECT", width/2, height/4);
-  textSize(24);
-  text("Level 1", width/2, height/2);
-  text("Level 2", width/2, height/2 + 200);
-  text("Level 3", width/2 + 200, height/2);
-
-
-  //Joey's abominatie
-  if (keysPressed[RIGHT]) {
-    testerinos = 2;
-  }
-
-  if (keysPressed[DOWN]) {
-    testerinos = 1;
-  }
-
-  if (keysPressed[UP] ^ keysPressed[LEFT]) {
-    testerinos = 0;
-  }
-
-  if (testerinos == 0) {
-    image(loadImage("images/selection.png"), (width/2 - 50), (height/2) - 50);
-    selectLevel = 1;
-  } else if (testerinos == 1) {
-    image(loadImage("images/selection.png"), (width/2 - 50), (height/2) + 150);
-    selectLevel = 2;
-  } else {
-    selectLevel = 3;
-    image(loadImage("images/selection.png"), (width/2) + 150, (height/2) - 50);
-  }
-}
-
-void drawOptions() {
-
-  background(101, 232, 255);
-  textSize(30);
-  text("MUTE SOUND", width/2, 3*(height/5));
-  text("QUIT GAME", width/2, 4*(height/5));
-}
-
-void drawGame() {
-  background(14, 209, 69); // make the background green
-
-  // Draw the tiles and selector
-  drawTilesLeft();
-  drawTilesRight();
-  if (startCheck == false) {
-    if (Select) {
-      selectLeft.drawSelect();
-    } else {
-      selectRight.drawSelect();
-    }
-  }
-
-  // Play the car explosion animation
-  for (Car car : carList) {
-    if (car.destroyed) {
-      car.destroy();
-    }
-  }
-
-  // Draw the finish line
-  image(loadImage("images/finishline.png"), lineX, 0);
-
-  // Draw the line seperating the line select and the play field
-  line(lineX, 0, lineX, height);
-
-  // Draw the car
-  for (Car car : carList) {
-    image(car.getImage(), car.x, car.y);
-  }
-
-  if (win) {
-    textSize(100);
-    fill(255, 0, 0);
-    text("YOU WIN!", width/2, height/2);
-  }
-} 
 
 // All the code that draws the Game World goes here
 void draw() {

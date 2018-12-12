@@ -185,4 +185,19 @@ void rotate90() {
       break;
     }
   }
+  
+  void carToCarCollision() {
+
+  for (Car car2 : carList) {
+    if (x != car2.x) {
+      if (x + width >= car2.x &&     // r1 right edge past r2 left
+        x <= car2.x + car2.width &&       // r1 left edge past r2 right
+        y + height >= car2.y &&       // r1 top edge past r2 bottom
+        y <= car2.y + car2.height) {       // r1 bottom edge past r2 top
+        destroyed = true;
+        car2.destroyed = true;
+      }
+    }
+  }
+}
 }
