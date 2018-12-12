@@ -1,10 +1,15 @@
 class Select {
-  
+
   int selectX, selectY;
 
   int tileNumber = 0;
   int limit = 0;
+  SoundFile reject;
 
+  Select(){
+     reject = new SoundFile(dontcrash.this, "/sound/false.wav"); 
+  }
+  
   // Function to move the selector over the tiles. 
   void select(int tileDistanceX, int tileX, int tileDistanceY, int tileY, int tileXStart, int tileRow, int tileCount) {
     if (keysPressed[RIGHT] && selectX != (tileDistanceX * (tileRow - 1) + tileXStart) && limit == 0) {
@@ -34,7 +39,19 @@ class Select {
     }
   }
 
-  void drawSelect() {
-    image(loadImage("images/selection.png"), selectX, selectY);
+  void drawSelect(String side) {
+    if (side == "left") {
+      if (tilesLeft[selectLeft.tileNumber].select) {
+        image(loadImage("images/selectionTrue.png"), selectX, selectY);
+      } else {
+        image(loadImage("images/selectionFalse.png"), selectX, selectY);
+      }
+    } else {
+      if (tilesRight[selectRight.tileNumber].select) {
+        image(loadImage("images/selectionTrue.png"), selectX, selectY);
+      } else {
+        image(loadImage("images/selectionFalse.png"), selectX, selectY);
+      }
+    }
   }
 }

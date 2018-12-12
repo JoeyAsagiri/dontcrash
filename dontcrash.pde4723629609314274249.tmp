@@ -18,16 +18,6 @@ void keyReleased() {
 }
 
 
-final color tile1load = color(255, 0, 0); //rood
-final color tile2load = color(255, 106, 0); //oranje
-final color tile3load = color(255, 216, 0); //geel
-final color tile4load = color(0, 255, 33); //felgroen
-final color tile5load = color(0, 255, 255); //felblauw
-final color tile6load = color(0, 38, 255); //donkerblauw
-final color tile7load = color(178, 0, 255); // paars
-final color tile8load = color(0, 0, 0); // afro-amerikaans
-
-
 boolean[] keysPressed = new boolean[KEY_LIMIT];
 boolean[] keysReleased = new boolean[KEY_LIMIT];
 
@@ -38,15 +28,10 @@ int[] richting = new int[7];
 Tile[] tiles;
 Tile[] tilesLeft;
 Tile[] tilesRight;
-Car[] car;
-Car[] carList;
-int carAmount = 2;
-Menu menu;
+//SelectLeft selectLeft;
+//SelectRight selectRight;
 Select selectLeft;
 Select selectRight;
-LevelLoader levelLoader;
-Level level;
-Ingame ingame;
 
 final int tileXStartLeft = 50;
 final int tileYStartLeft = 10;
@@ -99,8 +84,6 @@ boolean win = false;
 
 int[] levelLeft = new int[tileCountLeft];
 int[] levelRight = new int[tileCountRight];
-boolean[] levelLeftSelect = new boolean[tileCountLeft];
-boolean[] levelRightSelect = new boolean[tileCountRight];
 
 boolean start = false;
 
@@ -108,22 +91,19 @@ int testerinos = 0;
 
 int selectLevel = 0;
 
-
+Level level;
 
 void setup() {
 
-  // Initializeer klassen
+  // Initializeer de level klas
   level = new Level();
-  levelLoader = new LevelLoader();
-  menu = new Menu();
-  ingame = new Ingame();
 
   size(1280, 720);
 
   // Initialize the left side of the grid
   if (start) {
-    tilesLeft = initTiles(tileCountLeft, levelLeft, levelLeftSelect);
-    tilesRight = initTiles(tileCountRight, levelRight, levelRightSelect);
+    tilesLeft = initTiles(tileCountLeft, levelLeft);
+    tilesRight = initTiles(tileCountRight, levelRight);
     carList = initCar(2);
   } else {
     // Load a soundfile from the /data folder of the sketch and play it back
@@ -145,20 +125,47 @@ void setup() {
   win = false;
 }
 
+// calls the select functions
+void Select() {
+  if (Select) {
+    if (keysPressed[' '] == true && limit == 0) {
+      Select = false;
+      limit = 1;
+    } else {
+      selectLeft.select(tileDistanceXLeft, tileXLeft, tileDistanceYLeft, tileYLeft, tileXStartLeft, tileRowLeft, tileCountLeft);
+    }
+  } else {
+    if (keysPressed[' '] == true && limit == 0) {
+      Select = true;
+      limit = 1;
+      Tile memory = tilesRight[selectRight.tileNumber];
+      tilesRight[selectRight.tileNumber] = tilesLeft[selectLeft.tileNumber];
+      tilesLeft[selectLeft.tileNumber] = memory;
+    } else {
+      selectRight.select(tileDistanceXRight, tileXRight, tileDistanceYRight, tileYRight, tileXStartRight, tileRowRight, tileCountRight);
+    }
+  }
 
+  if (keysPressed[' '] == false) {
+    limit = 0;
+  }
+}
 
 // Initialize a set amount of tiles and return an array of random tiles
-Tile[] initTiles(int tileCount, int[] level, boolean[] levelSelect) {
-  tiles = new Tile[tileCount];
+Tile[] initTiles(int tileCountLeft, int[] level) {
+  tiles = new Tile[tileCountLeft];
   // Give an image and to every tile
-  for (int i = 0; i < tileCount; i++) {
+  for (int i = 0; i < tileCountLeft; i++) {
     tiles[i] = new Tile();
     tiles[i].setImage(loadImage("images/tiles/" + tiles[i].rotatedTile(level[i]) + level[i] + ".png"));  //assign the image of the chosen tile to the tile
-    tiles[i].setCollision(level[i]);
-    tiles[i].select = levelSelect[i];
+    tiles[i].setCollision(level[i]); //set the collision of the chosen tile to the tile (todo)
   } 
   return tiles;
 }
+
+Car[] car;
+Car[] carList;
+int carAmount = 2;
 
 Car[] initCar(int carAmount) {
   car = new Car[carAmount];
@@ -235,25 +242,174 @@ void win() {
   }
 }
 
-void carToCarCollision(Car car) {
+// All the code that alters the Game World goes here
+void updateGame() {
+  // Win condition
 
-  for (Car car2 : carList) {
-    if (car.x != car2.x) {
-      if (car.x + car.width >= car2.x &&     // r1 right edge past r2 left
-        car.x <= car2.x + car2.width &&       // r1 left edge past r2 right
-        car.y + car.height >= car2.y &&       // r1 top edge past r2 bottom
-        car.y <= car2.y + car2.height) {       // r1 bottom edge past r2 top
-        car.destroyed = true;
-        car2.destroyed = true;
+  if (startCheck == true) {
+    for (Car car : carList) {
+      // Use an int as a timer to prevent multiple collision checks on one tile
+      if (car.collisionTimer <= 100) {
+        car.collisionTimer++;
       }
+      if (car.destroyed) {
+        car.velocity = 0;
+      } else {
+        car.velocity = car.originalVelocity;
+        car.rotate90();
+      }
+      car.CarCollision();
+      car.move(car.previousDirection);
     }
+    int j = 0;
+    for (Car car : carList) {
+      if (car.y <= -20)
+        j++;
+    }
+    if (j == carList.length)
+      win = true;
+  }
+
+  // Conditions to start the car and reset it.
+  if (keysPressed[ENTER] == true && gameState == inGame) {
+    startCheck = true;
+  } else if (keysPressed['R'] == true) {
+    int i = 0;
+    for (Car car : carList) {
+      switch (i) {
+      case 0:
+        car.velocity = 3; 
+        car.originalVelocity = car.velocity;
+        car.x = tileXStartRight + 25;
+        car.y = height - 20;
+        car.destroyed = false;
+        car.setImage(loadImage("images/carUp.png"));
+        car.previousDirection = up;
+        car.frame = 0;
+        break;
+      case 1:
+        car.velocity = 3; 
+        car.originalVelocity = car.velocity;
+        car.x = tileXStartRight + tileDistanceXRight + 25;
+        car.y = height - 20;
+        car.destroyed = false;
+        car.setImage(loadImage("images/carUp.png"));
+        car.previousDirection = up;
+        car.frame = 0;
+        break;
+      }
+      i++;
+    }
+    startCheck = false;
+  }
+  Select();
+  
+  //!!!!!!!!!
+  //if (1x + 1Width >= 2x &&     // r1 right edge past r2 left
+  //1x <= 2x + 2width &&       // r1 left edge past r2 right
+  //1y + height1 >= 2y &&       // r1 top edge past r2 bottom
+  //1y <= 2y + 2height) {       // r1 bottom edge past r2 top
+  
+  
+}
+
+// All the code that draws the Game World goes here
+
+void drawMainMenu() {
+
+  background(101, 232, 255);
+  textAlign(CENTER);
+  textSize(100);
+  text("DON'T CRASH", width/2, height/4); 
+  fill(0, 102, 153);
+  textSize(30);
+  text("LEVEL SELECT", width/2, 3*(height/5));
+  text("OPTIONS", width/2, 4*(height/5));
+}
+
+void drawLevelSelect() {
+
+  background(101, 232, 255);
+  textSize(100);
+  text("LEVEL SELECT", width/2, height/4);
+  textSize(24);
+  text("Level 1", width/2, height/2);
+  text("Level 2", width/2, height/2 + 200);
+  text("Level 3", width/2 + 200, height/2);
+
+
+  //Joey's abominatie
+  if (keysPressed[RIGHT]) {
+    testerinos = 2;
+  }
+
+  if (keysPressed[DOWN]) {
+    testerinos = 1;
+  }
+
+  if (keysPressed[UP] ^ keysPressed[LEFT]) {
+    testerinos = 0;
+  }
+
+  if (testerinos == 0) {
+    image(loadImage("images/selection.png"), (width/2 - 50), (height/2) - 50);
+    selectLevel = 1;
+  } else if (testerinos == 1) {
+    image(loadImage("images/selection.png"), (width/2 - 50), (height/2) + 150);
+    selectLevel = 2;
+  } else {
+    selectLevel = 3;
+    image(loadImage("images/selection.png"), (width/2) + 150, (height/2) - 50);
   }
 }
 
+void drawOptions() {
 
+  background(101, 232, 255);
+  textSize(30);
+  text("MUTE SOUND", width/2, 3*(height/5));
+  text("QUIT GAME", width/2, 4*(height/5));
+}
 
+void drawGame() {
+  background(14, 209, 69); // make the background green
 
-// All the code that draws the Game World goes here
+  // Draw the tiles and selector
+  drawTilesLeft();
+  drawTilesRight();
+  if (startCheck == false) {
+    if (Select) {
+      selectLeft.drawSelect();
+    } else {
+      selectRight.drawSelect();
+    }
+  }
+
+  // Play the car explosion animation
+  for (Car car : carList) {
+    if (car.destroyed) {
+      car.destroy();
+    }
+  }
+
+  // Draw the finish line
+  image(loadImage("images/finishline.png"), lineX, 0);
+
+  // Draw the line seperating the line select and the play field
+  line(lineX, 0, lineX, height);
+
+  // Draw the car
+  for (Car car : carList) {
+    image(car.getImage(), car.x, car.y);
+  }
+
+  if (win) {
+    textSize(100);
+    fill(255, 0, 0);
+    text("YOU WIN!", width/2, height/2);
+  }
+} 
+
 void draw() {
   // causes the screens to advance on buttonpresses
   if (!keysPressed[' ']) {
@@ -273,10 +429,20 @@ void draw() {
 
     gameState = inGame;
     start = true;
-      
-    levelLeft = levelLoader.loadLevel(loadImage("images/levels/level"+selectLevel+"links.png"), tileCountLeft);
-    levelRight = levelLoader.loadLevel(loadImage("images/levels/level"+selectLevel+"rechts.png"), tileCountRight);
 
+    switch(selectLevel) {
+    case 1:
+      levelLeft = level.level1Links;
+      levelRight = level.level1Rechts;
+      break;
+    case 2:
+      levelLeft = level.level2Links;
+      levelRight = level.level2Rechts;
+    case 3:
+      levelLeft = level.level3Links;
+      levelRight = level.level3Rechts;
+      break;
+    }
 
     setup();
   } 
@@ -295,24 +461,23 @@ void draw() {
   //}
 
   // handles drawing of different screens
-
+  updateGame();
   switch(gameState) {
 
   case mainMenu:
-    menu.drawMainMenu();
+    drawMainMenu();
     break;
 
   case levelSelect:
-    menu.drawLevelSelect();
+    drawLevelSelect();
     break;
 
   case optionsScreen:
-    menu.drawOptions();
+    drawOptions();
     break;
 
   case inGame:   
-    ingame.updateGame();
-    ingame.drawGame();
+    drawGame();
     break;
   }
 }
