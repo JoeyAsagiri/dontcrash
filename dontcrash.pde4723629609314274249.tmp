@@ -242,21 +242,6 @@ void win() {
   }
 }
 
-void carToCarCollision(Car car) {
-
-  for (Car car2 : carList) {
-    if (car.x != car2.x) {
-      if (car.x + car.width >= car2.x &&     // r1 right edge past r2 left
-        car.x <= car2.x + car2.width &&       // r1 left edge past r2 right
-        car.y + car.height >= car2.y &&       // r1 top edge past r2 bottom
-        car.y <= car2.y + car2.height) {       // r1 bottom edge past r2 top
-        car.destroyed = true;
-        car2.destroyed = true;
-      }
-    }
-  }
-}
-
 // All the code that alters the Game World goes here
 void updateGame() {
   // Win condition
@@ -275,7 +260,6 @@ void updateGame() {
       }
       car.CarCollision();
       car.move(car.previousDirection);
-      carToCarCollision(car);
     }
     int j = 0;
     for (Car car : carList) {
@@ -319,9 +303,15 @@ void updateGame() {
     startCheck = false;
   }
   Select();
+  
+  //!!!!!!!!!
+  //if (1x + 1Width >= 2x &&     // r1 right edge past r2 left
+  //1x <= 2x + 2width &&       // r1 left edge past r2 right
+  //1y + height1 >= 2y &&       // r1 top edge past r2 bottom
+  //1y <= 2y + 2height) {       // r1 bottom edge past r2 top
+  
+  
 }
-
-
 
 // All the code that draws the Game World goes here
 
