@@ -25,17 +25,17 @@ class Ingame {
         if (car.y <= -20)
           j++;
       }
-      if (j == carList.length)
-        win = true;
+      if (j == carList.length) {
+        win();
+      }
     }
 
     // Conditions to start the car and reset it.
     if (keysPressed[ENTER] == true && gameState == inGame) {
       startCheck = true;
     } else if (keysPressed['R'] == true) {
-      int i = 0;
       for (Car car : carList) {
-        switch (i) {
+        switch (car.number) {
         case 0:
           car.carPosition(tileXStartRight + 25);
           break;
@@ -49,11 +49,23 @@ class Ingame {
           car.carPosition(tileXStartRight + (tileDistanceXRight * 3) + 25);
           break;
         }
-        i++;
       }
       startCheck = false;
     }
     Select();
+  }
+
+  // Function to let the game go back to the menu when you win
+  void win() {
+    win = true;
+    if (keysPressed[' '] == true) {
+      file.stop();
+      gameState = mainMenu;
+      limit2 = true;
+      file = new SoundFile(dontcrash.this, "/music/funky_menu.wav");
+      file.loop();
+      setup();
+    }
   }
 
 

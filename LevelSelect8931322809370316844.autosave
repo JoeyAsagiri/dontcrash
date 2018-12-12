@@ -41,6 +41,7 @@ class LevelLoader {
 
     boolean levelArray[] = new boolean[tileCount];
     int arrayLocation = 0;
+
     // for each column in the image
     for (int iY = 0; iY<levelImage.height; iY++)
       // for each row in the image
@@ -57,20 +58,5 @@ class LevelLoader {
         arrayLocation++;
       }
     return levelArray;
-  }
-
-  boolean[] carLoad(PImage levelImage, int carAmount) {
-
-    boolean[] carChecker = new boolean[carAmount];
-
-    for (int iY = 0; iY<levelImage.height; iY++)
-      for (int iX = 0; iX<levelImage.width; iX++) {
-        if  (levelImage.get(iX, iY) == carSelectTrue) {
-          carChecker[iX] = true;
-        } else {
-          carChecker[iX] = false;
-        }
-      }
-    return carChecker;
   }
 }

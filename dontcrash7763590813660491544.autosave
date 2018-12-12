@@ -28,8 +28,7 @@ final color tile7load = color(178, 0, 255); // paars
 final color tile8load = color(0, 0, 0); // afro-amerikaans
 final color tileSelectFalse = tile8load;
 final color tileSelectTrue = color(255, 255, 255);
-final color carSelectFalse = tileSelectFalse;
-final color carSelectTrue = tileSelectTrue;
+
 
 boolean[] keysPressed = new boolean[KEY_LIMIT];
 boolean[] keysReleased = new boolean[KEY_LIMIT];
@@ -43,7 +42,7 @@ Tile[] tilesLeft;
 Tile[] tilesRight;
 Car[] car;
 Car[] carList;
-int maxCars = 4;
+int carAmount = 4;
 Menu menu;
 Select selectLeft;
 Select selectRight;
@@ -103,7 +102,6 @@ int[] levelLeft = new int[tileCountLeft];
 int[] levelRight = new int[tileCountRight];
 boolean[] levelLeftSelect = new boolean[tileCountLeft];
 boolean[] levelRightSelect = new boolean[tileCountRight];
-boolean[] carChecker = new boolean[maxCars];
 
 boolean start = false;
 
@@ -126,7 +124,7 @@ void setup() {
   if (start) {
     tilesLeft = initTiles(tileCountLeft, levelLeft, levelLeftSelect);
     tilesRight = initTiles(tileCountRight, levelRight, levelRightSelect);
-    carList = initCar(carChecker);
+    carList = initCar(carAmount);
   } else {
     // Load a soundfile from the /data folder of the sketch and play it back
     file = new SoundFile(this, "/music/funky_menu.wav");
@@ -162,40 +160,26 @@ Tile[] initTiles(int tileCount, int[] level, boolean[] levelSelect) {
   return tiles;
 }
 
-Car[] initCar(boolean[] carChecker) {
-  int carAmount = 0;
-  for (int i = 0; i < carChecker.length; i++) {
-    if (carChecker[i]) {
-      carAmount++;
-    }
-  }
- 
+Car[] initCar(int carAmount) {
   car = new Car[carAmount];
- 
   // Give an image and to every tile
-  int carCount = 0;
-  for (int i = 0; i < carChecker.length; i++) {
-    if (carChecker[i] == true) {
-      car[carCount] = new Car();
-      switch (i) {
-      case 0:
-        car[carCount].carPosition(tileXStartRight + 25);
-        break;
-      case 1:
-        car[carCount].carPosition(tileXStartRight + tileDistanceXRight + 25);
-        break;
-      case 2:
-        car[carCount].carPosition(tileXStartRight + (tileDistanceXRight * 2) + 25);
-        break;
-      case 3:
-        car[carCount].carPosition(tileXStartRight + (tileDistanceXRight * 3) + 25);
-        break;
-      }
-      car[carCount].number = i;
-      carCount++;
-    }
-  }
-
+  for (int i = 0; i < carAmount; i++) {
+    car[i] = new Car();
+    switch (i) {
+    case 0:
+          car[i].carPosition(tileXStartRight + 25);
+          break;
+        case 1:
+          car[i].carPosition(tileXStartRight + tileDistanceXRight + 25);
+          break;
+        case 2:
+          car[i].carPosition(tileXStartRight + (tileDistanceXRight * 2) + 25);
+          break;
+        case 3:
+          car[i].carPosition(tileXStartRight + (tileDistanceXRight * 3) + 25);
+          break;
+        }
+  } 
   return car;
 }
 
@@ -238,6 +222,18 @@ void drawTilesRight() {
   tileYRight = tileYStartRight;
 }
 
+// Function to let the game go back to the menu when you win
+void win() {
+  win = true;
+  if (keysPressed[' '] == true) {
+    file.stop();
+    gameState = mainMenu;
+    limit2 = true;
+    file = new SoundFile(this, "/music/funky_menu.wav");
+    file.loop();
+    setup();
+  }
+}
 
 void carToCarCollision(Car car) {
 
@@ -275,8 +271,6 @@ void draw() {
     file = new SoundFile(this, "/music/funky_theme.wav");
     file.loop();
 
-    println();
-
     gameState = inGame;
     start = true;
 
@@ -284,7 +278,6 @@ void draw() {
     levelRight = levelLoader.loadLevel(loadImage("images/levels/level"+selectLevel+"rechts.png"), tileCountRight);
     levelLeftSelect = levelLoader.loadSelect(loadImage("images/selectcheck/level"+selectLevel+"links.png"), tileCountLeft);
     levelRightSelect = levelLoader.loadSelect(loadImage("images/selectcheck/level"+selectLevel+"rechts.png"), tileCountRight);
-    carChecker = levelLoader.carLoad(loadImage("images/caramount/level"+selectLevel+".png"), maxCars);
 
 
     setup();

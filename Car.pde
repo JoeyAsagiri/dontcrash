@@ -10,6 +10,7 @@ class Car {
   int collisionTimer = 0;
   boolean winCheck = false;
   SoundFile file;
+  int number;
 
   final int width = 50;
   final int height = 80;
