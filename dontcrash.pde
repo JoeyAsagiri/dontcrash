@@ -450,7 +450,7 @@ void draw() {
     setup();
   } 
 
-  if (keysPressed['O'] && gameState == mainMenu) {
+  if (keysPressed['O'] && gameState == mainMenu || keysPressed['O'] && gameState == inGame) {
     gameState = optionsScreen;
   }  
 
