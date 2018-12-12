@@ -26,8 +26,7 @@ final color tile5load = color(0, 255, 255); //felblauw
 final color tile6load = color(0, 38, 255); //donkerblauw
 final color tile7load = color(178, 0, 255); // paars
 final color tile8load = color(0, 0, 0); // afro-amerikaans
-final color tileSelectFalse = tile8load;
-final color tileSelectTrue = color(255, 255, 255);
+
 
 
 boolean[] keysPressed = new boolean[KEY_LIMIT];
@@ -42,7 +41,7 @@ Tile[] tilesLeft;
 Tile[] tilesRight;
 Car[] car;
 Car[] carList;
-int carAmount = 4;
+int carAmount = 2;
 Menu menu;
 Select selectLeft;
 Select selectRight;
@@ -124,7 +123,7 @@ void setup() {
   if (start) {
     tilesLeft = initTiles(tileCountLeft, levelLeft, levelLeftSelect);
     tilesRight = initTiles(tileCountRight, levelRight, levelRightSelect);
-    carList = initCar(carAmount);
+    carList = initCar(2);
   } else {
     // Load a soundfile from the /data folder of the sketch and play it back
     file = new SoundFile(this, "/music/funky_menu.wav");
@@ -167,18 +166,18 @@ Car[] initCar(int carAmount) {
     car[i] = new Car();
     switch (i) {
     case 0:
-          car[i].carPosition(tileXStartRight + 25);
-          break;
-        case 1:
-          car[i].carPosition(tileXStartRight + tileDistanceXRight + 25);
-          break;
-        case 2:
-          car[i].carPosition(tileXStartRight + (tileDistanceXRight * 2) + 25);
-          break;
-        case 3:
-          car[i].carPosition(tileXStartRight + (tileDistanceXRight * 3) + 25);
-          break;
-        }
+      car[i].velocity = 3; 
+      car[i].originalVelocity = car[i].velocity;
+      car[i].x = tileXStartRight + 25;
+      car[i].y = height - 20;
+      break;
+    case 1:
+      car[i].velocity = 3; 
+      car[i].originalVelocity = car[i].velocity;
+      car[i].x = tileXStartRight + tileDistanceXRight + 25;
+      car[i].y = height - 20;
+      break;
+    }
   } 
   return car;
 }
@@ -273,11 +272,9 @@ void draw() {
 
     gameState = inGame;
     start = true;
-
+      
     levelLeft = levelLoader.loadLevel(loadImage("images/levels/level"+selectLevel+"links.png"), tileCountLeft);
     levelRight = levelLoader.loadLevel(loadImage("images/levels/level"+selectLevel+"rechts.png"), tileCountRight);
-    levelLeftSelect = levelLoader.loadSelect(loadImage("images/selectcheck/level"+selectLevel+"links.png"), tileCountLeft);
-    levelRightSelect = levelLoader.loadSelect(loadImage("images/selectcheck/level"+selectLevel+"rechts.png"), tileCountRight);
 
 
     setup();

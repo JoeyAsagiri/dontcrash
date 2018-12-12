@@ -36,8 +36,8 @@ class LevelLoader {
       }
     return levelArray;
   }
-  
-    boolean[] loadSelect(PImage levelImage, int tileCount) {
+
+  boolean[] loadSelect(PImage levelImage, int tileCount) {
 
     boolean levelArray[] = new boolean[tileCount];
     int arrayLocation = 0;
@@ -59,5 +59,4 @@ class LevelLoader {
       }
     return levelArray;
   }
-  
 }

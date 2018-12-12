@@ -1,107 +1,103 @@
 class Ingame {
 
-// All the code that alters the Game World goes here
-void updateGame() {
-  // Win condition
+  // All the code that alters the Game World goes here
+  void updateGame() {
+    // Win condition
 
-  if (startCheck == true) {
-    for (Car car : carList) {
-      // Use an int as a timer to prevent multiple collision checks on one tile
-      if (car.collisionTimer <= 100) {
-        car.collisionTimer++;
+    if (startCheck == true) {
+      for (Car car : carList) {
+        // Use an int as a timer to prevent multiple collision checks on one tile
+        if (car.collisionTimer <= 100) {
+          car.collisionTimer++;
+        }
+        if (car.destroyed) {
+          car.velocity = 0;
+        } else {
+          car.velocity = car.originalVelocity;
+          car.rotate90();
+        }
+        car.CarCollision();
+        car.move(car.previousDirection);
+        carToCarCollision(car);
       }
-      if (car.destroyed) {
-        car.velocity = 0;
-      } else {
-        car.velocity = car.originalVelocity;
-        car.rotate90();
+      int j = 0;
+      for (Car car : carList) {
+        if (car.y <= -20)
+          j++;
       }
-      car.CarCollision();
-      car.move(car.previousDirection);
-      carToCarCollision(car);
+      if (j == carList.length)
+        win = true;
     }
-    int j = 0;
-    for (Car car : carList) {
-      if (car.y <= -20)
-        j++;
+
+    // Conditions to start the car and reset it.
+    if (keysPressed[ENTER] == true && gameState == inGame) {
+      startCheck = true;
+    } else if (keysPressed['R'] == true) {
+      int i = 0;
+      for (Car car : carList) {
+        switch (i) {
+        case 0:
+          car.carPosition(tileXStartRight + 25);
+          break;
+        case 1:
+          car.carPosition(tileXStartRight + tileDistanceXRight + 25);
+          break;
+        case 2:
+          car.carPosition(tileXStartRight + (tileDistanceXRight * 2) + 25);
+          break;
+        case 3:
+          car.carPosition(tileXStartRight + (tileDistanceXRight * 3) + 25);
+          break;
+        }
+        i++;
+      }
+      startCheck = false;
     }
-    if (j == carList.length)
-      win = true;
+    Select();
   }
 
-  // Conditions to start the car and reset it.
-  if (keysPressed[ENTER] == true && gameState == inGame) {
-    startCheck = true;
-  } else if (keysPressed['R'] == true) {
-    int i = 0;
-    for (Car car : carList) {
-      switch (i) {
-      case 0:
-        car.velocity = 3; 
-        car.originalVelocity = car.velocity;
-        car.x = tileXStartRight + 25;
-        car.y = height - 20;
-        car.destroyed = false;
-        car.setImage(loadImage("images/carUp.png"));
-        car.previousDirection = up;
-        car.frame = 0;
-        break;
-      case 1:
-        car.velocity = 3; 
-        car.originalVelocity = car.velocity;
-        car.x = tileXStartRight + tileDistanceXRight + 25;
-        car.y = height - 20;
-        car.destroyed = false;
-        car.setImage(loadImage("images/carUp.png"));
-        car.previousDirection = up;
-        car.frame = 0;
-        break;
-      }
-      i++;
-    }
-    startCheck = false;
-  }
-  Select();
-}
+
+
+
 
   void drawGame() {
-  background(14, 209, 69); // make the background green
+    background(14, 209, 69); // make the background green
 
-  // Draw the tiles and selector
-  drawTilesLeft();
-  drawTilesRight();
-  if (startCheck == false) {
-    if (Select) {
-      selectLeft.drawSelect("left");
-    } else {
-      selectRight.drawSelect("right");
+    // Draw the tiles and selector
+    drawTilesLeft();
+    drawTilesRight();
+    if (startCheck == false) {
+      if (Select) {
+        selectLeft.drawSelect("left");
+      } else {
+        selectRight.drawSelect("right");
+      }
     }
-  }
 
-  // Play the car explosion animation
-  for (Car car : carList) {
-    if (car.destroyed) {
-      car.destroy();
+    // Play the car explosion animation
+    for (Car car : carList) {
+      if (car.destroyed) {
+        car.destroy();
+      }
     }
-  }
 
-  // Draw the finish line
-  image(loadImage("images/finishline.png"), lineX, 0);
+    // Draw the finish line
+    image(loadImage("images/finishline.png"), lineX, 0);
 
-  // Draw the line seperating the line select and the play field
-  line(lineX, 0, lineX, height);
+    // Draw the line seperating the line select and the play field
+    line(lineX, 0, lineX, height);
 
-  // Draw the car
-  for (Car car : carList) {
-    image(car.getImage(), car.x, car.y);
-  }
+    // Draw the car
+    for (Car car : carList) {
+      image(car.getImage(), car.x, car.y);
+    }
 
-  if (win) {
-    textSize(100);
-    fill(255, 0, 0);
-    text("YOU WIN!", width/2, height/2);
-  }
-} 
+    if (win) {
+      textSize(100);
+      fill(255, 0, 0);
+      text("YOU WIN!", width/2, height/2);
+    }
+  } 
 
   // calls the select functions
   void Select() {
