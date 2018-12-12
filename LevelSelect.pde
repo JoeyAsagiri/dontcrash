@@ -66,10 +66,10 @@ class LevelLoader {
 
     car = new Car[carAmount];
 
-    for (int i = 0; i < carAmount; i++) {
+    for (int i = 0; i<levelImage.width; i++) {
       if (levelImage.get(i, 1) == carSelectTrue) {
         carChecker[i] = true;
-      } else {
+      } else if (levelImage.get(i, 1) == carSelectFalse) {
         carChecker[i] = false;
       }     
     }

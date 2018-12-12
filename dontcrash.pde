@@ -44,6 +44,7 @@ Tile[] tilesRight;
 Car[] car;
 Car[] carList;
 int carAmount = 4;
+int maxCars = 4;
 Menu menu;
 Select selectLeft;
 Select selectRight;
@@ -103,6 +104,7 @@ int[] levelLeft = new int[tileCountLeft];
 int[] levelRight = new int[tileCountRight];
 boolean[] levelLeftSelect = new boolean[tileCountLeft];
 boolean[] levelRightSelect = new boolean[tileCountRight];
+boolean[] carChecker = new boolean[maxCars];
 
 boolean start = false;
 
@@ -165,22 +167,24 @@ Car[] initCar(int carAmount) {
   car = new Car[carAmount];
   // Give an image and to every tile
   for (int i = 0; i < carAmount; i++) {
-    car[i] = new Car();
-    switch (i) {
-    case 0:
-      car[i].carPosition(tileXStartRight + 25);
-      break;
-    case 1:
-      car[i].carPosition(tileXStartRight + tileDistanceXRight + 25);
-      break;
-    case 2:
-      car[i].carPosition(tileXStartRight + (tileDistanceXRight * 2) + 25);
-      break;
-    case 3:
-      car[i].carPosition(tileXStartRight + (tileDistanceXRight * 3) + 25);
-      break;
+    if (carChecker[i] == true) {
+      car[i] = new Car();
+      switch (i) {
+      case 0:
+        car[i].carPosition(tileXStartRight + 25);
+        break;
+      case 1:
+        car[i].carPosition(tileXStartRight + tileDistanceXRight + 25);
+        break;
+      case 2:
+        car[i].carPosition(tileXStartRight + (tileDistanceXRight * 2) + 25);
+        break;
+      case 3:
+        car[i].carPosition(tileXStartRight + (tileDistanceXRight * 3) + 25);
+        break;
+      }
     }
-  } 
+  }
   return car;
 }
 
@@ -271,6 +275,8 @@ void draw() {
     // Load a soundfile from the /data folder of the sketch and play it back
     file = new SoundFile(this, "/music/funky_theme.wav");
     file.loop();
+    
+    println();
 
     gameState = inGame;
     start = true;
@@ -279,6 +285,7 @@ void draw() {
     levelRight = levelLoader.loadLevel(loadImage("images/levels/level"+selectLevel+"rechts.png"), tileCountRight);
     levelLeftSelect = levelLoader.loadSelect(loadImage("images/selectcheck/level"+selectLevel+"links.png"), tileCountLeft);
     levelRightSelect = levelLoader.loadSelect(loadImage("images/selectcheck/level"+selectLevel+"rechts.png"), tileCountRight);
+    carChecker = levelLoader.carLoad(loadImage("images/caramount/level"+selectLevel+".png"), maxCars);
 
 
     setup();
