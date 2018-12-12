@@ -26,6 +26,8 @@ final color tile5load = color(0, 255, 255); //felblauw
 final color tile6load = color(0, 38, 255); //donkerblauw
 final color tile7load = color(178, 0, 255); // paars
 final color tile8load = color(0, 0, 0); // afro-amerikaans
+final color tileSelectFalse = tile8load;
+final color tileSelectTrue = color(255, 255, 255);
 
 
 boolean[] keysPressed = new boolean[KEY_LIMIT];
@@ -274,6 +276,8 @@ void draw() {
       
     levelLeft = levelLoader.loadLevel(loadImage("images/levels/level"+selectLevel+"links.png"), tileCountLeft);
     levelRight = levelLoader.loadLevel(loadImage("images/levels/level"+selectLevel+"rechts.png"), tileCountRight);
+    levelLeftSelect = levelLoader.loadSelect(loadImage("images/selectcheck/level"+selectLevel+"links.png"), tileCountLeft);
+    levelRightSelect = levelLoader.loadSelect(loadImage("images/selectcheck/level"+selectLevel+"rechts.png"), tileCountRight);
 
 
     setup();

@@ -32,9 +32,32 @@ class LevelLoader {
         } else {
           levelArray[arrayLocation] = 8;
         }
-
         arrayLocation++;
       }
     return levelArray;
   }
+  
+    boolean[] loadSelect(PImage levelImage, int tileCount) {
+
+    boolean levelArray[] = new boolean[tileCount];
+    int arrayLocation = 0;
+
+    // for each column in the image
+    for (int iY = 0; iY<levelImage.height; iY++)
+      // for each row in the image
+      for (int iX = 0; iX<levelImage.width; iX++) {
+
+        // check which color and fill in the correct tile in the array
+        if  (levelImage.get(iX, iY) == tileSelectFalse) {
+          levelArray[arrayLocation] = false;
+        } else if  (levelImage.get(iX, iY) == tileSelectTrue) {
+          levelArray[arrayLocation] = true;
+        } else {
+          levelArray[arrayLocation] = false;
+        }
+        arrayLocation++;
+      }
+    return levelArray;
+  }
+  
 }
