@@ -67,6 +67,12 @@ final int levelSelect = 1;
 final int optionsScreen = 2;
 final int inGame = 3;
 
+int gameStateP = 0;
+final int mainMenuP = 0;
+final int levelSelectP = 1;
+final int optionsScreenP = 2;
+final int inGameP = 3;
+
 // Options in settings
 int options = 0;
 
@@ -369,8 +375,11 @@ void drawOptions() {
       exit();
     }
     //Return to main menu
-    if (keysPressed[ENTER]) {
+    if (keysPressed[BACKSPACE] && gameStateP == mainMenu) {
       gameState = mainMenu;
+    }
+    else if (keysPressed[BACKSPACE] && gameStateP == inGame) {
+      gameState = inGame;
     }
     
 }
@@ -450,9 +459,14 @@ void draw() {
     setup();
   } 
 
-  if (keysPressed['O'] && gameState == mainMenu || keysPressed['O'] && gameState == inGame) {
+  if (keysPressed['O'] && gameState == mainMenu) {
     gameState = optionsScreen;
-  }  
+    gameStateP = mainMenu;
+  }
+  else if (keysPressed['O'] && gameState == inGame) {
+    gameState = optionsScreen;
+    gameStateP = inGame;
+  }
 
 
   if (keysPressed[ENTER] && gameState == optionsScreen) {
