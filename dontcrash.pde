@@ -93,6 +93,7 @@ int frame = 0;
 
 int limit = 0;
 boolean limit2;
+int limitRestart;
 
 
 int collisionAdjustment = 75;
@@ -112,9 +113,7 @@ int testerinos = 0;
 int selectLevel = 0;
 
 
-
 void setup() {
-
   // Initializeer klassen
   levelLoader = new LevelLoader();
   menu = new Menu();
@@ -124,9 +123,9 @@ void setup() {
 
   // Initialize the left side of the grid
   if (start) {
-    tilesLeft = initTiles(tileCountLeft, levelLeft, levelLeftSelect);
-    tilesRight = initTiles(tileCountRight, levelRight, levelRightSelect);
-    carList = initCar(carChecker);
+    tilesLeft = ingame.initTiles(tileCountLeft, levelLeft, levelLeftSelect);
+    tilesRight = ingame.initTiles(tileCountRight, levelRight, levelRightSelect);
+    carList = ingame.initCar(carChecker);
   } else {
     // Load a soundfile from the /data folder of the sketch and play it back
     file = new SoundFile(this, "/music/funky_menu.wav");
@@ -147,126 +146,27 @@ void setup() {
   win = false;
 }
 
-
-
-// Initialize a set amount of tiles and return an array of random tiles
-Tile[] initTiles(int tileCount, int[] level, boolean[] levelSelect) {
-  tiles = new Tile[tileCount];
-  // Give an image and to every tile
-  for (int i = 0; i < tileCount; i++) {
-    tiles[i] = new Tile();
-    tiles[i].setImage(loadImage("images/tiles/" + tiles[i].rotatedTile(level[i]) + level[i] + ".png"));  //assign the image of the chosen tile to the tile
-    tiles[i].setCollision(level[i]);
-    tiles[i].select = levelSelect[i];
-  } 
-  return tiles;
-}
-
-Car[] initCar(boolean[] carChecker) {
-  int carAmount = 0;
-  for (int i = 0; i < carChecker.length; i++) {
-    if (carChecker[i]) {
-      carAmount++;
-    }
-  }
- 
-  car = new Car[carAmount];
- 
-  // Give an image and to every tile
-  int carCount = 0;
-  for (int i = 0; i < carChecker.length; i++) {
-    if (carChecker[i] == true) {
-      car[carCount] = new Car();
-      switch (i) {
-      case 0:
-        car[carCount].carPosition(tileXStartRight + 25);
-        break;
-      case 1:
-        car[carCount].carPosition(tileXStartRight + tileDistanceXRight + 25);
-        break;
-      case 2:
-        car[carCount].carPosition(tileXStartRight + (tileDistanceXRight * 2) + 25);
-        break;
-      case 3:
-        car[carCount].carPosition(tileXStartRight + (tileDistanceXRight * 3) + 25);
-        break;
-      }
-      car[carCount].number = i;
-      carCount++;
-    }
-  }
-
-  return car;
-}
-
-
-// Draw the tiles to be shown
-void drawTilesLeft() {
-
-  // Create tiles up to the tileCountLeft
-  for (int i = 0; i < tileCountLeft; i++) {
-    image(tilesLeft[i].getImage(), tileXLeft, tileYLeft);
-    tileXLeft += tileDistanceXLeft;
-
-    // set the tiles another row down after every 2 tiles
-    if ((i + 1) % tileRowLeft == 0) {
-      tileXLeft = tileXStartLeft;
-      tileYLeft += tileDistanceYLeft;
-    }
-  } 
-  tileXLeft = tileXStartLeft;
-  tileYLeft = tileYStartLeft;
-}
-
-// Draw the tiles to be shown
-void drawTilesRight() {
-
-  // Create tiles up to the tileCountRight
-  for (int i = 0; i < tileCountRight; i++) {
-    image(tilesRight[i].getImage(), tileXRight, tileYRight);
-    tilesRight[i].x = tileXRight;
-    tilesRight[i].y = tileYRight;
-    tileXRight += tileDistanceXRight;
-
-    // set the tiles another row down after every 4 tiles
-    if ((i + 1) % tileRowRight == 0) {
-      tileXRight = tileXStartRight;
-      tileYRight += tileDistanceYRight;
-    }
-  } 
-  tileXRight = tileXStartRight;
-  tileYRight = tileYStartRight;
-}
-
-
-void carToCarCollision(Car car) {
-
-  for (Car car2 : carList) {
-    if (car.x != car2.x) {
-      if (car.x + car.width >= car2.x &&     // r1 right edge past r2 left
-        car.x <= car2.x + car2.width &&       // r1 left edge past r2 right
-        car.y + car.height >= car2.y &&       // r1 top edge past r2 bottom
-        car.y <= car2.y + car2.height) {       // r1 bottom edge past r2 top
-        car.destroyed = true;
-        car2.destroyed = true;
-      }
-    }
-  }
-}
-
-
-
-
 // All the code that draws the Game World goes here
 void draw() {
+  
+  //TODO:: place these keyspressed somewhere else
   // causes the screens to advance on buttonpresses
   if (!keysPressed[' ']) {
     limit2 = false;
+    limit = 0;
   }
 
-  if (keysPressed[' '] && gameState == mainMenu) {
+  if (keysPressed[' '] && gameState == mainMenu && limit2 == false) {
     gameState = levelSelect;
     limit2 = true;
+  }
+
+  if (!keysPressed[ENTER]) {
+    limitRestart = 0;
+  }
+
+  if (keysPressed['R']) {
+    gameState = mainMenu;
   }
 
   if (keysPressed[' '] && gameState == levelSelect && limit2 == false) {
@@ -274,8 +174,9 @@ void draw() {
     // Load a soundfile from the /data folder of the sketch and play it back
     file = new SoundFile(this, "/music/funky_theme.wav");
     file.loop();
-
-    println();
+    // Prevent selector from immediately selecting the top left tile
+    limit = 1;
+    limit2 = true;
 
     gameState = inGame;
     start = true;
@@ -285,7 +186,6 @@ void draw() {
     levelLeftSelect = levelLoader.loadSelect(loadImage("images/selectcheck/level"+selectLevel+"links.png"), tileCountLeft);
     levelRightSelect = levelLoader.loadSelect(loadImage("images/selectcheck/level"+selectLevel+"rechts.png"), tileCountRight);
     carChecker = levelLoader.carLoad(loadImage("images/caramount/level"+selectLevel+".png"), maxCars);
-
 
     setup();
   } 
@@ -309,14 +209,17 @@ void draw() {
 
   case mainMenu:
     menu.drawMainMenu();
+    menu.drawMenu();
     break;
 
   case levelSelect:
     menu.drawLevelSelect();
+    menu.drawMenu();
     break;
 
   case optionsScreen:
     menu.drawOptions();
+    menu.drawMenu();
     break;
 
   case inGame:   

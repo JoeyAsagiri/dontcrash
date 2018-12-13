@@ -3,7 +3,7 @@ class Select {
   int selectX, selectY;
 
   int tileNumber = 0;
-  int limit = 0;
+  int limit = 1;
   SoundFile reject;
 
   Select(){

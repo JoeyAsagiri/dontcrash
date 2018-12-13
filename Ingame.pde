@@ -1,5 +1,4 @@
 class Ingame {
-
   // All the code that alters the Game World goes here
   void updateGame() {
     // Win condition
@@ -31,9 +30,10 @@ class Ingame {
     }
 
     // Conditions to start the car and reset it.
-    if (keysPressed[ENTER] == true && gameState == inGame) {
+    if (keysPressed[ENTER] == true && gameState == inGame && startCheck == false && limitRestart == 0) {
       startCheck = true;
-    } else if (keysPressed['R'] == true) {
+      limitRestart = 1;
+    } else if (keysPressed[ENTER] == true && limitRestart == 0 && !win) {
       for (Car car : carList) {
         switch (car.number) {
         case 0:
@@ -51,8 +51,11 @@ class Ingame {
         }
       }
       startCheck = false;
+      limitRestart = 1;
     }
-    Select();
+
+    if (!startCheck && !win)
+      Select();
   }
 
   // Function to let the game go back to the menu when you win
@@ -68,16 +71,15 @@ class Ingame {
     }
   }
 
-
-
-
-
+  // Function to draw everything in the level
   void drawGame() {
     background(14, 209, 69); // make the background green
 
     // Draw the tiles and selector
-    drawTilesLeft();
-    drawTilesRight();
+    drawTiles(tilesLeft, tileCountLeft, tileRowLeft, tileXLeft, tileYLeft, tileDistanceXLeft, tileDistanceYLeft, tileXStartLeft, tileYStartLeft, false);
+    drawTiles(tilesRight, tileCountRight, tileRowRight, tileXRight, tileYRight, tileDistanceXRight, tileDistanceYRight, tileXStartRight, tileYStartRight, true);
+    //drawTilesLeft();
+    //drawTilesRight();
     if (startCheck == false) {
       if (Select) {
         selectLeft.drawSelect("left");
@@ -105,7 +107,10 @@ class Ingame {
     }
 
     if (win) {
+      limit = 1;
+      limit2 = true;
       textSize(100);
+      textAlign(CENTER);
       fill(255, 0, 0);
       text("YOU WIN!", width/2, height/2);
     }
@@ -142,6 +147,106 @@ class Ingame {
 
     if (keysPressed[' '] == false) {
       limit = 0;
+    }
+  }
+
+  // Initialize a set amount of tiles and return an array of random tiles
+  Tile[] initTiles(int tileCount, int[] level, boolean[] levelSelect) {
+    tiles = new Tile[tileCount];
+    // Give an image and to every tile
+    for (int i = 0; i < tileCount; i++) {
+      tiles[i] = new Tile();
+      tiles[i].setImage(loadImage("images/tiles/" + tiles[i].rotatedTile(level[i]) + level[i] + ".png"));  //assign the image of the chosen tile to the tile
+      tiles[i].setCollision(level[i]);
+      tiles[i].select = levelSelect[i];
+      tiles[i].tile = level[i];
+    } 
+    return tiles;
+  }
+
+  // Draw the tiles to be shown
+  void drawTiles(Tile[] tiles, int tileCount, int tileRow, int tileX, int tileY, int tileDistanceX, int tileDistanceY, int tileXStart, int tileYStart, boolean sideRight) {
+
+    // Create tiles up to the tileCountRight
+    for (int i = 0; i < tileCount; i++) {
+      // Don't draw obstacles on the left side
+      if (sideRight || !sideRight && tiles[i].tile != 8) {
+        image(tiles[i].getImage(), tileX, tileY);
+      }
+      tiles[i].x = tileX;
+      tiles[i].y = tileY;
+      tileX += tileDistanceX;
+
+      // only place connection tiles on the right side of the field
+      if (sideRight) {
+        // Place a connection tile between this tile and the left tile if they connect properly
+        if (i > 0 && (tiles[i].collision[left] == 1) && tiles[(i - 1)].collision[right] == 1) {
+          image(loadImage("images/tiles/tile5.png"), tiles[i].x - 100, tiles[i].y);
+        }
+        // Place a connection tile between this tile and the tile above if they connect properly
+        if (i >= tileRow && (tilesRight[i].collision[up] == 1) && tiles[(i - tileRow)].collision[down] == 1) {
+          image(loadImage("images/tiles/tile1.png"), tiles[i].x, tiles[i].y - 100);
+        }
+      }
+
+      // set the tiles another row down after every 4 tiles
+      if ((i + 1) % tileRow == 0) {
+        tileX = tileXStart;
+        tileY += tileDistanceY;
+      }
+    } 
+    tileX = tileXStart;
+    tileY = tileYStart;
+  }
+
+  // Function to initialize all the cars for the level
+  Car[] initCar(boolean[] carChecker) {
+    int carAmount = 0;
+    for (int i = 0; i < carChecker.length; i++) {
+      if (carChecker[i]) {
+        carAmount++;
+      }
+    }
+
+    car = new Car[carAmount];
+
+    // Give an image and to every tile
+    int carCount = 0;
+    for (int i = 0; i < carChecker.length; i++) {
+      if (carChecker[i] == true) {
+        car[carCount] = new Car();
+        switch (i) {
+        case 0:
+          car[carCount].carPosition(tileXStartRight + 25);
+          break;
+        case 1:
+          car[carCount].carPosition(tileXStartRight + tileDistanceXRight + 25);
+          break;
+        case 2:
+          car[carCount].carPosition(tileXStartRight + (tileDistanceXRight * 2) + 25);
+          break;
+        case 3:
+          car[carCount].carPosition(tileXStartRight + (tileDistanceXRight * 3) + 25);
+          break;
+        }
+        car[carCount].number = i;
+        carCount++;
+      }
+    }
+    return car;
+  }
+
+  void carToCarCollision(Car car) {
+    for (Car car2 : carList) {
+      if (car.x != car2.x) {
+        if (car.x + car.width >= car2.x &&     // r1 right edge past r2 left
+          car.x <= car2.x + car2.width &&       // r1 left edge past r2 right
+          car.y + car.height >= car2.y &&       // r1 top edge past r2 bottom
+          car.y <= car2.y + car2.height) {       // r1 bottom edge past r2 top
+          car.destroyed = true;
+          car2.destroyed = true;
+        }
+      }
     }
   }
 }

@@ -1,4 +1,13 @@
 class Menu {
+  void drawMenu() {
+     textSize(12);
+     textAlign(LEFT);
+     text("Press the arrow keys to move between menu options and tiles", 50, 600);
+     text("Press SPACE to select menu options and tiles", 50, 625);
+     text("Press ENTER to start the car ingame", 50, 650);
+     text("Press R to return to the main menu", 50, 675);
+  }
+  
   void drawMainMenu() {
     background(101, 232, 255);
     textAlign(CENTER);
@@ -12,6 +21,7 @@ class Menu {
 
   void drawLevelSelect() {
     background(101, 232, 255);
+    textAlign(CENTER);
     textSize(100);
     text("LEVEL SELECT", width/2, height/4);
     textSize(24);
