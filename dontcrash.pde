@@ -2,22 +2,6 @@
 import processing.sound.*;
 SoundFile file;
 
-// Arrays of booleans for Keyboard handling. One boolean for each keyCode
-final int KEY_LIMIT = 1024;
-
-// Keyboard handling...
-void keyPressed() {  
-  if (keyCode >= KEY_LIMIT) return; //safety: if keycode exceeds limit, exit methhod ('return').
-  keysPressed[keyCode] = true; // set its boolean to true
-}
-
-//..and with each key Released vice versa
-void keyReleased() {
-  if (keyCode >= KEY_LIMIT) return;
-  keysPressed[keyCode] = false; // set its boolean to false
-}
-
-
 final color tile1load = color(255, 0, 0); //rood
 final color tile2load = color(255, 106, 0); //oranje
 final color tile3load = color(255, 216, 0); //geel
@@ -30,9 +14,6 @@ final color tileSelectFalse = tile8load;
 final color tileSelectTrue = color(255, 255, 255);
 final color carSelectFalse = tileSelectFalse;
 final color carSelectTrue = tileSelectTrue;
-
-boolean[] keysPressed = new boolean[KEY_LIMIT];
-boolean[] keysReleased = new boolean[KEY_LIMIT];
 
 boolean Select = true;
 boolean startCheck = false;
@@ -60,7 +41,6 @@ int tileYLeft = tileYStartLeft;
 int tileXRight = tileXStartRight;
 int tileYRight = tileYStartRight;
 
-
 //Grid
 int tileCountLeft = 8;
 int tileRowLeft = 2;
@@ -74,14 +54,12 @@ int tileDistanceYRight = 180;
 
 final int lineX = 400;
 
-
 // Different screens
 int gameState = 0;
 final int mainMenu = 0;
 final int levelSelect = 1;
 final int optionsScreen = 2;
 final int inGame = 3;
-
 
 // constants for the car movement directions
 final int up = 0;
@@ -90,11 +68,9 @@ final int down = 2;
 final int left = 3;
 int frame = 0;
 
-
 int limit = 0;
 boolean limit2;
 int limitRestart;
-
 
 int collisionAdjustment = 75;
 
@@ -111,7 +87,6 @@ boolean start = false;
 int testerinos = 0;
 
 int selectLevel = 0;
-
 
 void setup() {
   // Initializeer klassen
@@ -149,51 +124,11 @@ void setup() {
 // All the code that draws the Game World goes here
 void draw() {
   
-  //TODO:: place these keyspressed somewhere else
-  // causes the screens to advance on buttonpresses
-  if (!keysPressed[' ']) {
-    limit2 = false;
-    limit = 0;
-  }
-
-  if (keysPressed[' '] && gameState == mainMenu && limit2 == false) {
-    gameState = levelSelect;
-    limit2 = true;
-  }
-
-  if (!keysPressed[ENTER]) {
-    limitRestart = 0;
-  }
-
-  if (keysPressed['R']) {
-    gameState = mainMenu;
-  }
-
-  if (keysPressed[' '] && gameState == levelSelect && limit2 == false) {
-    file.stop();
-    // Load a soundfile from the /data folder of the sketch and play it back
-    file = new SoundFile(this, "/music/funky_theme.wav");
-    file.loop();
-    // Prevent selector from immediately selecting the top left tile
-    limit = 1;
-    limit2 = true;
-
-    gameState = inGame;
-    start = true;
-
-    levelLeft = levelLoader.loadLevel(loadImage("images/levels/level"+selectLevel+"links.png"), tileCountLeft);
-    levelRight = levelLoader.loadLevel(loadImage("images/levels/level"+selectLevel+"rechts.png"), tileCountRight);
-    levelLeftSelect = levelLoader.loadSelect(loadImage("images/selectcheck/level"+selectLevel+"links.png"), tileCountLeft);
-    levelRightSelect = levelLoader.loadSelect(loadImage("images/selectcheck/level"+selectLevel+"rechts.png"), tileCountRight);
-    carChecker = levelLoader.carLoad(loadImage("images/caramount/level"+selectLevel+".png"), maxCars);
-
-    setup();
-  } 
+  keyPresses();
 
   //if (keysPressed['O'] && gameState == mainMenu) {
   //  gameState = optionsScreen;
   //}  
-
 
   //if (keysPressed[ENTER] && gameState == optionsScreen) {
   //  gameState = mainMenu;
@@ -204,7 +139,6 @@ void draw() {
   //}
 
   // handles drawing of different screens
-
   switch(gameState) {
 
   case mainMenu:
