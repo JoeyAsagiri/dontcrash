@@ -99,13 +99,21 @@ void setup() {
   selectLeft.selectY = tileYLeft;
   selectRight.selectX = tileXRight;
   selectRight.selectY = tileYRight;
-  //Run the level setup once on launch to fix some crashes
-  ingame.levelSetup();
-  size(1280, 720);
 
-  // Load a soundfile from the /data folder of the sketch and play it back
-  file = new SoundFile(dontcrash.this, "/music/funky_menu.wav");
-  file.loop();
+  if (start) {
+    // Initialize the left side of the grid
+    tilesLeft = ingame.initTiles(tileCountLeft, levelLeft, levelLeftSelect);
+    tilesRight = ingame.initTiles(tileCountRight, levelRight, levelRightSelect);
+    carList = ingame.initCar(carChecker);
+  } else {
+    // Load a soundfile from the /data folder of the sketch and play it back
+    file = new SoundFile(dontcrash.this, "/music/funky_menu.wav");
+    file.loop();
+  }
+
+  startCheck = false;
+  win = false;
+  size(1280, 720);
 }
 
 // All the code that draws the Game World goes here

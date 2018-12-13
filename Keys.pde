@@ -47,7 +47,10 @@ void keyPresses() {
   }
 
   if (keysPressed['R']) {
+    file.stop();
     gameState = mainMenu;
+    start = false;
+    setup();
   }
 
   if (keysPressed[' '] && gameState == levelSelect && limit2 == false) {

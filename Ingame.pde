@@ -1,15 +1,5 @@
 class Ingame {
 
-  void levelSetup() {
-    // Initialize the left side of the grid
-    tilesLeft = ingame.initTiles(tileCountLeft, levelLeft, levelLeftSelect);
-    tilesRight = ingame.initTiles(tileCountRight, levelRight, levelRightSelect);
-    carList = ingame.initCar(carChecker);
-
-    startCheck = false;
-    win = false;
-  }
-
   // All the code that alters the Game World goes here
   void updateGame() {
     // Win condition
@@ -78,7 +68,7 @@ class Ingame {
       limit2 = true;
       file = new SoundFile(dontcrash.this, "/music/funky_menu.wav");
       file.loop();
-      levelSetup();
+      setup();
     }
   }
 
