@@ -236,6 +236,7 @@ class Ingame {
     return car;
   }
 
+  // Function to check if a car has collision with another car
   void carToCarCollision(Car car) {
     for (Car car2 : carList) {
       if (car.x != car2.x) {
