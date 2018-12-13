@@ -101,7 +101,6 @@ void setup() {
   selectRight.selectY = tileYRight;
   //Run the level setup once on launch to fix some crashes
   ingame.levelSetup();
-
   size(1280, 720);
 
   // Load a soundfile from the /data folder of the sketch and play it back

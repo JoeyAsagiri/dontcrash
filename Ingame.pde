@@ -85,6 +85,9 @@ class Ingame {
   // Function to draw everything in the level
   void drawGame() {
     background(14, 209, 69); // make the background green
+    // Make the left select side grey
+    fill(192, 192, 192);
+    rect(0, 0, lineX , height - 1);
 
     // Draw the tiles and selector
     drawTiles(tilesLeft, tileCountLeft, tileRowLeft, tileXLeft, tileYLeft, tileDistanceXLeft, tileDistanceYLeft, tileXStartLeft, tileYStartLeft, false);
@@ -191,7 +194,7 @@ class Ingame {
       // only place connection tiles on the right side of the field
       if (sideRight) {
         // Place a connection tile between this tile and the left tile if they connect properly
-        if (i > 0 && (tiles[i].collision[left] == 1) && tiles[(i - 1)].collision[right] == 1) {
+        if (i > 0 && (tiles[i].collision[left] == 1) && tiles[(i - 1)].collision[right] == 1 && ((i - 1) % tileRow == 0 || (i - 1) % tileRow == 1)) {
           image(loadImage("images/tiles/tile5.png"), tiles[i].x - 100, tiles[i].y);
         }
         // Place a connection tile between this tile and the tile above if they connect properly
