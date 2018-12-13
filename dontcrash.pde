@@ -93,50 +93,26 @@ void setup() {
   levelLoader = new LevelLoader();
   menu = new Menu();
   ingame = new Ingame();
+  selectLeft = new Select();
+  selectRight = new Select();
+  selectLeft.selectX = tileXLeft;
+  selectLeft.selectY = tileYLeft;
+  selectRight.selectX = tileXRight;
+  selectRight.selectY = tileYRight;
+  //Run the level setup once on launch to fix some crashes
+  ingame.levelSetup();
 
   size(1280, 720);
 
-  // Initialize the left side of the grid
-  if (start) {
-    tilesLeft = ingame.initTiles(tileCountLeft, levelLeft, levelLeftSelect);
-    tilesRight = ingame.initTiles(tileCountRight, levelRight, levelRightSelect);
-    carList = ingame.initCar(carChecker);
-  } else {
-    // Load a soundfile from the /data folder of the sketch and play it back
-    file = new SoundFile(this, "/music/funky_menu.wav");
-    file.loop();
-  }
-
-  //Create the selector and give it the variables
-  selectLeft = new Select();
-  selectRight = new Select();
-
-  selectLeft.selectX = tileXLeft;
-  selectLeft.selectY = tileYLeft;
-
-  selectRight.selectX = tileXRight;
-  selectRight.selectY = tileYRight;
-
-  startCheck = false;
-  win = false;
+  // Load a soundfile from the /data folder of the sketch and play it back
+  file = new SoundFile(dontcrash.this, "/music/funky_menu.wav");
+  file.loop();
 }
 
 // All the code that draws the Game World goes here
 void draw() {
-  
+
   keyPresses();
-
-  //if (keysPressed['O'] && gameState == mainMenu) {
-  //  gameState = optionsScreen;
-  //}  
-
-  //if (keysPressed[ENTER] && gameState == optionsScreen) {
-  //  gameState = mainMenu;
-  //} 
-
-  //if (keysPressed[ENTER] && gameState == levelSelect) {
-  //  gameState = mainMenu;
-  //}
 
   // handles drawing of different screens
   switch(gameState) {

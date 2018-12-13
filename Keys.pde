@@ -25,6 +25,18 @@ void keyPresses() {
     limit = 0;
   }
 
+  //if (keysPressed['O'] && gameState == mainMenu) {
+  //  gameState = optionsScreen;
+  //}  
+
+  //if (keysPressed[ENTER] && gameState == optionsScreen) {
+  //  gameState = mainMenu;
+  //} 
+
+  //if (keysPressed[ENTER] && gameState == levelSelect) {
+  //  gameState = mainMenu;
+  //}
+
   if (keysPressed[' '] && gameState == mainMenu && limit2 == false) {
     gameState = levelSelect;
     limit2 = true;
