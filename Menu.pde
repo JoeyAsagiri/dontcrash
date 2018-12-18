@@ -35,12 +35,14 @@ class Menu {
       text("OPTIONS", width/2, 4*(height/5));
       fill(0, 102, 153);
     }
-    if (selectMainMenu == 0 && gameState == mainMenu && keysPressed[ENTER]) {
+    if (keysPressed[' '] && gameState == mainMenu && limit2 == false && selectMainMenu == 0) {
       gameState = levelSelect;
+      limit2 = true;
     }
     
-    if (selectMainMenu == 1 && gameState == mainMenu && keysPressed[ENTER]) {
+    if (keysPressed[' '] && gameState == mainMenu && limit2 == false && selectMainMenu == 1) {
       gameState = optionsScreen;
+      limit2 = true;
     }
   }
 
