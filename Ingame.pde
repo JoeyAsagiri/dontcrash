@@ -2,8 +2,8 @@ class Ingame {
 
   // All the code that alters the Game World goes here
   void updateGame() {
-    // Win condition
-
+    
+    //timer.timeTrack();
     if (startCheck == true) {
       for (Car car : carList) {
         // Use an int as a timer to prevent multiple collision checks on one tile
@@ -118,6 +118,8 @@ class Ingame {
       fill(255, 0, 0);
       text("YOU WIN!", width/2, height/2);
     }
+    
+    timer.displayTime();
   } 
 
   // calls the select functions

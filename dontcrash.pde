@@ -26,6 +26,7 @@ Car[] car;
 Car[] carList;
 int maxCars = 4;
 Menu menu;
+Timer timer;
 Select selectLeft;
 Select selectRight;
 LevelLoader levelLoader;
@@ -93,6 +94,7 @@ void setup() {
   levelLoader = new LevelLoader();
   menu = new Menu();
   ingame = new Ingame();
+  timer = new Timer();
   selectLeft = new Select();
   selectRight = new Select();
   selectLeft.selectX = tileXLeft;
@@ -118,7 +120,7 @@ void setup() {
 
 // All the code that draws the Game World goes here
 void draw() {
-
+  timer.timeTrack();
   keyPresses();
 
   // handles drawing of different screens
