@@ -106,6 +106,7 @@ void setup() {
   menu = new Menu();
   ingame = new Ingame();
   timer = new Timer();
+  timer.setup(); // Timer setup not running when initialized?
   selectLeft = new Select();
   selectRight = new Select();
   selectLeft.selectX = tileXLeft;
