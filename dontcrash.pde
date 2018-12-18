@@ -30,6 +30,7 @@ Tile[] tiles;
 Tile[] tilesLeft;
 Tile[] tilesRight;
 Car car;
+Timer timer;
 //SelectLeft selectLeft;
 //SelectRight selectRight;
 Select selectLeft;
@@ -58,6 +59,9 @@ int tileDistanceXRight = 200;
 int tileDistanceYRight = 180;
 
 final int lineX = 400;
+
+
+
 
 
 // Different screens
@@ -100,6 +104,7 @@ void setup() {
 
   // Initializeer de level klas
   level = new Level();
+  timer = new Timer();
 
   size(1280, 720);
 
@@ -210,6 +215,10 @@ void drawTilesRight() {
   tileYRight = tileYStartRight;
 }
 
+
+
+
+
 // Function to let the game go back to the menu when you win
 void win() {
   win = true;
@@ -225,6 +234,7 @@ void win() {
 
 // All the code that alters the Game World goes here
 void updateGame() {
+  timer.timeTrack();
   // Win condition
   if (car.y <= -20) {
     win();
@@ -331,6 +341,7 @@ void drawGame() {
       selectRight.drawSelect();
     }
   }
+  timer.displayTime();
 
 
   // Play the car explosion animation
