@@ -52,6 +52,7 @@ class Menu {
       selectLevel = 3;
       image(loadImage("images/selectionFalse.png"), (width/2) + 150, (height/2) - 50);
     }
+    timer.level = selectLevel;
   }
 
   void drawOptions() {
