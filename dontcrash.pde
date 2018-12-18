@@ -101,6 +101,7 @@ int selectLevel = 0;
 
 final int levelAmount = 3;
 
+ArrayList<Levels> levelsList = new ArrayList<Levels>();
 
 
 void setup() {
@@ -126,11 +127,15 @@ void setup() {
     file = new SoundFile(dontcrash.this, "/music/funky_menu.wav");
     file.loop();
   }
+  
+  levelLoader.fillLevelList();
 
   startCheck = false;
   win = false;
   size(1280, 720);
 }
+
+
 
 // All the code that draws the Game World goes here
 void draw() {

@@ -73,4 +73,31 @@ class LevelLoader {
       }
     return carChecker;
   }
+  
+  void fillLevelList() {
+  for (int i = 1; i <= levelAmount; i++) {
+
+    float positionHelper = i%10;
+
+    float xPos = width/10 * positionHelper;
+    float yPos;
+    if (i<10) {
+      yPos = height/2;
+    } else if (i<20) {
+      yPos = height/3*2;
+    } else {
+      yPos = height/4*3;
+    }
+    println(i);
+    int[] leftTiles = levelLoader.loadLevel(loadImage("images/levels/level"+i+"links.png"), tileCountLeft);
+    int[] rightTiles = levelLoader.loadLevel(loadImage("images/levels/level"+i+"rechts.png"), tileCountRight);
+    boolean[] leftSelect = levelLoader.loadSelect(loadImage("images/selectcheck/level"+i+"links.png"), tileCountLeft);
+    boolean[] rightSelect = levelLoader.loadSelect(loadImage("images/selectcheck/level"+i+"rechts.png"), tileCountRight);
+    boolean[] carPositions = levelLoader.carLoad(loadImage("images/caramount/level"+i+".png"), maxCars);
+
+    Levels level = new Levels(xPos, yPos, rightTiles, leftTiles, rightSelect, leftSelect, carPositions);
+
+    levelsList.add(level);
+  }
+}
 }

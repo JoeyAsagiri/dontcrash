@@ -26,11 +26,9 @@ class Menu {
     text("LEVEL SELECT", width/2, height/4);
     textSize(24);
     
-    for (int i = 0; i < levelAmount; i++){
-      
+    for (int i = 1; i <= levelAmount; i++){
+      text("Level "+ (i), levelsList.get(i -1).xPos, height/2);
      
-      text("Level "+(i+1), levels[i](.xPos), height/2);
-      
     }
     
     //Joey's abominatie
