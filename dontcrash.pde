@@ -43,6 +43,8 @@ int tileYLeft = tileYStartLeft;
 int tileXRight = tileXStartRight;
 int tileYRight = tileYStartRight;
 
+int levelSelector = 1;
+
 //Grid
 int tileCountLeft = 8;
 int tileRowLeft = 2;
@@ -95,9 +97,9 @@ boolean[] carChecker = new boolean[maxCars];
 
 boolean start = false;
 
-int testerinos = 0;
 
-int selectLevel = 0;
+
+
 
 final int levelAmount = 3;
 
@@ -117,6 +119,8 @@ void setup() {
   selectRight.selectX = tileXRight;
   selectRight.selectY = tileYRight;
 
+  
+
   if (start) {
     // Initialize the left side of the grid
     tilesLeft = ingame.initTiles(tileCountLeft, levelLeft, levelLeftSelect);
@@ -135,6 +139,13 @@ void setup() {
   size(1280, 720);
 }
 
+
+void initLevel() {
+ 
+    tilesLeft = ingame.initTiles(tileCountLeft, levelLeft, levelLeftSelect);
+    tilesRight = ingame.initTiles(tileCountRight, levelRight, levelRightSelect);
+    carList = ingame.initCar(carChecker);
+}
 
 
 // All the code that draws the Game World goes here

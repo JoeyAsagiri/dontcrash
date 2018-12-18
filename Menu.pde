@@ -25,35 +25,39 @@ class Menu {
     textSize(100);
     text("LEVEL SELECT", width/2, height/4);
     textSize(24);
+
+    for (int i = 1; i <= levelAmount; i++) {
+      text("Level "+i, levelsList.get(i - 1).xPos, levelsList.get(i - 1).yPos);
+    }
+
+    if (levelSelector < 30) {
+      if (keysPressed[RIGHT] && limit2 == false) {
+        levelSelector++;
+        limit2 = true;
+      }
+    }
+    if (levelSelector < 20) {
+      if (keysPressed[DOWN] && limit2 == false) {
+        levelSelector += 10;
+        limit2 = true;
+      }
+    }
+
+    if (levelSelector > 10) {
+      if (keysPressed[UP] && limit2 == false) {
+        levelSelector -= 10;
+        limit2 = true;
+      }
+    }
+
+    if (levelSelector > 1) {
+      if (keysPressed[LEFT] && limit2 == false) {
+        levelSelector--;
+        limit2 = true;
+      }
+    }
     
-    for (int i = 1; i <= levelAmount; i++){
-      text("Level "+ (i), levelsList.get(i -1).xPos, height/2);
-     
-    }
-    
-    //Joey's abominatie
-    if (keysPressed[RIGHT]) {
-      testerinos = 2;
-    }
-
-    if (keysPressed[DOWN]) {
-      testerinos = 1;
-    }
-
-    if (keysPressed[UP] ^ keysPressed[LEFT]) {
-      testerinos = 0;
-    }
-
-    if (testerinos == 0) {
-      image(loadImage("images/selectionFalse.png"), (width/2 - 50), (height/2) - 50);
-      selectLevel = 1;
-    } else if (testerinos == 1) {
-      image(loadImage("images/selectionFalse.png"), (width/2 - 50), (height/2) + 150);
-      selectLevel = 2;
-    } else {
-      selectLevel = 3;
-      image(loadImage("images/selectionFalse.png"), (width/2) + 150, (height/2) - 50);
-    }
+    image(loadImage("images/selectionFalse.png"), levelsList.get(levelSelector).xPos, levelsList.get(levelSelector).yPos);
   }
 
   void drawOptions() {
@@ -62,11 +66,11 @@ class Menu {
     fill(0, 102, 153);
     textSize(30);
     text("QUIT GAME", width/2, 4*(height/5));
-    
+
     // Sound
     if (options == 0) {
       fill(255, 255, 255);
-      
+
       // Switches text based on if the music is turned on or off
       if (music == true) {
         text("SOUND OFF", width/2, 3*(height/5));
@@ -75,7 +79,7 @@ class Menu {
       }
       fill(0, 102, 153);
     }
-    
+
     // Quit
     else if (options == 1) {
       fill(0, 102, 153);
@@ -84,32 +88,32 @@ class Menu {
       text("QUIT GAME", width/2, 4*(height/5));
       fill(0, 102, 153);
     }
-    
+
     // Press DOWN when 'Sound' is selected to move down
     if (keysPressed[DOWN] || (options == 2 && keysPressed[DOWN])) {
       options = 1;
     }
-    
+
     // Press UP when 'quit' is selected to move up
     if ((options == 1) && (keysPressed[UP])) {
       options = 0;
     }
-    
+
     // Press RIGHT to turn the music off
     if (options == 0 && keysPressed[RIGHT] && music == true) {
       file.stop();
       music = false;
     }
-    
+
     // Press LEFT to turn the music on
     if (options == 0 && keysPressed[LEFT] && music == false) {
       file.loop();
       music = true;
     }
-    
+
     // Press this option to exit the game
     if ((options == 1) && (keysPressed[' '])) {
       exit();
-    }  
+    }
   }
 }
