@@ -61,6 +61,15 @@ final int levelSelect = 1;
 final int optionsScreen = 2;
 final int inGame = 3;
 
+//settings?
+int options;
+boolean music;
+int gameStateP = 0;
+final int mainMenuP = 0;
+final int levelSelectP = 1;
+final int optionsScreenP = 2;
+final int inGameP = 3;
+
 // constants for the car movement directions
 final int up = 0;
 final int right = 1;
