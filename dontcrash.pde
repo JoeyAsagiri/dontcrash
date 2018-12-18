@@ -98,6 +98,8 @@ int testerinos = 0;
 
 int selectLevel = 0;
 
+int selectMainMenu = 0;
+
 void setup() {
   // Initializeer klassen
   levelLoader = new LevelLoader();
@@ -116,7 +118,11 @@ void setup() {
     tilesLeft = ingame.initTiles(tileCountLeft, levelLeft, levelLeftSelect);
     tilesRight = ingame.initTiles(tileCountRight, levelRight, levelRightSelect);
     carList = ingame.initCar(carChecker);
-  } else {
+  }
+  else if (music == true) {
+      file.stop();
+    }
+    else {
     // Load a soundfile from the /data folder of the sketch and play it back
     file = new SoundFile(dontcrash.this, "/music/funky_menu.wav");
     file.loop();

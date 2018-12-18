@@ -37,7 +37,7 @@ void keyPresses() {
   //  gameState = mainMenu;
   //}
 
-  if (keysPressed[' '] && gameState == mainMenu && limit2 == false) {
+  if (keysPressed[' '] && gameState == mainMenu && limit2 == false && selectMainMenu == 0) {
     gameState = levelSelect;
     limit2 = true;
   }

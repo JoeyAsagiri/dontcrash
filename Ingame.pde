@@ -2,6 +2,13 @@ class Ingame {
 
   // All the code that alters the Game World goes here
   void updateGame() {
+    //Music check
+    if (music == true) {
+      file.stop();
+    }
+    if (music == false) {
+      file.loop();
+    }
     
     //timer.timeTrack();
     if (startCheck == true) {
@@ -67,8 +74,10 @@ class Ingame {
       gameState = mainMenu;
       limit2 = true;
       file = new SoundFile(dontcrash.this, "/music/funky_menu.wav");
-      file.loop();
       setup();
+    }
+    if (music == false) {
+      file.loop();
     }
   }
 
