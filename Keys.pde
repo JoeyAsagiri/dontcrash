@@ -57,7 +57,13 @@ void keyPresses() {
     file.stop();
     // Load a soundfile from the /data folder of the sketch and play it back
     file = new SoundFile(dontcrash.this, "/music/funky_theme.wav");
-    file.loop();
+      // Checks if music setting is turned on or off
+      if (music == true) {
+        file.stop();
+      }
+      else {
+        file.loop();
+      }
     // Prevent selector from immediately selecting the top left tile
     limit = 1;
     limit2 = true;
