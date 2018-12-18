@@ -67,7 +67,12 @@ class Ingame {
       gameState = mainMenu;
       limit2 = true;
       file = new SoundFile(dontcrash.this, "/music/funky_menu.wav");
-      file.loop();
+      if (music == true) {
+        file.stop();
+      }
+      else {
+        file.loop();
+      }
       setup();
     }
   }
