@@ -6,6 +6,12 @@ class Menu {
     text("Press SPACE to select menu options and tiles", 50, 625);
     text("Press ENTER to start the car ingame", 50, 650);
     text("Press R to return to the main menu", 50, 675);
+    if (options == 0 && music == false && gameState == optionsScreen) {
+      text("Press left to turn music off", 50, 700);
+    }
+    if (options == 0 && music == true && gameState == optionsScreen) {
+      text("Press right to turn music on", 50, 700);
+    }
   }
 
   void drawMainMenu() {
