@@ -55,6 +55,7 @@ class Menu {
     text("Level 1", width/2, height/2);
     text("Level 2", width/2, height/2 + 200);
     text("Level 3", width/2 + 200, height/2);
+    text("Level 4", width/2 - 200, height/2);
 
     //Joey's abominatie
     if (keysPressed[RIGHT]) {
@@ -65,8 +66,12 @@ class Menu {
       testerinos = 1;
     }
 
-    if (keysPressed[UP] ^ keysPressed[LEFT]) {
+    if (keysPressed[UP]) {
       testerinos = 0;
+    }
+    
+    if (keysPressed[LEFT]) {
+      testerinos = 3;
     }
 
     if (testerinos == 0) {
@@ -75,9 +80,12 @@ class Menu {
     } else if (testerinos == 1) {
       image(loadImage("images/selectionFalse.png"), (width/2 - 50), (height/2) + 150);
       selectLevel = 2;
-    } else {
+    } else if (testerinos == 2){
       selectLevel = 3;
-      image(loadImage("images/selectionFalse.png"), (width/2) + 150, (height/2) - 50);
+      image(loadImage("images/selectionFalse.png"), (width/2 + 150), (height/2) - 50);
+    } else {
+      selectLevel = 4; 
+      image(loadImage("images/selectionFalse.png"), (width/2 - 250), (height/2) - 50);
     }
     timer.level = selectLevel;
   }

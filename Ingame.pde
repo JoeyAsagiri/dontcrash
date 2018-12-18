@@ -191,7 +191,7 @@ class Ingame {
       // only place connection tiles on the right side of the field
       if (sideRight) {
         // Place a connection tile between this tile and the left tile if they connect properly
-        if (i > 0 && (tiles[i].collision[left] == 1) && tiles[(i - 1)].collision[right] == 1 && ((i - 1) % tileRow == 0 || (i - 1) % tileRow == 1)) {
+        if (i > 0 && (tiles[i].collision[left] == 1) && tiles[(i - 1)].collision[right] == 1 && ((i - 1) % tileRow == 0 || (i - 1) % tileRow == 1 || (i - 1) % tileRow == 2)) {
           image(loadImage("images/tiles/tile5.png"), tiles[i].x - 100, tiles[i].y);
         }
         // Place a connection tile between this tile and the tile above if they connect properly
