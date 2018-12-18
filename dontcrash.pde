@@ -31,6 +31,7 @@ Select selectLeft;
 Select selectRight;
 LevelLoader levelLoader;
 Ingame ingame;
+Levels levels;
 
 final int tileXStartLeft = 50;
 final int tileYStartLeft = 10;
@@ -97,6 +98,10 @@ boolean start = false;
 int testerinos = 0;
 
 int selectLevel = 0;
+
+final int levelAmount = 3;
+
+
 
 void setup() {
   // Initializeer klassen

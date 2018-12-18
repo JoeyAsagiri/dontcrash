@@ -25,10 +25,14 @@ class Menu {
     textSize(100);
     text("LEVEL SELECT", width/2, height/4);
     textSize(24);
-    text("Level 1", width/2, height/2);
-    text("Level 2", width/2, height/2 + 200);
-    text("Level 3", width/2 + 200, height/2);
-
+    
+    for (int i = 0; i < levelAmount; i++){
+      
+     
+      text("Level "+(i+1), levels[i](.xPos), height/2);
+      
+    }
+    
     //Joey's abominatie
     if (keysPressed[RIGHT]) {
       testerinos = 2;
