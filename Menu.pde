@@ -108,6 +108,6 @@ class Menu {
     // Press this option to exit the game
     if ((options == 1) && (keysPressed[' '])) {
       exit();
-    }
+    }  
   }
 }
