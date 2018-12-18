@@ -9,7 +9,7 @@ class Timer {
   boolean saved = false;
   Table table;
 
-  void setup() {
+  Timer() {
     table = loadTable("best_times.csv", "header");
   }
 
