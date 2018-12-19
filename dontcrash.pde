@@ -24,6 +24,7 @@ Tile[] tilesLeft;
 Tile[] tilesRight;
 Car[] car;
 Car[] carList;
+Car[] carListMenu;
 int maxCars = 4;
 Menu menu;
 Timer timer;
@@ -112,7 +113,7 @@ void setup() {
   selectLeft.selectY = tileYLeft;
   selectRight.selectX = tileXRight;
   selectRight.selectY = tileYRight;
-
+  carListMenu = menu.initCar();
   if (start) {
     // Initialize the left side of the grid
     tilesLeft = ingame.initTiles(tileCountLeft, levelLeft, levelLeftSelect);
