@@ -42,6 +42,7 @@ class Car {
     if (frame < 20) {
       frame++;
       img = (loadImage("images/explosion/car"+(frame/4)+".png"));
+      image(img, x - width / 2, y - height / 2);
     }
   }
 
