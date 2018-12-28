@@ -1,15 +1,34 @@
 class Menu {
   Car[] car;
-  
-  Car[] initCar() {
-    int carAmount = 5;
 
+  Car[] initCar() {
+    int carAmount = 10;
     car = new Car[carAmount];
     for (int i = 0; i < carAmount; i++) {
       car[i] = new Car();
-      car[i].x = random(width);
-      car[i].y = height;
-      car[i].velocity = random (1,5);
+      car[i].directionMainMenu = Math.round(random(1, 4));
+      switch (car[i].directionMainMenu) {
+      case 1:
+        car[i].x = random(width);
+        car[i].y = height;
+        car[i].velocity = random (1, 5);
+        break;
+      case 2:
+        car[i].x = random(width);
+        car[i].y = -100;
+        car[i].velocity = random (1, 5);
+        break;
+      case 3:
+        car[i].x = width;
+        car[i].y = random(height);
+        car[i].velocity = random (1, 5);
+        break;
+      case 4:
+        car[i].x = -100;
+        car[i].y = random(height);
+        car[i].velocity = random (1, 5);
+        break;
+      }
     }
     return car;
   }
@@ -34,13 +53,82 @@ class Menu {
     background(14, 209, 69);
 
     for (Car car : carListMenu) {
-      car.y -= car.velocity;
-      image(car.getImage(), car.x, car.y);
-      if (car.y <= -100){
-        car.x = random(width);
-        car.y = height;
-        car.velocity = random(1,5);
+
+      switch (car.directionMainMenu) {
+      case 1:
+        car.y -= car.velocity;
+        image(loadImage("images/carUp.png"), car.x, car.y);
+        break;
+      case 2:
+        car.y += car.velocity;
+        image(loadImage("images/carDown.png"), car.x, car.y);
+        break;
+      case 3:
+        car.x -= car.velocity;
+        image(loadImage("images/carLeft.png"), car.x, car.y);
+        break;
+      case 4:
+        car.x += car.velocity;
+        image(loadImage("images/carRight.png"), car.x, car.y);
+        break;
       }
+
+      switch (car.directionMainMenu) {
+      case 1:
+        if (car.y <= -100) {
+          car.directionMainMenu = Math.round(random(1, 4));
+          car.poof= true;
+        }
+        break;
+      case 2:
+        if (car.y >= height) {
+          car.directionMainMenu = Math.round(random(1, 4));
+          car.poof = true;
+        }
+        break;
+      case 3:
+        if (car.x <= -100) {
+          car.directionMainMenu = Math.round(random(1, 4));
+          car.poof = true;
+        }
+        break;
+      case 4:
+        if (car.x >= width) {
+          car.directionMainMenu = Math.round(random(1, 4));
+          car.poof = true;
+        }
+        break;
+      }
+
+      if (car.poof) {
+        switch (car.directionMainMenu) {
+        case 1:
+          car.x = random(width);
+          car.y = height;
+          car.velocity = random (1, 5);
+          car.poof = false;
+          break;
+        case 2:
+          car.x = random(width);
+          car.y = -100;
+          car.velocity = random (1, 5);
+          car.poof = false;
+          break;
+        case 3:
+          car.x = width;
+          car.y = random(height);
+          car.velocity = random (1, 5);
+          car.poof = false;
+          break;
+        case 4:
+          car.x = -100;
+          car.y = random(height);
+          car.velocity = random (1, 5);
+          car.poof = false;
+          break;
+        }
+      }
+      car.carToCarCollision(car);
     }
 
     textAlign(CENTER);
