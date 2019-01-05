@@ -12,5 +12,4 @@ public class Levels {
     leftSelect = conLeftSelect;
     carPositions = conCarPositions;
   }
-
 }

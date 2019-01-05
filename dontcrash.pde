@@ -43,7 +43,7 @@ int tileYLeft = tileYStartLeft;
 int tileXRight = tileXStartRight;
 int tileYRight = tileYStartRight;
 
-int levelSelector = 1;
+int levelSelector = 0;
 
 //Grid
 int tileCountLeft = 8;
@@ -82,7 +82,7 @@ final int left = 3;
 int frame = 0;
 
 int limit = 0;
-boolean limit2;
+boolean limit2 = false;
 int limitRestart;
 
 int collisionAdjustment = 75;
@@ -101,7 +101,7 @@ boolean start = false;
 
 
 
-final int levelAmount = 3;
+final int levelAmount = 4;
 
 ArrayList<Levels> levelsList = new ArrayList<Levels>();
 
@@ -123,8 +123,8 @@ void setup() {
 
   if (start) {
     // Initialize the left side of the grid
-    tilesLeft = ingame.initTiles(tileCountLeft, levelLeft, levelLeftSelect);
-    tilesRight = ingame.initTiles(tileCountRight, levelRight, levelRightSelect);
+    tilesLeft = ingame.initTiles(tileCountLeft, levelsList.get(levelSelector).leftTiles, levelsList.get(levelSelector).leftSelect);
+    tilesRight = ingame.initTiles(tileCountRight, levelsList.get(levelSelector).rightTiles, levelsList.get(levelSelector).rightSelect);
     carList = ingame.initCar(carChecker);
   } else {
     // Load a soundfile from the /data folder of the sketch and play it back

@@ -23,7 +23,10 @@ void keyPresses() {
   if (!keysPressed[' ']) {
     limit2 = false;
     limit = 0;
+    
   }
+  
+
 
   //if (keysPressed['O'] && gameState == mainMenu) {
   //  gameState = optionsScreen;

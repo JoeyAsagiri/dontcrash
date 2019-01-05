@@ -26,38 +26,46 @@ class Menu {
     text("LEVEL SELECT", width/2, height/4);
     textSize(24);
 
-    for (int i = 1; i <= levelAmount; i++) {
-      text("Level "+i, levelsList.get(i - 1).xPos, levelsList.get(i - 1).yPos);
+    //draws leveltexts
+    for (int i = 0; i < levelAmount; i++) {
+      text("Level "+(i+1), levelsList.get(i).xPos, levelsList.get(i).yPos);
     }
 
+
+    //draws selector and makes variable to load in selected level
     if (levelSelector < 30) {
-      if (keysPressed[RIGHT] && limit2 == false) {
+      if (keysPressed[RIGHT]) {
+
         levelSelector++;
-        limit2 = true;
+        keysPressed[RIGHT] = false;
       }
     }
+    
     if (levelSelector < 20) {
-      if (keysPressed[DOWN] && limit2 == false) {
+      if (keysPressed[DOWN]) {
+
         levelSelector += 10;
-        limit2 = true;
+        keysPressed[DOWN] = false;
       }
     }
 
     if (levelSelector > 10) {
-      if (keysPressed[UP] && limit2 == false) {
+      if (keysPressed[UP]) {
+
         levelSelector -= 10;
-        limit2 = true;
+        keysPressed[UP] = false;
       }
     }
 
-    if (levelSelector > 1) {
-      if (keysPressed[LEFT] && limit2 == false) {
+    if (levelSelector > 0) {
+      if (keysPressed[LEFT]) {
+
         levelSelector--;
-        limit2 = true;
+        keysPressed[LEFT] = false;
       }
     }
-    
-    image(loadImage("images/selectionFalse.png"), levelsList.get(levelSelector).xPos, levelsList.get(levelSelector).yPos);
+
+    image(loadImage("images/selectionFalse.png"), (levelsList.get(levelSelector).xPos - 50), (levelsList.get(levelSelector).yPos - 50));
   }
 
   void drawOptions() {
