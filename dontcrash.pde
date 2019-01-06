@@ -24,10 +24,8 @@ Tile[] tilesLeft;
 Tile[] tilesRight;
 Car[] car;
 Car[] carList;
-Car[] carListMenu;
 int maxCars = 4;
 Menu menu;
-Timer timer;
 Select selectLeft;
 Select selectRight;
 LevelLoader levelLoader;
@@ -43,12 +41,7 @@ int tileYLeft = tileYStartLeft;
 int tileXRight = tileXStartRight;
 int tileYRight = tileYStartRight;
 
-ArrayList<Levels> levelsList = new ArrayList<Levels>();
-
 //Grid
-int levelSelector = 0;
-
-
 int tileCountLeft = 8;
 int tileRowLeft = 2;
 int tileDistanceXLeft = 200;
@@ -60,7 +53,6 @@ int tileDistanceXRight = 200;
 int tileDistanceYRight = 180;
 
 final int lineX = 400;
-final int levelAmount = 4;
 
 // Different screens
 int gameState = 0;
@@ -69,14 +61,15 @@ final int levelSelect = 1;
 final int optionsScreen = 2;
 final int inGame = 3;
 
-//settings?
-int options;
-boolean music;
 int gameStateP = 0;
 final int mainMenuP = 0;
 final int levelSelectP = 1;
 final int optionsScreenP = 2;
 final int inGameP = 3;
+
+// Options in settings
+int options = 0;
+
 
 // constants for the car movement directions
 final int up = 0;
@@ -100,58 +93,130 @@ boolean[] levelRightSelect = new boolean[tileCountRight];
 boolean[] carChecker = new boolean[maxCars];
 
 boolean start = false;
+boolean music = true;
 
 int testerinos = 0;
+int mainselect = 0;
 
 int selectLevel = 0;
-
-int selectMainMenu = 0;
 
 void setup() {
   // Initializeer klassen
   levelLoader = new LevelLoader();
   menu = new Menu();
   ingame = new Ingame();
-  timer = new Timer();
   selectLeft = new Select();
   selectRight = new Select();
   selectLeft.selectX = tileXLeft;
   selectLeft.selectY = tileYLeft;
   selectRight.selectX = tileXRight;
   selectRight.selectY = tileYRight;
-  carListMenu = menu.initCar();
-
 
   if (start) {
     // Initialize the left side of the grid
     tilesLeft = ingame.initTiles(tileCountLeft, levelLeft, levelLeftSelect);
     tilesRight = ingame.initTiles(tileCountRight, levelRight, levelRightSelect);
     carList = ingame.initCar(carChecker);
-  } else if (music == true) {
-    file.stop();
   } else {
-    // Load a soundfile from the /data folder of the sketch and play it back
-    file = new SoundFile(dontcrash.this, "/music/funky_menu.wav");
-    file.loop();
+    if (keysPressed[' '] == true && limit == 0 && gameState == inGame) {
+      Select = true;
+      limit = 1;
+      Tile memory = tilesRight[selectRight.tileNumber];
+      tilesRight[selectRight.tileNumber] = tilesLeft[selectLeft.tileNumber];
+      tilesLeft[selectLeft.tileNumber] = memory;
+    } else {
+      selectRight.select(tileDistanceXRight, tileXRight, tileDistanceYRight, tileYRight, tileXStartRight, tileRowRight, tileCountRight);
+    }
   }
 
-  levelLoader.fillLevelList();
+  if (keysPressed[' '] == false) {
+    limit = 0;
+  }
+}
+
+// Initialize a set amount of tiles and return an array of random tiles
+Tile[] initTiles(int tileCountLeft, int[] level) {
+  tiles = new Tile[tileCountLeft];
+  // Give an image and to every tile
+  for (int i = 0; i < tileCountLeft; i++) {
+    tiles[i] = new Tile();
+    tiles[i].setImage(loadImage("images/tiles/" + tiles[i].rotatedTile(level[i]) + level[i] + ".png"));  //assign the image of the chosen tile to the tile
+    tiles[i].setCollision(level[i]); //set the collision of the chosen tile to the tile (todo)
+  } 
+  return tiles;
+}
+
+// Draw the tiles to be shown
+void drawTilesLeft() {
+
+  // Create tiles up to the tileCountLeft
+  for (int i = 0; i < tileCountLeft; i++) {
+    image(tilesLeft[i].getImage(), tileXLeft, tileYLeft);
+    tileXLeft += tileDistanceXLeft;
+
+    // set the tiles another row down after every 2 tiles
+    if ((i + 1) % tileRowLeft == 0) {
+      tileXLeft = tileXStartLeft;
+      tileYLeft += tileDistanceYLeft;
+    }
+  } 
+  tileXLeft = tileXStartLeft;
+  tileYLeft = tileYStartLeft;
+}
+
+// Draw the tiles to be shown
+void drawTilesRight() {
+
+  // Create tiles up to the tileCountRight
+  for (int i = 0; i < tileCountRight; i++) {
+    image(tilesRight[i].getImage(), tileXRight, tileYRight);
+    tilesRight[i].x = tileXRight;
+    tilesRight[i].y = tileYRight;
+    tileXRight += tileDistanceXRight;
+
+    // set the tiles another row down after every 4 tiles
+    if ((i + 1) % tileRowRight == 0) {
+      tileXRight = tileXStartRight;
+      tileYRight += tileDistanceYRight;
+    }
+  } 
+  tileXRight = tileXStartRight;
+  tileYRight = tileYStartRight;
+}
+
+// Function to let the game go back to the menu when you win
+void win() {
+  win = true;
+  if (keysPressed[' '] == true) {
+    file.stop();
+    gameState = mainMenu;
+    limit2 = true;
+    file = new SoundFile(this, "/music/funky_menu.wav");
+    if (music == true) {
+      file.loop();
+    }
+    else {
+      file.stop();
+    }
+    setup();
+  }
+}
+
+// All the code that alters the Game World goes here
+void updateGame() {
+  // Win condition
+  if (car.y <= -20) {
+    win();
+  }
 
   startCheck = false;
   win = false;
   size(1280, 720);
 }
 
-void initLevel() {
- 
-    tilesLeft = ingame.initTiles(tileCountLeft, levelLeft, levelLeftSelect);
-    tilesRight = ingame.initTiles(tileCountRight, levelRight, levelRightSelect);
-    carList = ingame.initCar(carChecker);
-}
-
 // All the code that draws the Game World goes here
 void draw() {
-  timer.timeTrack();
+
   keyPresses();
 
   // handles drawing of different screens
