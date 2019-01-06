@@ -43,7 +43,12 @@ int tileYLeft = tileYStartLeft;
 int tileXRight = tileXStartRight;
 int tileYRight = tileYStartRight;
 
+ArrayList<Levels> levelsList = new ArrayList<Levels>();
+
 //Grid
+int levelSelector = 0;
+
+
 int tileCountLeft = 8;
 int tileRowLeft = 2;
 int tileDistanceXLeft = 200;
@@ -55,6 +60,7 @@ int tileDistanceXRight = 200;
 int tileDistanceYRight = 180;
 
 final int lineX = 400;
+final int levelAmount = 4;
 
 // Different screens
 int gameState = 0;
@@ -114,24 +120,33 @@ void setup() {
   selectRight.selectX = tileXRight;
   selectRight.selectY = tileYRight;
   carListMenu = menu.initCar();
+
+
   if (start) {
     // Initialize the left side of the grid
     tilesLeft = ingame.initTiles(tileCountLeft, levelLeft, levelLeftSelect);
     tilesRight = ingame.initTiles(tileCountRight, levelRight, levelRightSelect);
     carList = ingame.initCar(carChecker);
-  }
-  else if (music == true) {
-      file.stop();
-    }
-    else {
+  } else if (music == true) {
+    file.stop();
+  } else {
     // Load a soundfile from the /data folder of the sketch and play it back
     file = new SoundFile(dontcrash.this, "/music/funky_menu.wav");
     file.loop();
   }
 
+  levelLoader.fillLevelList();
+
   startCheck = false;
   win = false;
   size(1280, 720);
+}
+
+void initLevel() {
+ 
+    tilesLeft = ingame.initTiles(tileCountLeft, levelLeft, levelLeftSelect);
+    tilesRight = ingame.initTiles(tileCountRight, levelRight, levelRightSelect);
+    carList = ingame.initCar(carChecker);
 }
 
 // All the code that draws the Game World goes here
