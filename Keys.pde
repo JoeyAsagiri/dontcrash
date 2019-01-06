@@ -23,10 +23,7 @@ void keyPresses() {
   if (!keysPressed[' ']) {
     limit2 = false;
     limit = 0;
-    
   }
-  
-
 
   //if (keysPressed['O'] && gameState == mainMenu) {
   //  gameState = optionsScreen;
@@ -70,6 +67,12 @@ void keyPresses() {
 
     gameState = inGame;
     start = true;
+
+    levelLeft = levelLoader.loadLevel(loadImage("images/levels/level"+selectLevel+"links.png"), tileCountLeft);
+    levelRight = levelLoader.loadLevel(loadImage("images/levels/level"+selectLevel+"rechts.png"), tileCountRight);
+    levelLeftSelect = levelLoader.loadSelect(loadImage("images/selectcheck/level"+selectLevel+"links.png"), tileCountLeft);
+    levelRightSelect = levelLoader.loadSelect(loadImage("images/selectcheck/level"+selectLevel+"rechts.png"), tileCountRight);
+    carChecker = levelLoader.carLoad(loadImage("images/caramount/level"+selectLevel+".png"), maxCars);
 
     setup();
   }

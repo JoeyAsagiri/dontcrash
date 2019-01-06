@@ -188,7 +188,7 @@ class Menu {
         keysPressed[RIGHT] = false;
       }
     }
-    
+
     if (levelSelector < 20) {
       if (keysPressed[DOWN]) {
 
