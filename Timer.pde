@@ -50,7 +50,7 @@ class Timer {
   // function to keep track of the score
   int score() {
     // every second that passes lowers score by 10, and every move done lowers score by 100
-    int score = initialScore - (seconds * 10) - (moves * 100); 
+    int score = initialScore - ((getElapsedTime()  / 1000) * 10) - (moves * 100); 
     if (score < 0) {
       score = 0;
     }
