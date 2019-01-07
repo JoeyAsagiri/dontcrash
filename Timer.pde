@@ -47,14 +47,23 @@ class Timer {
     }
   }
 
+  // function to keep track of the score
+  int score() {
+    // every second that passes lowers score by 10, and every move done lowers score by 100
+    int score = initialScore - (seconds * 10) - (moves * 100); 
+    if (score < 0) {
+      score = 0;
+    }
+    return score;
+  }
+
   // function om tijd te displayen in game
   void displayTime() {
     fill(#000000);
     textSize(25);
-    textAlign(CENTER);
-    text(minutes, 1200, 700);
-    text(":", 1230, 700);
-    text(seconds, 1260, 700);
+    textAlign(LEFT);
+    text(minutes + ":" + seconds, 1200, 680);
+    text(score(), 1200, 710);
   }
 
   void timeTrack () {
@@ -78,14 +87,19 @@ class Timer {
     }
   }
 
-  // Function to save the current time to best_times.csv if the current time in the level is better than the previous best
+  // Function to save the current time and score to best_times.csv if the current time in the level is better than the previous best
   void saveTime() {
-    TableRow previousTime = table.findRow(str(selectLevel), "Level");
-    int previousElapsed = previousTime.getInt("Elapsed time");
+    TableRow previousRecord = table.findRow(str(selectLevel), "Level");
+    int previousElapsed = previousRecord.getInt("Elapsed time");
+    int previousScore = previousRecord.getInt("Score");
     // Only save if the current time is shorter than the previously recorded time
     if (previousElapsed > elapsed) {
-      previousTime.setInt("Elapsed time", elapsed);
-      previousTime.setString("Time string", str(minutes) + " minutes : " + str(seconds) + " seconds");
+      previousRecord.setInt("Elapsed time", elapsed);
+      previousRecord.setString("Time string", str(minutes) + " minutes : " + str(seconds) + " seconds");
+      saveTable(table, "best_times.csv");
+    }
+    if (previousScore < score()) {
+      previousRecord.setInt("Score", score());
       saveTable(table, "best_times.csv");
     }
     saved = true;

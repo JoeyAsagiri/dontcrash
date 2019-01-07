@@ -133,6 +133,7 @@ class Ingame {
       if (keysPressed[' '] == true && limit == 0 && tilesLeft[selectLeft.tileNumber].select) {
         Select = false;
         limit = 1;
+        moves++;
       } else {
         if (keysPressed[' '] && !tilesLeft[selectLeft.tileNumber].select && limit == 0) {
           selectRight.reject.play();
@@ -147,6 +148,7 @@ class Ingame {
         Tile memory = tilesRight[selectRight.tileNumber];
         tilesRight[selectRight.tileNumber] = tilesLeft[selectLeft.tileNumber];
         tilesLeft[selectLeft.tileNumber] = memory;
+        moves++;
       } else {
         if (keysPressed[' '] && !tilesRight[selectRight.tileNumber].select && limit == 0) {
           selectRight.reject.play();

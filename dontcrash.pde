@@ -101,7 +101,8 @@ int selectLevel = 0;
 
 int selectMainMenu = 0;
 
-//Test
+int initialScore = 10000;
+int moves = 0;
 
 void setup() {
   // Initializeer klassen
@@ -133,6 +134,7 @@ void setup() {
 
   startCheck = false;
   win = false;
+  moves = 0;
   size(1280, 720);
 }
 
