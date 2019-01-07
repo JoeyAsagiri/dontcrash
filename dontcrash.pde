@@ -32,6 +32,7 @@ Select selectLeft;
 Select selectRight;
 LevelLoader levelLoader;
 Ingame ingame;
+Levels levels;
 
 final int tileXStartLeft = 50;
 final int tileYStartLeft = 10;
@@ -42,6 +43,8 @@ int tileXLeft = tileXStartLeft;
 int tileYLeft = tileYStartLeft;
 int tileXRight = tileXStartRight;
 int tileYRight = tileYStartRight;
+
+int levelSelector = 0;
 
 //Grid
 int tileCountLeft = 8;
@@ -80,7 +83,7 @@ final int left = 3;
 int frame = 0;
 
 int limit = 0;
-boolean limit2;
+boolean limit2 = false;
 int limitRestart;
 
 int collisionAdjustment = 75;
@@ -95,9 +98,14 @@ boolean[] carChecker = new boolean[maxCars];
 
 boolean start = false;
 
-int testerinos = 0;
 
-int selectLevel = 0;
+
+
+
+final int levelAmount = 4;
+
+ArrayList<Levels> levelsList = new ArrayList<Levels>();
+
 
 int selectMainMenu = 0;
 
@@ -114,10 +122,13 @@ void setup() {
   selectRight.selectX = tileXRight;
   selectRight.selectY = tileYRight;
   carListMenu = menu.initCar();
+
+  
+
   if (start) {
     // Initialize the left side of the grid
-    tilesLeft = ingame.initTiles(tileCountLeft, levelLeft, levelLeftSelect);
-    tilesRight = ingame.initTiles(tileCountRight, levelRight, levelRightSelect);
+    tilesLeft = ingame.initTiles(tileCountLeft, levelsList.get(levelSelector).leftTiles, levelsList.get(levelSelector).leftSelect);
+    tilesRight = ingame.initTiles(tileCountRight, levelsList.get(levelSelector).rightTiles, levelsList.get(levelSelector).rightSelect);
     carList = ingame.initCar(carChecker);
   }
   else if (music == true) {
@@ -128,11 +139,22 @@ void setup() {
     file = new SoundFile(dontcrash.this, "/music/funky_menu.wav");
     file.loop();
   }
+  
+  levelLoader.fillLevelList();
 
   startCheck = false;
   win = false;
   size(1280, 720);
 }
+
+
+void initLevel() {
+ 
+    tilesLeft = ingame.initTiles(tileCountLeft, levelLeft, levelLeftSelect);
+    tilesRight = ingame.initTiles(tileCountRight, levelRight, levelRightSelect);
+    carList = ingame.initCar(carChecker);
+}
+
 
 // All the code that draws the Game World goes here
 void draw() {
