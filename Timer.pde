@@ -65,6 +65,16 @@ class Timer {
     text(minutes + ":" + seconds, 1200, 680);
     text(score(), 1200, 710);
   }
+  
+  void displayLevelBest(int level, int X, int Y){
+    TableRow previousRecord = table.findRow(str(level), "Level");
+    String bestTime = previousRecord.getString("Time string");
+    int bestScore = previousRecord.getInt("Score");
+    textAlign(LEFT);
+    textSize(12);
+    text(bestTime, X, Y + 20);
+    text(bestScore, X, Y + 40);
+  }
 
   void timeTrack () {
     if (gameState == inGame && win == false) {

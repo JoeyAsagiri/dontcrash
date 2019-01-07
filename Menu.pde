@@ -174,9 +174,16 @@ class Menu {
     text("LEVEL SELECT", width/2, height/4);
     textSize(24);
     text("Level 1", width/2, height/2);
+    timer.displayLevelBest(1, width/2, height/2);
+    
     text("Level 2", width/2, height/2 + 200);
+    timer.displayLevelBest(2, width/2, height/2 + 200);
+    
     text("Level 3", width/2 + 200, height/2);
+    timer.displayLevelBest(3, width/2 + 200, height/2);
+    
     text("Level 4", width/2 - 200, height/2);
+    timer.displayLevelBest(4, width/2 - 200, height/2);
 
     //Joey's abominatie
     if (keysPressed[RIGHT]) {
