@@ -1,5 +1,5 @@
 Level,Elapsed time,Time string,Score
-1,10872,0 minutes : 10 seconds,9100
-2,37636,0 minutes : 37 seconds,0
-3,30040,0 minutes : 30 seconds,0
-4,1000000,0 minutes : 0 seconds,0
+1,10872,0:30,9090
+2,37636,0:37,0
+3,30040,0:30,0
+4,1000000,0:0,0

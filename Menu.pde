@@ -172,11 +172,12 @@ class Menu {
     textAlign(CENTER);
     textSize(100);
     text("LEVEL SELECT", width/2, height/4);
-    textSize(24);
     //draws leveltexts
     for (int i = 0; i < levelAmount; i++) {
+      textSize(24);
+      textAlign(CENTER);
       text("Level "+(i+1), levelsList.get(i).xPos, levelsList.get(i).yPos);
-      timer.displayLevelBest(i, width/2, height/2);
+      timer.displayLevelBest(i+1, levelsList.get(i).xPos, levelsList.get(i).yPos);
     }
 
 

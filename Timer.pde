@@ -66,14 +66,14 @@ class Timer {
     text(score(), 1200, 710);
   }
   
-  void displayLevelBest(int level, int X, int Y){
+  void displayLevelBest(int level, float X, float Y){
     TableRow previousRecord = table.findRow(str(level), "Level");
     String bestTime = previousRecord.getString("Time string");
     int bestScore = previousRecord.getInt("Score");
     textAlign(LEFT);
     textSize(12);
-    text(bestTime, X, Y + 20);
-    text(bestScore, X, Y + 40);
+    text("Time: " + bestTime, X - 45, Y + 20);
+    text("Score: " + bestScore, X - 45, Y + 40);
   }
 
   void timeTrack () {
@@ -99,13 +99,13 @@ class Timer {
 
   // Function to save the current time and score to best_times.csv if the current time in the level is better than the previous best
   void saveTime() {
-    TableRow previousRecord = table.findRow(str(selectLevel), "Level");
+    TableRow previousRecord = table.findRow(str(selectLevel+1), "Level");
     int previousElapsed = previousRecord.getInt("Elapsed time");
     int previousScore = previousRecord.getInt("Score");
     // Only save if the current time is shorter than the previously recorded time
     if (previousElapsed > elapsed) {
       previousRecord.setInt("Elapsed time", elapsed);
-      previousRecord.setString("Time string", str(minutes) + " minutes : " + str(seconds) + " seconds");
+      previousRecord.setString("Time string", str(minutes) + ": " + str(seconds));
       saveTable(table, "best_times.csv");
     }
     if (previousScore < score()) {
