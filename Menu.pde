@@ -168,54 +168,52 @@ class Menu {
   }
 
   void drawLevelSelect() {
-    background(14, 209, 69);
+    background(101, 232, 255);
     textAlign(CENTER);
     textSize(100);
     text("LEVEL SELECT", width/2, height/4);
     textSize(24);
-    text("Level 1", width/2, height/2);
-    timer.displayLevelBest(1, width/2, height/2);
-    
-    text("Level 2", width/2, height/2 + 200);
-    timer.displayLevelBest(2, width/2, height/2 + 200);
-    
-    text("Level 3", width/2 + 200, height/2);
-    timer.displayLevelBest(3, width/2 + 200, height/2);
-    
-    text("Level 4", width/2 - 200, height/2);
-    timer.displayLevelBest(4, width/2 - 200, height/2);
-
-    //Joey's abominatie
-    if (keysPressed[RIGHT]) {
-      testerinos = 2;
+    //draws leveltexts
+    for (int i = 0; i < levelAmount; i++) {
+      text("Level "+(i+1), levelsList.get(i).xPos, levelsList.get(i).yPos);
+      timer.displayLevelBest(i, width/2, height/2);
     }
 
-    if (keysPressed[DOWN]) {
-      testerinos = 1;
+
+    //draws selector and makes variable to load in selected level
+    if (levelSelector < 30) {
+      if (keysPressed[RIGHT]) {
+
+        levelSelector++;
+        keysPressed[RIGHT] = false;
+      }
     }
 
-    if (keysPressed[UP]) {
-      testerinos = 0;
+    if (levelSelector < 20) {
+      if (keysPressed[DOWN]) {
+
+        levelSelector += 10;
+        keysPressed[DOWN] = false;
+      }
     }
 
-    if (keysPressed[LEFT]) {
-      testerinos = 3;
+    if (levelSelector > 10) {
+      if (keysPressed[UP]) {
+
+        levelSelector -= 10;
+        keysPressed[UP] = false;
+      }
     }
 
-    if (testerinos == 0) {
-      image(loadImage("images/selectionFalse.png"), (width/2 - 50), (height/2) - 50);
-      selectLevel = 1;
-    } else if (testerinos == 1) {
-      image(loadImage("images/selectionFalse.png"), (width/2 - 50), (height/2) + 150);
-      selectLevel = 2;
-    } else if (testerinos == 2) {
-      selectLevel = 3;
-      image(loadImage("images/selectionFalse.png"), (width/2 + 150), (height/2) - 50);
-    } else {
-      selectLevel = 4; 
-      image(loadImage("images/selectionFalse.png"), (width/2 - 250), (height/2) - 50);
+    if (levelSelector > 0) {
+      if (keysPressed[LEFT]) {
+
+        levelSelector--;
+        keysPressed[LEFT] = false;
+      }
     }
-    timer.level = selectLevel;
+
+    image(loadImage("images/selectionFalse.png"), (levelsList.get(levelSelector).xPos - 50), (levelsList.get(levelSelector).yPos - 50));
   }
 
   void drawOptions() {
