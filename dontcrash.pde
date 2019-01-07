@@ -45,6 +45,7 @@ int tileXRight = tileXStartRight;
 int tileYRight = tileYStartRight;
 
 int levelSelector = 0;
+int selectLevel = 0;
 
 //Grid
 int tileCountLeft = 8;
