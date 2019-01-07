@@ -68,11 +68,11 @@ void keyPresses() {
     gameState = inGame;
     start = true;
 
-    levelLeft = levelLoader.loadLevel(loadImage("images/levels/level"+selectLevel+"links.png"), tileCountLeft);
-    levelRight = levelLoader.loadLevel(loadImage("images/levels/level"+selectLevel+"rechts.png"), tileCountRight);
-    levelLeftSelect = levelLoader.loadSelect(loadImage("images/selectcheck/level"+selectLevel+"links.png"), tileCountLeft);
-    levelRightSelect = levelLoader.loadSelect(loadImage("images/selectcheck/level"+selectLevel+"rechts.png"), tileCountRight);
-    carChecker = levelLoader.carLoad(loadImage("images/caramount/level"+selectLevel+".png"), maxCars);
+    levelLeft = levelLoader.loadLevel(loadImage("images/levels/level"+(selectLevel+1)+"links.png"), tileCountLeft);
+    levelRight = levelLoader.loadLevel(loadImage("images/levels/level"+(selectLevel+1)+"rechts.png"), tileCountRight);
+    levelLeftSelect = levelLoader.loadSelect(loadImage("images/selectcheck/level"+(selectLevel+1)+"links.png"), tileCountLeft);
+    levelRightSelect = levelLoader.loadSelect(loadImage("images/selectcheck/level"+(selectLevel+1)+"rechts.png"), tileCountRight);
+    carChecker = levelLoader.carLoad(loadImage("images/caramount/level"+(selectLevel+1)+".png"), maxCars);
 
     setup();
   }
