@@ -220,12 +220,12 @@ class Ingame {
         carAmount++;
       }
     }
-
+    
     car = new Car[carAmount];
-
-    // Give an image and to every tile
+// Give an image and to every tile
     int carCount = 0;
     for (int i = 0; i < carChecker.length; i++) {
+      
       if (carChecker[i] == true) {
         car[carCount] = new Car();
         switch (i) {

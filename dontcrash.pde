@@ -57,7 +57,7 @@ int tileDistanceYRight = 180;
 
 int levelSelector = 0;
 ArrayList<Levels> levelsList = new ArrayList<Levels>();
-final int levelAmount = 4;
+final int levelAmount = 10;
 
 final int lineX = 400;
 
@@ -129,7 +129,7 @@ void setup() {
     // Initialize the left side of the grid
     tilesLeft = ingame.initTiles(tileCountLeft, levelsList.get(levelSelector).leftTiles, levelsList.get(levelSelector).leftSelect);
     tilesRight = ingame.initTiles(tileCountRight, levelsList.get(levelSelector).rightTiles, levelsList.get(levelSelector).rightSelect);
-    carList = ingame.initCar(carChecker);
+    carList = ingame.initCar(levelsList.get(levelSelector).carPositions);
   } else if (music == true) {
     file.stop();
   } else {
@@ -144,13 +144,6 @@ void setup() {
   win = false;
   moves = 0;
   size(1280, 720);
-}
-
-void initLevel() {
- 
-    tilesLeft = ingame.initTiles(tileCountLeft, levelLeft, levelLeftSelect);
-    tilesRight = ingame.initTiles(tileCountRight, levelRight, levelRightSelect);
-    carList = ingame.initCar(carChecker);
 }
 
 // All the code that draws the Game World goes here
