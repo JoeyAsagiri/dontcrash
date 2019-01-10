@@ -90,11 +90,10 @@ class LevelLoader {
       float yPos;
       if (i<11) {
         yPos = height/2;
-      } else if (i<20) {
-        yPos = height/3*2;
       } else {
-        yPos = height/4*3;
+        yPos = height/3*2;
       }
+
 
       int[] leftTiles = levelLoader.loadLevel(loadImage("images/levels/level"+i+"links.png"), tileCountLeft);
       int[] rightTiles = levelLoader.loadLevel(loadImage("images/levels/level"+i+"rechts.png"), tileCountRight);
