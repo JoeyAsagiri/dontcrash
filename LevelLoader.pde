@@ -74,13 +74,17 @@ class LevelLoader {
     return carChecker;
   }
 
-  void fillLevelList() {
-    for (int i = 1; i <= levelAmount; i++) {
 
-      float positionHelper = i%10;
-      if(positionHelper == 0) {
-       positionHelper++; 
+
+  void fillLevelList() {
+          float positionHelper = 0;
+    for (int i = 1; i <= levelAmount; i++) {
+ 
+      if (positionHelper == 9){
+      positionHelper = 0;
       }
+      positionHelper++;
+
 
       float xPos = width/10 * positionHelper;
       float yPos;
