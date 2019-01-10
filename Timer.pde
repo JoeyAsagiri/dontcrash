@@ -1,6 +1,6 @@
 class Timer {
   // variables
-  int starttime, stoptime;
+  int starttime, stoptime = 0;
   int elapsed;
   int minutes = 0;
   int seconds = 0;
@@ -65,8 +65,8 @@ class Timer {
     text(minutes + ":" + seconds, 1200, 680);
     text(score(), 1200, 710);
   }
-  
-  void displayLevelBest(int level, float X, float Y){
+
+  void displayLevelBest(int level, float X, float Y) {
     TableRow previousRecord = table.findRow(str(level), "Level");
     String bestTime = previousRecord.getString("Time string");
     int bestScore = previousRecord.getInt("Score");
@@ -87,7 +87,10 @@ class Timer {
       if (!saved) {
         saveTime();
       }
-      StopTime();
+      // Update stoptime only once
+      if (stoptime == 0) {
+        StopTime();
+      }
     } else if (gameState != inGame) {
       saved = false;
       running = false;

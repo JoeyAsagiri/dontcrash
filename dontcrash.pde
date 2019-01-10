@@ -110,7 +110,7 @@ int initialScore = 10000;
 int moves = 0;
 
 void setup() {
-
+  
   // Initializeer klassen
 
   levelLoader = new LevelLoader();
@@ -140,9 +140,12 @@ void setup() {
 
   levelLoader.fillLevelList();
 
+  // Reset variables 
   startCheck = false;
   win = false;
   moves = 0;
+  limit = 1;
+  
   size(1280, 720);
 }
 
