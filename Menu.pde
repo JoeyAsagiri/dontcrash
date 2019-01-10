@@ -310,4 +310,25 @@ class Menu {
       menuLimit = false;
     }
   }
+
+  void winScreen() {
+    background(14, 209, 69);
+    fill(0, 102, 153);
+    textAlign(CENTER);
+    textSize(100);
+    text("YOU WIN!", width/2, height/4);
+    textSize(30);
+    text("You just beat level " + (levelSelector +1) + ".", width/2, 2*(height/5));
+    
+    if (timer.previousScore != 0){
+      text("High score: " + timer.previousScore + ".", width/2, 3*(height/5));
+    }
+    
+    text("Your score: " + timer.score() + ".", width/2, 4*(height/5));
+    
+    if (gameState == winScreen && keysPressed[' ']){
+      limit2 = true;
+      gameState = 0;
+    }
+  }
 }

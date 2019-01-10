@@ -61,20 +61,7 @@ class Ingame {
 
   // Function to let the game go back to the menu when you win
   void win() {
-    win = true;
-    if (keysPressed[' '] == true) {
-      file.stop();
-      gameState = mainMenu;
-      limit2 = true;
-      file = new SoundFile(dontcrash.this, "/music/funky_menu.wav");
-      if (music == true) {
-        file.stop();
-      }
-      else {
-        file.loop();
-      }
-      setup();
-    }
+    gameState = winScreen;
   }
 
   // Function to draw everything in the level
