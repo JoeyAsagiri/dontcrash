@@ -57,7 +57,7 @@ int tileDistanceYRight = 180;
 
 int levelSelector = 0;
 ArrayList<Levels> levelsList = new ArrayList<Levels>();
-final int levelAmount = 11;
+final int levelAmount = 13;
 
 final int lineX = 400;
 
