@@ -191,10 +191,10 @@ class Menu {
       }
     }
 
-    if (levelSelector < 18) {
+    if (levelSelector < 20) {
       if (keysPressed[DOWN]) {
 
-        levelSelector += 9;
+        levelSelector += 10;
         keysPressed[DOWN] = false;
       }
     }

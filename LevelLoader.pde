@@ -80,15 +80,15 @@ class LevelLoader {
           float positionHelper = 0;
     for (int i = 1; i <= levelAmount; i++) {
  
-      if (positionHelper == 9){
+      if (positionHelper == 10){
       positionHelper = 0;
       }
       positionHelper++;
 
 
-      float xPos = width/10 * positionHelper;
+      float xPos = width/11 * positionHelper;
       float yPos;
-      if (i<10) {
+      if (i<11) {
         yPos = height/2;
       } else if (i<20) {
         yPos = height/3*2;
