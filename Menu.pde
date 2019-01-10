@@ -190,18 +190,18 @@ class Menu {
       }
     }
 
-    if (levelSelector < 20) {
+    if (levelSelector < 18) {
       if (keysPressed[DOWN]) {
 
-        levelSelector += 10;
+        levelSelector += 9;
         keysPressed[DOWN] = false;
       }
     }
 
-    if (levelSelector > 10) {
+    if (levelSelector > 8) {
       if (keysPressed[UP]) {
 
-        levelSelector -= 10;
+        levelSelector -= 9;
         keysPressed[UP] = false;
       }
     }
