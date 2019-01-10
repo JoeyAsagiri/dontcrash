@@ -223,7 +223,9 @@ class Menu {
     fill(0, 102, 153);
     textAlign(CENTER);
     textSize(30);
+    text("RESET SCORE", width/2, 3*(height/5));
     text("QUIT GAME", width/2, 4*(height/5));
+    
 
     // Sound
     if (options == 0) {
@@ -231,9 +233,9 @@ class Menu {
 
       // Switches text based on if the music is turned on or off
       if (music == true) {
-        text("SOUND OFF", width/2, 3*(height/5));
+        text("SOUND OFF", width/2, 2*(height/5));
       } else if (music == false) {
-        text("SOUND ON", width/2, 3*(height/5));
+        text("SOUND ON", width/2, 2*(height/5));
       }
       fill(0, 102, 153);
     }
@@ -241,19 +243,19 @@ class Menu {
     // Quit
     if (options == 1) {
       fill(0, 102, 153);
-      text("SOUND ON/OFF", width/2, 3*(height/5));
+      text("SOUND ON/OFF", width/2, 2*(height/5));
       fill(255, 255, 255);
       text("QUIT GAME", width/2, 4*(height/5));
       fill(0, 102, 153);
     }
 
     // Press DOWN when 'Sound' is selected to move down
-    if (keysPressed[DOWN] || (options == 2 && keysPressed[DOWN])) {
+    if (options == 2 && keysPressed[DOWN]) {
       options = 1;
     }
 
     // Press UP when 'quit' is selected to move up
-    if ((options == 1) && (keysPressed[UP])) {
+    if (options == 1 && (keysPressed[UP])) {
       options = 0;
     }
 
