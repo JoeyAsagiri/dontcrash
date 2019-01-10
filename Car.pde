@@ -89,55 +89,56 @@ class Car {
   // Calls collisionCalc with the right variables depending on direction of car
   void collisionResult(int[] tile) {
     switch(previousDirection) {
-
     case up:
-      richting[0] = 2; 
-      richting[1] = 0; 
-      richting[2] = 1; 
-      richting[3] = 3; 
-      richting[4] = 0; 
-      richting[5] = 1; 
-      richting[6] = 3;
+      richting[0] = down; 
+      richting[1] = up; 
+      richting[2] = right; 
+      richting[3] = left; 
+      richting[4] = up; 
+      richting[5] = right; 
+      richting[6] = left;
       collisionCalc(richting, tile);
       break;
 
     case right:
-      richting[0] = 3; 
-      richting[1] = 1; 
-      richting[2] = 2; 
-      richting[3] = 0; 
-      richting[4] = 1; 
-      richting[5] = 2; 
-      richting[6] = 0;
+      richting[0] = left; 
+      richting[1] = right; 
+      richting[2] = down; 
+      richting[3] = up; 
+      richting[4] = right; 
+      richting[5] = down; 
+      richting[6] = up;
       collisionCalc(richting, tile);
       break; 
 
     case down:
-      richting[0] = 0; 
-      richting[1] = 2; 
-      richting[2] = 1; 
-      richting[3] = 3; 
-      richting[4] = 2; 
-      richting[5] = 1; 
-      richting[6] = 3;
+      richting[0] = up; 
+      richting[1] = down; 
+      richting[2] = right; 
+      richting[3] = left; 
+      richting[4] = down; 
+      richting[5] = right; 
+      richting[6] = left;
       collisionCalc(richting, tile);
       break;
 
     case left:
-      richting[0] = 1; 
-      richting[1] = 3; 
-      richting[2] = 2; 
-      richting[3] = 0; 
-      richting[4] = 3; 
-      richting[5] = 2; 
-      richting[6] = 0;
+      richting[0] = right; 
+      richting[1] = left; 
+      richting[2] = down; 
+      richting[3] = up; 
+      richting[4] = left; 
+      richting[5] = down; 
+      richting[6] = up;
       collisionCalc(richting, tile);
     }
   }
 
   //Calculates what direction the car has to go
   void collisionCalc(int[] richting, int[] tile ) {
+    // Check if the direction the car is entering the tile is open
     if (tile[richting[0]] == 1 ) {   
+      // Check which way the car has to go depending on the tile
       if (tile[richting[1]] == 1) {      
         collisionTimer = 0;
         previousDirection = richting[4];
@@ -149,7 +150,8 @@ class Car {
         previousDirection = richting[6];
       }
     } else
-      if (collisionTimer > (100 / originalVelocity)) {
+    // destroy the car if the tile isn't open from the cars direction
+      if (collisionTimer > (120 / originalVelocity)) {
         destroyed = true;
       }
   }

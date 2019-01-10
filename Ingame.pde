@@ -122,6 +122,8 @@ class Ingame {
       textAlign(CENTER);
       fill(255, 0, 0);
       text("YOU WIN!", width/2, height/2);
+      // disable the timer from changing after winning
+      timer.running = false;
     }
     
     timer.displayTime();
