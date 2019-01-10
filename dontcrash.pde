@@ -111,7 +111,7 @@ int initialScore = 10000;
 int moves = 0;
 
 void setup() {
-  
+
   // Initializeer klassen
 
   levelLoader = new LevelLoader();
@@ -146,7 +146,8 @@ void setup() {
   win = false;
   moves = 0;
   limit = 1;
-  
+  limit2 = true;
+
   size(1280, 720);
 }
 
