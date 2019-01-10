@@ -109,13 +109,9 @@ class Timer {
   // Function to save the current time and score to best_times.csv if the current time in the level is better than the previous best
   void saveTime() {
     StopTime();
-    println((stoptime - starttime));
     TableRow previousRecord = table.findRow(str(levelSelector+1), "Level");
-    println(levelSelector+1);
     int previousElapsed = previousRecord.getInt("Elapsed time");
     int previousScore = previousRecord.getInt("Score");
-    println(previousElapsed);
-    println(previousScore);
     // Only save if the current time is shorter than the previously recorded time
     if (previousElapsed > (stoptime - starttime)) {
       previousRecord.setInt("Elapsed time", (stoptime - starttime));

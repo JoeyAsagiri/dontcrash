@@ -40,9 +40,12 @@ class Car {
       file.play();
     }
     if (frame < 20) {
+      
+      img = (loadImage("images/tiles/tile0.png"));
+      // create a new explosion
       frame++;
-      img = (loadImage("images/explosion/car"+(frame/4)+".png"));
-      image(img, x - width / 2, y - height / 2);
+      PImage image = (loadImage("images/explosion/car"+(frame/4)+".png"));
+      image(image, x - width / 2, y - height / 2);
     }
   }
 
