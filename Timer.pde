@@ -1,6 +1,6 @@
 class Timer {
   // variables
-  int starttime, stoptime = 0;
+  int starttime = 0, stoptime = 0;
   int elapsed;
   int minutes = 0;
   int seconds = 0;
@@ -63,7 +63,7 @@ class Timer {
     textSize(25);
     textAlign(LEFT);
     text(minutes + ":" + seconds, 1200, 680);
-    text(score(), 1200, 710);
+    text("Score: " + score(), 1100, 710);
   }
 
   void displayLevelBest(int level, float X, float Y) {
@@ -78,7 +78,7 @@ class Timer {
 
   void timeTrack () {
     if (gameState == inGame && win == false) {
-      if (!running) {
+      if (!running && starttime == 0) {
         StartTime();
       }
       TijdSeconden();
@@ -86,10 +86,6 @@ class Timer {
     } else if (win == true && gameState == inGame) {
       if (!saved) {
         saveTime();
-      }
-      // Update stoptime only once
-      if (stoptime == 0) {
-        StopTime();
       }
     } else if (gameState != inGame) {
       saved = false;
@@ -100,15 +96,30 @@ class Timer {
     }
   }
 
+  void resetTimes() {
+    for (int i = 1; i <= levelAmount; i++){
+      TableRow record = table.findRow(str(i), "Level");
+      record.setInt("Elapsed time", 100000);
+      record.setString("Time string", "0:0");
+      record.setInt("Score", 0);
+      saveTable(table, "best_times.csv");
+    }
+  }
+
   // Function to save the current time and score to best_times.csv if the current time in the level is better than the previous best
   void saveTime() {
-    TableRow previousRecord = table.findRow(str(selectLevel+1), "Level");
+    StopTime();
+    println((stoptime - starttime));
+    TableRow previousRecord = table.findRow(str(levelSelector+1), "Level");
+    println(levelSelector+1);
     int previousElapsed = previousRecord.getInt("Elapsed time");
     int previousScore = previousRecord.getInt("Score");
+    println(previousElapsed);
+    println(previousScore);
     // Only save if the current time is shorter than the previously recorded time
-    if (previousElapsed > elapsed) {
-      previousRecord.setInt("Elapsed time", elapsed);
-      previousRecord.setString("Time string", str(minutes) + ": " + str(seconds));
+    if (previousElapsed > (stoptime - starttime)) {
+      previousRecord.setInt("Elapsed time", (stoptime - starttime));
+      previousRecord.setString("Time string", str(minutes) + ":" + str(seconds));
       saveTable(table, "best_times.csv");
     }
     if (previousScore < score()) {
