@@ -69,7 +69,7 @@ final int optionsScreen = 2;
 final int inGame = 3;
 
 //settings?
-int options;
+int options = 0;
 boolean music;
 int gameStateP = 0;
 final int mainMenuP = 0;
@@ -87,6 +87,7 @@ int frame = 0;
 int limit = 0;
 boolean limit2;
 int limitRestart;
+boolean menuLimit = false;
 
 int collisionAdjustment = 75;
 

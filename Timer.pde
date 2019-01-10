@@ -63,7 +63,7 @@ class Timer {
     textSize(25);
     textAlign(LEFT);
     text(minutes + ":" + seconds, 1200, 680);
-    text(score(), 1200, 710);
+    text("Score: " + score(), 1100, 710);
   }
 
   void displayLevelBest(int level, float X, float Y) {
@@ -93,6 +93,16 @@ class Timer {
       elapsed = 0;
       seconds = 0;
       minutes = 0;
+    }
+  }
+
+  void resetTimes() {
+    for (int i = 1; i <= levelAmount; i++){
+      TableRow record = table.findRow(str(i), "Level");
+      record.setInt("Elapsed time", 100000);
+      record.setString("Time string", "0:0");
+      record.setInt("Score", 0);
+      saveTable(table, "best_times.csv");
     }
   }
 
