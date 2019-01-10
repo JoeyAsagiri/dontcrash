@@ -57,7 +57,7 @@ int tileDistanceYRight = 180;
 
 int levelSelector = 0;
 ArrayList<Levels> levelsList = new ArrayList<Levels>();
-final int levelAmount = 13;
+final int levelAmount = 20;
 
 final int lineX = 400;
 
@@ -111,7 +111,7 @@ int initialScore = 10000;
 int moves = 0;
 
 void setup() {
-
+  
   // Initializeer klassen
 
   levelLoader = new LevelLoader();
@@ -146,8 +146,7 @@ void setup() {
   win = false;
   moves = 0;
   limit = 1;
-  limit2 = true;
-
+  
   size(1280, 720);
 }
 

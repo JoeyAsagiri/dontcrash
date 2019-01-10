@@ -183,7 +183,7 @@ class Menu {
 
 
     //draws selector and makes variable to load in selected level
-    if (levelSelector < 30) {
+    if (levelSelector < 19) {
       if (keysPressed[RIGHT]) {
 
         levelSelector++;
@@ -191,18 +191,18 @@ class Menu {
       }
     }
 
-    if (levelSelector < 18) {
+    if (levelSelector < 19) {
       if (keysPressed[DOWN]) {
 
-        levelSelector += 9;
+        levelSelector += 10;
         keysPressed[DOWN] = false;
       }
     }
 
-    if (levelSelector > 8) {
+    if (levelSelector > 9) {
       if (keysPressed[UP]) {
 
-        levelSelector -= 9;
+        levelSelector -= 10;
         keysPressed[UP] = false;
       }
     }
