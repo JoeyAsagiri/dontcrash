@@ -2,7 +2,7 @@ class Ingame {
 
   // All the code that alters the Game World goes here
   void updateGame() {
-    
+
     //timer.timeTrack();
     if (startCheck == true) {
       for (Car car : carList) {
@@ -16,9 +16,12 @@ class Ingame {
           car.velocity = car.originalVelocity;
           car.rotate90();
         }
-        car.CarCollision();
+        // Optimize performance by not constantly calling collision
+        if (car.collisionTimer >= 30) {
+          car.CarCollision();
+          carToCarCollision(car);
+        }
         car.move(car.previousDirection);
-        carToCarCollision(car);
       }
       int j = 0;
       for (Car car : carList) {
@@ -69,8 +72,7 @@ class Ingame {
       file = new SoundFile(dontcrash.this, "/music/funky_menu.wav");
       if (music == true) {
         file.stop();
-      }
-      else {
+      } else {
         file.loop();
       }
       setup();
@@ -82,7 +84,7 @@ class Ingame {
     background(14, 209, 69); // make the background green
     // Make the left select side grey
     fill(192, 192, 192);
-    rect(0, 0, lineX , height - 1);
+    rect(0, 0, lineX, height - 1);
 
     // Draw the tiles and selector
     drawTiles(tilesLeft, tileCountLeft, tileRowLeft, tileXLeft, tileYLeft, tileDistanceXLeft, tileDistanceYLeft, tileXStartLeft, tileYStartLeft, false);
@@ -125,7 +127,7 @@ class Ingame {
       // disable the timer from changing after winning
       timer.running = false;
     }
-    
+
     timer.displayTime();
   } 
 
@@ -222,12 +224,12 @@ class Ingame {
         carAmount++;
       }
     }
-    
+
     car = new Car[carAmount];
-// Give an image and to every tile
+    // Give an image and to every tile
     int carCount = 0;
     for (int i = 0; i < carChecker.length; i++) {
-      
+
       if (carChecker[i] == true) {
         car[carCount] = new Car();
         switch (i) {

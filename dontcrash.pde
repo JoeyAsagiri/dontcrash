@@ -57,7 +57,7 @@ int tileDistanceYRight = 180;
 
 int levelSelector = 0;
 ArrayList<Levels> levelsList = new ArrayList<Levels>();
-final int levelAmount = 11;
+final int levelAmount = 13;
 
 final int lineX = 400;
 
@@ -69,7 +69,7 @@ final int optionsScreen = 2;
 final int inGame = 3;
 
 //settings?
-int options;
+int options = 0;
 boolean music;
 int gameStateP = 0;
 final int mainMenuP = 0;
@@ -87,6 +87,7 @@ int frame = 0;
 int limit = 0;
 boolean limit2;
 int limitRestart;
+boolean menuLimit = false;
 
 int collisionAdjustment = 75;
 
@@ -110,7 +111,7 @@ int initialScore = 10000;
 int moves = 0;
 
 void setup() {
-  
+
   // Initializeer klassen
 
   levelLoader = new LevelLoader();
@@ -145,7 +146,8 @@ void setup() {
   win = false;
   moves = 0;
   limit = 1;
-  
+  limit2 = true;
+
   size(1280, 720);
 }
 

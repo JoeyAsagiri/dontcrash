@@ -37,6 +37,7 @@ class Menu {
   void drawMenu() {
     textSize(12);
     textAlign(LEFT);
+    fill(0, 102, 153);
     text("Press the arrow keys to move between menu options and tiles", 50, 600);
     text("Press SPACE to select menu options and tiles", 50, 625);
     text("Press ENTER to start the car ingame", 50, 650);
@@ -223,55 +224,90 @@ class Menu {
     fill(0, 102, 153);
     textAlign(CENTER);
     textSize(30);
+    text("RESET SCORE", width/2, 3*(height/5));
     text("QUIT GAME", width/2, 4*(height/5));
+
+    println(options);
 
     // Sound
     if (options == 0) {
       fill(255, 255, 255);
-
       // Switches text based on if the music is turned on or off
       if (music == true) {
-        text("SOUND OFF", width/2, 3*(height/5));
+        text("SOUND OFF", width/2, 2*(height/5));
       } else if (music == false) {
-        text("SOUND ON", width/2, 3*(height/5));
+        text("SOUND ON", width/2, 2*(height/5));
       }
       fill(0, 102, 153);
+    } else if (options == 2) {
     }
 
     // Quit
     if (options == 1) {
       fill(0, 102, 153);
-      text("SOUND ON/OFF", width/2, 3*(height/5));
+      text("SOUND ON/OFF", width/2, 2*(height/5));
       fill(255, 255, 255);
-      text("QUIT GAME", width/2, 4*(height/5));
+      text("RESET SCORE", width/2, 3*(height/5));
       fill(0, 102, 153);
     }
 
-    // Press DOWN when 'Sound' is selected to move down
-    if (keysPressed[DOWN] || (options == 2 && keysPressed[DOWN])) {
-      options = 1;
+    if (options == 2) {
+      fill(0, 102, 153);
+      text("SOUND ON/OFF", width/2, 2*(height/5));
+      fill(255, 255, 255);
+      text("QUIT GAME", width/2, 4*(height/5));
     }
 
-    // Press UP when 'quit' is selected to move up
-    if ((options == 1) && (keysPressed[UP])) {
+    // Press DOWN when 'Sound' is selected to move down
+    if (options == 0 && keysPressed[DOWN] && !menuLimit) {
+      options = 1;
+      menuLimit = true;
+    }
+
+    // Press UP when 'Reset score' is selected to move up
+    if (options == 1 && keysPressed[UP] && !menuLimit) {
       options = 0;
+      menuLimit = true;
+    }
+
+    if (options == 1 && keysPressed[DOWN] && !menuLimit) {
+      options = 2;
+      menuLimit = true;
+    }
+
+
+    // Press UP when 'quit' is selected to move up
+    if (options == 2 && (keysPressed[UP]) && !menuLimit) {
+      options = 1;
+      menuLimit = true;
     }
 
     // Press RIGHT to turn the music off
-    if (options == 0 && keysPressed[RIGHT] && music == true) {
+    if (options == 0 && keysPressed[RIGHT] && music == true && !menuLimit) {
       file.loop();
       music = false;
+      menuLimit = true;
     }
 
     // Press LEFT to turn the music on
-    if (options == 0 && keysPressed[LEFT] && music == false) {
+    if (options == 0 && keysPressed[LEFT] && music == false && !menuLimit) {
       file.stop();
       music = true;
+      menuLimit = true;
     }
 
     // Press this option to exit the game
     if ((options == 1) && (keysPressed[' '])) {
+      timer.resetTimes();
+    }
+
+    // Press this option to exit the game
+    if ((options == 2) && (keysPressed[' '])) {
       exit();
+    }
+
+    if (!keysPressed[UP] && !keysPressed[DOWN] && !keysPressed[LEFT] && !keysPressed[RIGHT]) {
+      menuLimit = false;
     }
   }
 }
