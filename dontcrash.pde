@@ -67,6 +67,7 @@ final int mainMenu = 0;
 final int levelSelect = 1;
 final int optionsScreen = 2;
 final int inGame = 3;
+final int winScreen = 4;
 
 //settings?
 int options = 0;
@@ -76,6 +77,7 @@ final int mainMenuP = 0;
 final int levelSelectP = 1;
 final int optionsScreenP = 2;
 final int inGameP = 3;
+
 
 // constants for the car movement directions
 final int up = 0;
@@ -111,7 +113,7 @@ int initialScore = 10000;
 int moves = 0;
 
 void setup() {
-  
+
   // Initializeer klassen
 
   levelLoader = new LevelLoader();
@@ -146,7 +148,7 @@ void setup() {
   win = false;
   moves = 0;
   limit = 1;
-  
+
   size(1280, 720);
 }
 
@@ -176,6 +178,10 @@ void draw() {
   case inGame:   
     ingame.updateGame();
     ingame.drawGame();
+    break;
+
+  case winScreen:
+    menu.winScreen();
     break;
   }
 }
