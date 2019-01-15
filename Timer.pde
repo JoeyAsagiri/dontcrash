@@ -2,8 +2,6 @@ class Timer {
   // variables
   int starttime = 0, stoptime = 0;
   int elapsed;
-  int minutes = 0;
-  int seconds = 0;
   int level;
   boolean running = false;
   boolean saved = false;
@@ -89,7 +87,7 @@ class Timer {
       if (!saved) {
         saveTime();
       }
-    } else if (gameState != inGame && gameState != winScreen) {
+    } else if (gameState != inGame && gameState != winScreen && saved) {
       saved = false;
       running = false;
       elapsed = 0;

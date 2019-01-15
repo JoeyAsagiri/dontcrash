@@ -169,6 +169,9 @@ class Menu {
   }
 
   void drawLevelSelect() {
+    moves = 0; // small fix
+    minutes = 0;
+    seconds = 0;
     background(14, 209, 69);
     textAlign(CENTER);
     textSize(100);
@@ -226,8 +229,6 @@ class Menu {
     textSize(30);
     text("RESET SCORE", width/2, 3*(height/5));
     text("QUIT GAME", width/2, 4*(height/5));
-
-    println(options);
 
     // Sound
     if (options == 0) {
