@@ -111,6 +111,8 @@ int selectMainMenu = 0;
 
 int initialScore = 10000;
 int moves = 0;
+int seconds = 0;
+int minutes = 0;
 
 void setup() {
 
@@ -146,7 +148,6 @@ void setup() {
   // Reset variables 
   startCheck = false;
   win = false;
-  moves = 0;
   limit = 1;
 
   size(1280, 720);
