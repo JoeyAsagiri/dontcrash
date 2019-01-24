@@ -2,12 +2,12 @@ class Timer {
   // variables
   int starttime = 0, stoptime = 0;
   int elapsed;
-  int minutes = 0;
-  int seconds = 0;
   int level;
   boolean running = false;
   boolean saved = false;
   Table table;
+  TableRow previousRecord;
+  int previousScore;
 
   Timer() {
     table = loadTable("best_times.csv", "header");
@@ -83,11 +83,11 @@ class Timer {
       }
       TijdSeconden();
       TijdMinuten();
-    } else if (win == true && gameState == inGame) {
+    } else if (gameState == winScreen) {
       if (!saved) {
         saveTime();
       }
-    } else if (gameState != inGame) {
+    } else if (gameState != inGame && gameState != winScreen && saved) {
       saved = false;
       running = false;
       elapsed = 0;
@@ -97,7 +97,7 @@ class Timer {
   }
 
   void resetTimes() {
-    for (int i = 1; i <= levelAmount; i++){
+    for (int i = 1; i <= levelAmount; i++) {
       TableRow record = table.findRow(str(i), "Level");
       record.setInt("Elapsed time", 100000);
       record.setString("Time string", "0:0");
@@ -109,9 +109,9 @@ class Timer {
   // Function to save the current time and score to best_times.csv if the current time in the level is better than the previous best
   void saveTime() {
     StopTime();
-    TableRow previousRecord = table.findRow(str(levelSelector+1), "Level");
+    previousRecord = table.findRow(str(levelSelector+1), "Level");
     int previousElapsed = previousRecord.getInt("Elapsed time");
-    int previousScore = previousRecord.getInt("Score");
+    previousScore = previousRecord.getInt("Score");
     // Only save if the current time is shorter than the previously recorded time
     if (previousElapsed > (stoptime - starttime)) {
       previousRecord.setInt("Elapsed time", (stoptime - starttime));

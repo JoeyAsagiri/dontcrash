@@ -56,6 +56,7 @@ int tileDistanceXRight = 200;
 int tileDistanceYRight = 180;
 
 int levelSelector = 0;
+
 ArrayList<Levels> levelsList = new ArrayList<Levels>();
 final int levelAmount = 20;
 
@@ -67,6 +68,7 @@ final int mainMenu = 0;
 final int levelSelect = 1;
 final int optionsScreen = 2;
 final int inGame = 3;
+final int winScreen = 4;
 
 //settings?
 int options = 0;
@@ -76,6 +78,7 @@ final int mainMenuP = 0;
 final int levelSelectP = 1;
 final int optionsScreenP = 2;
 final int inGameP = 3;
+
 
 // constants for the car movement directions
 final int up = 0;
@@ -101,17 +104,15 @@ boolean[] carChecker = new boolean[maxCars];
 
 boolean start = false;
 
-int testerinos = 0;
-
-int selectLevel = 0;
-
 int selectMainMenu = 0;
 
 int initialScore = 10000;
 int moves = 0;
+int seconds = 0;
+int minutes = 0;
 
 void setup() {
-  
+
   // Initializeer klassen
 
   levelLoader = new LevelLoader();
@@ -144,9 +145,8 @@ void setup() {
   // Reset variables 
   startCheck = false;
   win = false;
-  moves = 0;
   limit = 1;
-  
+
   size(1280, 720);
 }
 
@@ -176,6 +176,10 @@ void draw() {
   case inGame:   
     ingame.updateGame();
     ingame.drawGame();
+    break;
+
+  case winScreen:
+    menu.winScreen();
     break;
   }
 }

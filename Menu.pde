@@ -174,6 +174,11 @@ class Menu {
   }
 
   void drawLevelSelect() {
+    // small fix for the timer
+    moves = 0;
+    minutes = 0;
+    seconds = 0;
+    
     background(14, 209, 69);
     textAlign(CENTER);
     textSize(100);
@@ -188,37 +193,29 @@ class Menu {
 
 
     //draws selector and makes variable to load in selected level
-    if (levelSelector < 19) {
-      if (keysPressed[RIGHT]) {
+    if (levelSelector < 19 && keysPressed[RIGHT]) {
 
         levelSelector++;
         keysPressed[RIGHT] = false;
       }
-    }
 
-    if (levelSelector < 19) {
-      if (keysPressed[DOWN]) {
+    if (levelSelector < 9 && keysPressed[DOWN]) {
 
         levelSelector += 10;
         keysPressed[DOWN] = false;
       }
-    }
 
-    if (levelSelector > 9) {
-      if (keysPressed[UP]) {
+    if (levelSelector > 9 && keysPressed[UP]) {
 
         levelSelector -= 10;
         keysPressed[UP] = false;
       }
-    }
 
-    if (levelSelector > 0) {
-      if (keysPressed[LEFT]) {
+    if (levelSelector > 0 && keysPressed[LEFT]) {
 
         levelSelector--;
         keysPressed[LEFT] = false;
       }
-    }
 
     image(loadImage("images/selectionFalse.png"), (levelsList.get(levelSelector).xPos - 50), (levelsList.get(levelSelector).yPos - 50));
   }
@@ -231,8 +228,6 @@ class Menu {
     textSize(30);
     text("RESET SCORE", width/2, 3*(height/5));
     text("QUIT GAME", width/2, 4*(height/5));
-
-    println(options);
 
     // Sound
     if (options == 0) {
@@ -313,6 +308,27 @@ class Menu {
 
     if (!keysPressed[UP] && !keysPressed[DOWN] && !keysPressed[LEFT] && !keysPressed[RIGHT]) {
       menuLimit = false;
+    }
+  }
+
+  void winScreen() {
+    background(14, 209, 69);
+    fill(0, 102, 153);
+    textAlign(CENTER);
+    textSize(100);
+    text("YOU WIN!", width/2, height/4);
+    textSize(30);
+    text("You just beat level " + (levelSelector +1) + ".", width/2, 2*(height/5));
+    
+    if (timer.previousScore != 0){
+      text("High score: " + timer.previousScore + ".", width/2, 3*(height/5));
+    }
+    
+    text("Your score: " + timer.score() + ".", width/2, 4*(height/5));
+    
+    if (gameState == winScreen && keysPressed[' ']){
+      limit2 = true;
+      gameState = 0;
     }
   }
 }
