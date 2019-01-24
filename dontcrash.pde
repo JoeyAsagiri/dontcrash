@@ -56,6 +56,7 @@ int tileDistanceXRight = 200;
 int tileDistanceYRight = 180;
 
 int levelSelector = 0;
+
 ArrayList<Levels> levelsList = new ArrayList<Levels>();
 final int levelAmount = 20;
 
@@ -102,10 +103,6 @@ boolean[] levelRightSelect = new boolean[tileCountRight];
 boolean[] carChecker = new boolean[maxCars];
 
 boolean start = false;
-
-int testerinos = 0;
-
-int selectLevel = 0;
 
 int selectMainMenu = 0;
 
