@@ -189,26 +189,29 @@ class Menu {
 
     //draws selector and makes variable to load in selected level
     if (levelSelector < 19 && keysPressed[RIGHT]) {
+
         levelSelector++;
         keysPressed[RIGHT] = false;
-      }    
+      }
 
     if (levelSelector < 9 && keysPressed[DOWN]) {
+
         levelSelector += 10;
         keysPressed[DOWN] = false;
-      }    
+      }
 
     if (levelSelector > 9 && keysPressed[UP]) {
+
         levelSelector -= 10;
         keysPressed[UP] = false;
-      }    
+      }
 
     if (levelSelector > 0 && keysPressed[LEFT]) {
+
         levelSelector--;
         keysPressed[LEFT] = false;
       }
-    }
-    // draws selector based on levelSelector variable
+
     image(loadImage("images/selectionFalse.png"), (levelsList.get(levelSelector).xPos - 50), (levelsList.get(levelSelector).yPos - 50));
   }
 
