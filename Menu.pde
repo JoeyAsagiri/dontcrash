@@ -1,29 +1,31 @@
 class Menu {
+  //aanmaken cararray
   Car[] car;
-
+  
+  //kijken waar de car de eerste keer moet komen
   Car[] initCar() {
     int carAmount = 10;
     car = new Car[carAmount];
     for (int i = 0; i < carAmount; i++) {
       car[i] = new Car();
       car[i].directionMainMenu = Math.round(random(1, 4));
-      switch (car[i].directionMainMenu) {
-      case 1:
+      switch (car[i].directionMainMenu) {  
+      case 1: //onder
         car[i].x = random(width);
         car[i].y = height;
         car[i].velocity = random (1, 5);
         break;
-      case 2:
+      case 2: //boven
         car[i].x = random(width);
         car[i].y = -100;
         car[i].velocity = random (1, 5);
         break;
-      case 3:
+      case 3: //rechts
         car[i].x = width;
         car[i].y = random(height);
         car[i].velocity = random (1, 5);
         break;
-      case 4:
+      case 4: //links
         car[i].x = -100;
         car[i].y = random(height);
         car[i].velocity = random (1, 5);
@@ -54,74 +56,76 @@ class Menu {
     background(14, 209, 69);
 
     for (Car car : carListMenu) {
-
+      //laat de auto rijden en laad het plaatje in
       switch (car.directionMainMenu) {
-      case 1:
+      case 1: //boven
         car.y -= car.velocity;
         image(loadImage("images/carUp.png"), car.x, car.y);
         break;
-      case 2:
+      case 2: //onder
         car.y += car.velocity;
         image(loadImage("images/carDown.png"), car.x, car.y);
         break;
-      case 3:
+      case 3: //links
         car.x -= car.velocity;
         image(loadImage("images/carLeft.png"), car.x, car.y);
         break;
-      case 4:
+      case 4: //rechts
         car.x += car.velocity;
         image(loadImage("images/carRight.png"), car.x, car.y);
         break;
       }
-
+       
+      //auto wordt opnieuw op het menu gezet als hij het level uitrijdt
       switch (car.directionMainMenu) {
-      case 1:
+      case 1: //omhoog
         if (car.y <= -100) {
           car.directionMainMenu = Math.round(random(1, 4));
           car.poof= true;
         }
         break;
-      case 2:
+      case 2: //naar beneden
         if (car.y >= height) {
           car.directionMainMenu = Math.round(random(1, 4));
           car.poof = true;
         }
         break;
-      case 3:
+      case 3: //naar links
         if (car.x <= -100) {
           car.directionMainMenu = Math.round(random(1, 4));
           car.poof = true;
         }
         break;
-      case 4:
+      case 4: //naar rechts
         if (car.x >= width) {
           car.directionMainMenu = Math.round(random(1, 4));
           car.poof = true;
         }
         break;
       }
-
+      
+      //als de auto verdwenen is, wordt hij opnieuw getekend met de nieuwe directionMainMenu
       if (car.poof) {
         switch (car.directionMainMenu) {
-        case 1:
+        case 1: //beneden
           car.x = random(width);
           car.y = height;
           car.velocity = random (1, 5);
           car.poof = false;
           break;
-        case 2:
+        case 2: //boven
           car.x = random(width);
           car.y = -100;
           car.velocity = random (1, 5);
           car.poof = false;
           break;
-        case 3:
+        case 3: //rechts
           car.x = width;
           car.y = random(height);
           car.velocity = random (1, 5);
           car.poof = false;
           break;
-        case 4:
+        case 4: //links
           car.x = -100;
           car.y = random(height);
           car.velocity = random (1, 5);
@@ -129,6 +133,7 @@ class Menu {
           break;
         }
       }
+      //als de auto's tegen elkaar rijden, worden ze verwijderd en opnieuw getekend
       car.carToCarCollision(car);
     }
 

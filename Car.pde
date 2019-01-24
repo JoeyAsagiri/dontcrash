@@ -224,10 +224,12 @@ class Car {
             x <= car2.x + car2.width &&       // r1 left edge past r2 right
             y + height >= car2.y &&       // r1 top edge past r2 bottom
             y <= car2.y + car2.height) {       // r1 bottom edge past r2 top
+            //auto 1 verdwijnt en krijgt een nieuwe kant mee
             poof = true;
-            velocity = random (1, 5);
+            directionMainMenu = Math.round(random(1, 4));
+            //auto 2 verdwijnt en krijgt een nieuwe kant mee
             car2.poof = true;
-            car2.velocity = random (1, 5);
+            directionMainMenu = Math.round(random(1, 4));
           }
         }
       }
